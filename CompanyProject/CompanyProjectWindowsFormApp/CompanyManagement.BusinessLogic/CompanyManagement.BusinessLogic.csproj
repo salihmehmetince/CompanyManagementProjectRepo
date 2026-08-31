@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31889540-9D01-42EF-BE97-409B138408F6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyManagement.BusinessLogic</RootNamespace>
+    <AssemblyName>CompanyManagement.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLCompany.cs" />
+    <Compile Include="BLCompanyGivesBonusToEmployee.cs" />
+    <Compile Include="BLCompanyHasDepartmentType.cs" />
+    <Compile Include="BLCompanyHasProductOrService.cs" />
+    <Compile Include="BLCompanyOwner.cs" />
+    <Compile Include="BLCompanyOwnerHasCompany.cs" />
+    <Compile Include="BLCompanyType.cs" />
+    <Compile Include="BLCustomer.cs" />
+    <Compile Include="BLCustomerBuysCompanyHasProductOrService.cs" />
+    <Compile Include="BLDepartmentType.cs" />
+    <Compile Include="BLEmployee.cs" />
+    <Compile Include="BLEmployeeHasCompanyHasDepartmentType.cs" />
+    <Compile Include="BLMeeting.cs" />
+    <Compile Include="BLMeetingHasCompanyOwner.cs" />
+    <Compile Include="BLMeetingHasEmployee.cs" />
+    <Compile Include="BLPaymentType.cs" />
+    <Compile Include="BLProductOrService.cs" />
+    <Compile Include="BLProductOrServiceType.cs" />
+    <Compile Include="BLProfessionType.cs" />
+    <Compile Include="BLTask.cs" />
+    <Compile Include="BLTaskHasCompanyOwner.cs" />
+    <Compile Include="BLTaskHasEmployee.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyManagement.DataAccess\CompanyManagement.DataAccess.csproj">
+      <Project>{99ce188d-3033-44a3-9890-f7910894e071}</Project>
+      <Name>CompanyManagement.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyManagement.Entity\CompanyManagement.Entity.csproj">
+      <Project>{ac085478-9493-4d96-a44d-31b00d94b203}</Project>
+      <Name>CompanyManagement.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
