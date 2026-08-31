@@ -23,6 +23,11 @@ namespace CompanyManagement.Entity
             }
         }
 
+        public DbSet<Admin> Admins { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<CompanyOwner> CompanyOwners { get; set; }
         public DbSet<CompanyOwnerHasCompany> CompanyOwnerHasCompanies { get; set; }
 
@@ -62,6 +67,34 @@ namespace CompanyManagement.Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            // Admin 1 - 1 User
+            modelBuilder.Entity<Admin>()
+                .HasOne(x => x.User)
+                .WithOne()
+                .HasForeignKey<Admin>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // CompanyOwner 1 - 1 User
+            modelBuilder.Entity<CompanyOwner>()
+                .HasOne(x => x.User)
+                .WithOne()
+                .HasForeignKey<CompanyOwner>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Employee 1 - 1 User
+            modelBuilder.Entity<Employee>()
+                .HasOne(x => x.User)
+                .WithOne()
+                .HasForeignKey<Employee>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // UserRole 1 - N User
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.UserRole)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.UserRoleId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // CompanyType 1 - N Company
             modelBuilder.Entity<Company>()
@@ -364,6 +397,25 @@ namespace CompanyManagement.Entity
                 .WithMany(x => x.TaskHasEmployees)
                 .HasForeignKey(x => x.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // User Roles seed
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole
+                {
+                    UserRoleId = 1,
+                    UserRoleName = "Admin"
+                },
+                new UserRole
+                {
+                    UserRoleId = 2,
+                    UserRoleName = "CompanyOwner"
+                },
+                new UserRole
+                {
+                    UserRoleId = 3,
+                    UserRoleName = "Employee"
+                }
+            );
         }
     }
 }

@@ -49,6 +49,11 @@ namespace CompanyManagement.Entity
         public int EmployeeYearsSpent { get; set; }
 
         [Required]
+        public int UserId { get; set; }
+
+        public virtual User User { get; set; }
+
+        [Required]
         public int EmployeeProfessionTypeId { get; set; }
 
         public virtual ProfessionType ProfessionType { get; set; }

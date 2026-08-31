@@ -160,6 +160,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs" />
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyGivesBonusToEmployee.cs" />
@@ -180,6 +181,14 @@
     <Compile Include="Migrations\20260831104219_InitialCreate.Designer.cs">
       <DependentUpon>20260831104219_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20260831150156_AddUserSystem.cs" />
+    <Compile Include="Migrations\20260831150156_AddUserSystem.Designer.cs">
+      <DependentUpon>20260831150156_AddUserSystem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20260831150708_AddUserRoles.cs" />
+    <Compile Include="Migrations\20260831150708_AddUserRoles.Designer.cs">
+      <DependentUpon>20260831150708_AddUserRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />
     <Compile Include="ProductOrService.cs" />
@@ -189,6 +198,8 @@
     <Compile Include="Task.cs" />
     <Compile Include="TaskHasCompanyOwner.cs" />
     <Compile Include="TaskHasEmployee.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -177,6 +177,8 @@
     <Compile Include="DALTask.cs" />
     <Compile Include="DALTaskHasCompanyOwner.cs" />
     <Compile Include="DALTaskHasEmployee.cs" />
+    <Compile Include="DALUser.cs" />
+    <Compile Include="DALUserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
