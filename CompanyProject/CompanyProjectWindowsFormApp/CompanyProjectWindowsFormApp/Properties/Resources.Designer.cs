@@ -69,5 +69,15 @@ namespace CompanyProjectWindowsFormApp.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconCompany {
+            get {
+                object obj = ResourceManager.GetObject("iconCompany", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -155,6 +155,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DALAdmin.cs" />
     <Compile Include="DALCompany.cs" />
     <Compile Include="DALCompanyGivesBonusToEmployee.cs" />
     <Compile Include="DALCompanyHasDepartmentType.cs" />

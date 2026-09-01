@@ -16,7 +16,23 @@ namespace CompanyProjectWindowsFormApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+
+            BLAdmin blAdmin = new BLAdmin();
+
+            var admins = blAdmin.AdminList();
+
+            if (admins == null || admins.Count == 0)
+            {
+                using (FrmFirstAdminForm firstAdminForm = new FrmFirstAdminForm())
+                {
+                    if (firstAdminForm.ShowDialog() != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            Application.Run(new FrmLoginForm());
         }
     }
 }

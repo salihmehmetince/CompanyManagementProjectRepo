@@ -10,16 +10,12 @@ using System.Windows.Forms;
 
 namespace CompanyProjectWindowsFormApp
 {
-    public partial class LoginForm : Form
+    public partial class FrmLoginForm : Form
     {
-        public LoginForm()
+        public FrmLoginForm()
         {
             InitializeComponent();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-            this.Icon = Properties.Resources.icon_company;
-        }
     }
 }

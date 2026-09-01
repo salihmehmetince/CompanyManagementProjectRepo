@@ -111,7 +111,7 @@ namespace CompanyManagement.BusinessLogic
                 return false;
             }
 
-            if (telephone.Length < 10 ||
+            if (telephone.Length < 9 ||
                 telephone.Length > 15)
                 return false;
 
@@ -121,6 +121,19 @@ namespace CompanyManagement.BusinessLogic
                     character != '+')
                     return false;
             }
+
+            return true;
+        }
+
+        public static bool IdentityNumberControl(
+    string identityNumber)
+        {
+            if (string.IsNullOrWhiteSpace(identityNumber))
+                return false;
+
+            if (identityNumber.Length < 11 ||
+                identityNumber.Length > 15)
+                return false;
 
             return true;
         }

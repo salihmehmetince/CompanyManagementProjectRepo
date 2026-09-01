@@ -166,16 +166,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoginForm.cs">
+    <Compile Include="FrmFirstAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="FrmFirstAdminForm.Designer.cs">
+      <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLoginForm.Designer.cs">
+      <DependentUpon>FrmLoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="FrmFirstAdminForm.resx">
+      <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLoginForm.resx">
+      <DependentUpon>FrmLoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -202,6 +211,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CompanyManagement.BusinessLogic\CompanyManagement.BusinessLogic.csproj">
+      <Project>{31889540-9d01-42ef-be97-409b138408f6}</Project>
+      <Name>CompanyManagement.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyManagement.DataAccess\CompanyManagement.DataAccess.csproj">
+      <Project>{99ce188d-3033-44a3-9890-f7910894e071}</Project>
+      <Name>CompanyManagement.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CompanyManagement.Entity\CompanyManagement.Entity.csproj">
       <Project>{ac085478-9493-4d96-a44d-31b00d94b203}</Project>
       <Name>CompanyManagement.Entity</Name>
@@ -209,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon company.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconCompany.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
