@@ -20,6 +20,7 @@ namespace CompanyProjectWindowsFormApp
             InitializeComponent();
             SetTextBoxFocusEffect();
             setIcon();
+            SetRegisterButtonBorder();
         }
 
         private void BtnRegister_Click(object sender, EventArgs e)
@@ -212,6 +213,12 @@ namespace CompanyProjectWindowsFormApp
             this.Icon=Properties.Resources.icon_company;
             PBLogo.Image = Properties.Resources.iconCompany;
         }
+
+        private void SetRegisterButtonBorder()
+        {
+            BtnRegister.FlatAppearance.BorderSize = 0;
+        }
+
 
     }
 }
