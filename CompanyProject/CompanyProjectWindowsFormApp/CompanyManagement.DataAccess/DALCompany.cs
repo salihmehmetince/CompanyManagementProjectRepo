@@ -54,7 +54,17 @@ namespace CompanyManagement.DataAccess
         {
             using (var context = new AppDbContext())
             {
-                context.Companies.Update(company);
+                var existingCompany = context.Companies
+                    .FirstOrDefault(x => x.CompanyId == company.CompanyId);
+
+                if (existingCompany == null)
+                    return false;
+
+                existingCompany.CompanyName = company.CompanyName;
+                existingCompany.CompanyAddress = company.CompanyAddress;
+                existingCompany.CompanyTelephoneNumber = company.CompanyTelephoneNumber;
+                existingCompany.CompanyEmail = company.CompanyEmail;
+                existingCompany.CompanyTypeId = company.CompanyTypeId;
 
                 return context.SaveChanges() > 0;
             }

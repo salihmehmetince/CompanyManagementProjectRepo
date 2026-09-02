@@ -21,10 +21,10 @@ namespace CompanyManagement.Entity
         public string CompanyAddress { get; set; }
 
         [StringLength(15)]
-        public string CompanyOwnerTelephoneNumber { get; set; }
+        public string CompanyTelephoneNumber { get; set; }
 
         [StringLength(100)]
-        public string CompanyOwnerEmail { get; set; }
+        public string CompanyEmail { get; set; }
 
         [Required]
         public int CompanyTypeId { get; set; }

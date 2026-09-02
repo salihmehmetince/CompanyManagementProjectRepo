@@ -8,24 +8,6 @@ namespace CompanyManagement.Entity.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CompanyOwners",
-                columns: table => new
-                {
-                    CompanyOwnerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyOwnerIdentityNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    CompanyOwnerName = table.Column<string>(maxLength: 30, nullable: false),
-                    CompanyOwnerSurname = table.Column<string>(maxLength: 30, nullable: false),
-                    CompanyOwnerBirthday = table.Column<DateTime>(nullable: false),
-                    CompanyOwnerTelephoneNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    CompanyOwnerEmail = table.Column<string>(maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanyOwners", x => x.CompanyOwnerId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CompanyTypes",
                 columns: table => new
                 {
@@ -141,6 +123,19 @@ namespace CompanyManagement.Entity.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    UserRoleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserRoleName = table.Column<string>(maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.UserRoleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -148,8 +143,8 @@ namespace CompanyManagement.Entity.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyName = table.Column<string>(maxLength: 30, nullable: false),
                     CompanyAddress = table.Column<string>(maxLength: 250, nullable: false),
-                    CompanyOwnerTelephoneNumber = table.Column<string>(maxLength: 15, nullable: true),
-                    CompanyOwnerEmail = table.Column<string>(maxLength: 100, nullable: true),
+                    CompanyTelephoneNumber = table.Column<string>(maxLength: 15, nullable: true),
+                    CompanyEmail = table.Column<string>(maxLength: 100, nullable: true),
                     CompanyTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -160,32 +155,6 @@ namespace CompanyManagement.Entity.Migrations
                         column: x => x.CompanyTypeId,
                         principalTable: "CompanyTypes",
                         principalColumn: "CompanyTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MeetingHasCompanyOwners",
-                columns: table => new
-                {
-                    MeetingHasCompanyOwnerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MeetingId = table.Column<int>(nullable: false),
-                    CompanyOwnerId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MeetingHasCompanyOwners", x => x.MeetingHasCompanyOwnerId);
-                    table.ForeignKey(
-                        name: "FK_MeetingHasCompanyOwners_CompanyOwners_CompanyOwnerId",
-                        column: x => x.CompanyOwnerId,
-                        principalTable: "CompanyOwners",
-                        principalColumn: "CompanyOwnerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MeetingHasCompanyOwners_Meetings_MeetingId",
-                        column: x => x.MeetingId,
-                        principalTable: "Meetings",
-                        principalColumn: "MeetingId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -211,56 +180,24 @@ namespace CompanyManagement.Entity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "Users",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeName = table.Column<string>(maxLength: 30, nullable: false),
-                    EmployeeSurname = table.Column<string>(maxLength: 30, nullable: false),
-                    EmployeeIdentityNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    EmployeeBirthday = table.Column<DateTime>(nullable: false),
-                    EmployeeTelephoneNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    EmployeeEmail = table.Column<string>(maxLength: 100, nullable: false),
-                    EmployeeAddress = table.Column<string>(maxLength: 250, nullable: true),
-                    EmployeeSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    EmployeeYearsSpent = table.Column<int>(nullable: false),
-                    EmployeeProfessionTypeId = table.Column<int>(nullable: false)
+                    Username = table.Column<string>(maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(maxLength: 250, nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    UserRoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Employees_ProfessionTypes_EmployeeProfessionTypeId",
-                        column: x => x.EmployeeProfessionTypeId,
-                        principalTable: "ProfessionTypes",
-                        principalColumn: "ProfessionTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TaskHasCompanyOwners",
-                columns: table => new
-                {
-                    TaskHasCompanyOwnerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TaskId = table.Column<int>(nullable: false),
-                    CompanyOwnerId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskHasCompanyOwners", x => x.TaskHasCompanyOwnerId);
-                    table.ForeignKey(
-                        name: "FK_TaskHasCompanyOwners_CompanyOwners_CompanyOwnerId",
-                        column: x => x.CompanyOwnerId,
-                        principalTable: "CompanyOwners",
-                        principalColumn: "CompanyOwnerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TaskHasCompanyOwners_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId",
+                        name: "FK_Users_UserRoles_UserRoleId",
+                        column: x => x.UserRoleId,
+                        principalTable: "UserRoles",
+                        principalColumn: "UserRoleId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -287,33 +224,6 @@ namespace CompanyManagement.Entity.Migrations
                         column: x => x.DepartmentTypeId,
                         principalTable: "DepartmentTypes",
                         principalColumn: "DepartmentTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CompanyOwnerHasCompanies",
-                columns: table => new
-                {
-                    CompanyOwnerHasCompanyId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyOwnerId = table.Column<int>(nullable: false),
-                    CompanyOwnerPercent = table.Column<int>(nullable: false),
-                    CompanyId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanyOwnerHasCompanies", x => x.CompanyOwnerHasCompanyId);
-                    table.ForeignKey(
-                        name: "FK_CompanyOwnerHasCompanies_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "CompanyId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CompanyOwnerHasCompanies_CompanyOwners_CompanyOwnerId",
-                        column: x => x.CompanyOwnerId,
-                        principalTable: "CompanyOwners",
-                        principalColumn: "CompanyOwnerId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -346,6 +256,203 @@ namespace CompanyManagement.Entity.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    AdminId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdminName = table.Column<string>(maxLength: 30, nullable: false),
+                    AdminSurname = table.Column<string>(maxLength: 30, nullable: false),
+                    AdminTelephoneNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    AdminEmail = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.AdminId);
+                    table.ForeignKey(
+                        name: "FK_Admins_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyOwners",
+                columns: table => new
+                {
+                    CompanyOwnerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyOwnerIdentityNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    CompanyOwnerName = table.Column<string>(maxLength: 30, nullable: false),
+                    CompanyOwnerSurname = table.Column<string>(maxLength: 30, nullable: false),
+                    CompanyOwnerBirthday = table.Column<DateTime>(nullable: false),
+                    CompanyOwnerTelephoneNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    CompanyOwnerEmail = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyOwners", x => x.CompanyOwnerId);
+                    table.ForeignKey(
+                        name: "FK_CompanyOwners_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeName = table.Column<string>(maxLength: 30, nullable: false),
+                    EmployeeSurname = table.Column<string>(maxLength: 30, nullable: false),
+                    EmployeeIdentityNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    EmployeeBirthday = table.Column<DateTime>(nullable: false),
+                    EmployeeTelephoneNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    EmployeeEmail = table.Column<string>(maxLength: 100, nullable: false),
+                    EmployeeAddress = table.Column<string>(maxLength: 250, nullable: true),
+                    EmployeeSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmployeeYearsSpent = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    EmployeeProfessionTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_Employees_ProfessionTypes_EmployeeProfessionTypeId",
+                        column: x => x.EmployeeProfessionTypeId,
+                        principalTable: "ProfessionTypes",
+                        principalColumn: "ProfessionTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerBuysCompanyHasProductOrServices",
+                columns: table => new
+                {
+                    CustomerBuysCompanyHasProductOrServiceId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<int>(nullable: false),
+                    CompanyHasProductOrServiceId = table.Column<int>(nullable: false),
+                    PaymentTypeId = table.Column<int>(nullable: false),
+                    CustomerBuysCompanyHasProductOrServiceQuantity = table.Column<decimal>(nullable: false),
+                    CustomerBuysCompanyHasProductOrServiceDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerBuysCompanyHasProductOrServices", x => x.CustomerBuysCompanyHasProductOrServiceId);
+                    table.ForeignKey(
+                        name: "FK_CustomerBuysCompanyHasProductOrServices_CompanyHasProductOrServices_CompanyHasProductOrServiceId",
+                        column: x => x.CompanyHasProductOrServiceId,
+                        principalTable: "CompanyHasProductOrServices",
+                        principalColumn: "CompanyHasProductOrServiceId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerBuysCompanyHasProductOrServices_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerBuysCompanyHasProductOrServices_PaymentTypes_PaymentTypeId",
+                        column: x => x.PaymentTypeId,
+                        principalTable: "PaymentTypes",
+                        principalColumn: "PaymentTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyOwnerHasCompanies",
+                columns: table => new
+                {
+                    CompanyOwnerHasCompanyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyOwnerId = table.Column<int>(nullable: false),
+                    CompanyOwnerPercent = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyOwnerHasCompanies", x => x.CompanyOwnerHasCompanyId);
+                    table.ForeignKey(
+                        name: "FK_CompanyOwnerHasCompanies_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "CompanyId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CompanyOwnerHasCompanies_CompanyOwners_CompanyOwnerId",
+                        column: x => x.CompanyOwnerId,
+                        principalTable: "CompanyOwners",
+                        principalColumn: "CompanyOwnerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeetingHasCompanyOwners",
+                columns: table => new
+                {
+                    MeetingHasCompanyOwnerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MeetingId = table.Column<int>(nullable: false),
+                    CompanyOwnerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingHasCompanyOwners", x => x.MeetingHasCompanyOwnerId);
+                    table.ForeignKey(
+                        name: "FK_MeetingHasCompanyOwners_CompanyOwners_CompanyOwnerId",
+                        column: x => x.CompanyOwnerId,
+                        principalTable: "CompanyOwners",
+                        principalColumn: "CompanyOwnerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MeetingHasCompanyOwners_Meetings_MeetingId",
+                        column: x => x.MeetingId,
+                        principalTable: "Meetings",
+                        principalColumn: "MeetingId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskHasCompanyOwners",
+                columns: table => new
+                {
+                    TaskHasCompanyOwnerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TaskId = table.Column<int>(nullable: false),
+                    CompanyOwnerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskHasCompanyOwners", x => x.TaskHasCompanyOwnerId);
+                    table.ForeignKey(
+                        name: "FK_TaskHasCompanyOwners_CompanyOwners_CompanyOwnerId",
+                        column: x => x.CompanyOwnerId,
+                        principalTable: "CompanyOwners",
+                        principalColumn: "CompanyOwnerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskHasCompanyOwners_Tasks_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CompanyGivesBonusToEmployees",
                 columns: table => new
                 {
@@ -367,6 +474,39 @@ namespace CompanyManagement.Entity.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CompanyGivesBonusToEmployees_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeHasCompanyHasDepartmentTypes",
+                columns: table => new
+                {
+                    EmployeeHasCompanyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    CompanyHasDepartmentTypeId = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeHasCompanyHasDepartmentTypes", x => x.EmployeeHasCompanyId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_CompanyHasDepartmentTypes_CompanyHasDepartmentTypeId",
+                        column: x => x.CompanyHasDepartmentTypeId,
+                        principalTable: "CompanyHasDepartmentTypes",
+                        principalColumn: "CompanyHasDepartmentTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "CompanyId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
@@ -425,73 +565,26 @@ namespace CompanyManagement.Entity.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EmployeeHasCompanyHasDepartmentTypes",
-                columns: table => new
-                {
-                    EmployeeHasCompanyId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(nullable: false),
-                    CompanyHasDepartmentTypeId = table.Column<int>(nullable: false),
-                    CompanyId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeHasCompanyHasDepartmentTypes", x => x.EmployeeHasCompanyId);
-                    table.ForeignKey(
-                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_CompanyHasDepartmentTypes_CompanyHasDepartmentTypeId",
-                        column: x => x.CompanyHasDepartmentTypeId,
-                        principalTable: "CompanyHasDepartmentTypes",
-                        principalColumn: "CompanyHasDepartmentTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "CompanyId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EmployeeHasCompanyHasDepartmentTypes_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "UserRoleId", "UserRoleName" },
+                values: new object[] { 1, "Admin" });
 
-            migrationBuilder.CreateTable(
-                name: "CustomerBuysCompanyHasProductOrServices",
-                columns: table => new
-                {
-                    CustomerBuysCompanyHasProductOrServiceId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false),
-                    CompanyHasProductOrServiceId = table.Column<int>(nullable: false),
-                    PaymentTypeId = table.Column<int>(nullable: false),
-                    CustomerBuysCompanyHasProductOrServiceQuantity = table.Column<decimal>(nullable: false),
-                    CustomerBuysCompanyHasProductOrServiceDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerBuysCompanyHasProductOrServices", x => x.CustomerBuysCompanyHasProductOrServiceId);
-                    table.ForeignKey(
-                        name: "FK_CustomerBuysCompanyHasProductOrServices_CompanyHasProductOrServices_CompanyHasProductOrServiceId",
-                        column: x => x.CompanyHasProductOrServiceId,
-                        principalTable: "CompanyHasProductOrServices",
-                        principalColumn: "CompanyHasProductOrServiceId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CustomerBuysCompanyHasProductOrServices_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CustomerBuysCompanyHasProductOrServices_PaymentTypes_PaymentTypeId",
-                        column: x => x.PaymentTypeId,
-                        principalTable: "PaymentTypes",
-                        principalColumn: "PaymentTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "UserRoleId", "UserRoleName" },
+                values: new object[] { 2, "CompanyOwner" });
+
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "UserRoleId", "UserRoleName" },
+                values: new object[] { 3, "Employee" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admins_UserId",
+                table: "Admins",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_CompanyTypeId",
@@ -539,6 +632,12 @@ namespace CompanyManagement.Entity.Migrations
                 column: "CompanyOwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CompanyOwners_UserId",
+                table: "CompanyOwners",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CustomerBuysCompanyHasProductOrServices_CompanyHasProductOrServiceId",
                 table: "CustomerBuysCompanyHasProductOrServices",
                 column: "CompanyHasProductOrServiceId");
@@ -572,6 +671,12 @@ namespace CompanyManagement.Entity.Migrations
                 name: "IX_Employees_EmployeeProfessionTypeId",
                 table: "Employees",
                 column: "EmployeeProfessionTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_UserId",
+                table: "Employees",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeetingHasCompanyOwners_CompanyOwnerId",
@@ -617,10 +722,18 @@ namespace CompanyManagement.Entity.Migrations
                 name: "IX_TaskHasEmployees_TaskId",
                 table: "TaskHasEmployees",
                 column: "TaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserRoleId",
+                table: "Users",
+                column: "UserRoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
             migrationBuilder.DropTable(
                 name: "CompanyGivesBonusToEmployees");
 
@@ -682,10 +795,16 @@ namespace CompanyManagement.Entity.Migrations
                 name: "ProfessionTypes");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "ProductOrServiceTypes");
 
             migrationBuilder.DropTable(
                 name: "CompanyTypes");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
         }
     }
 }

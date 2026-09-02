@@ -68,16 +68,16 @@ namespace CompanyManagement.Entity.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
+                    b.Property<string>("CompanyEmail")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<string>("CompanyOwnerEmail")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("CompanyOwnerTelephoneNumber")
+                    b.Property<string>("CompanyTelephoneNumber")
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 

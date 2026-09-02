@@ -27,6 +27,12 @@ namespace CompanyProjectWindowsFormApp
             SetUserInformation(user);
             CreateDashBoardButton();
             CreateMenu(user);
+            setIcon();
+        }
+
+        private void setIcon()
+        {
+            this.Icon = Properties.Resources.icon_company;
         }
 
         private void SetUserInformation(User user)
@@ -352,7 +358,8 @@ namespace CompanyProjectWindowsFormApp
         }
         private void BtnCompanies_Click(object sender, EventArgs e)
         {
-
+            FrmCompaniesForm frmCompanies = new FrmCompaniesForm();
+            frmCompanies.ShowDialog();
         }
 
         private void BtnCompanyOwners_Click(object sender, EventArgs e)

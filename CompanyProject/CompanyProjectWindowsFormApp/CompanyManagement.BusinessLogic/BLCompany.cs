@@ -40,11 +40,11 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             if (!Validation.TelephoneControl(
-                company.CompanyOwnerTelephoneNumber, true))
+                company.CompanyTelephoneNumber, true))
                 return false;
 
             if (!Validation.EmailControl(
-                company.CompanyOwnerEmail, true))
+                company.CompanyEmail, true))
                 return false;
 
             if (!Validation.IntControl(
@@ -78,11 +78,11 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             if (!Validation.TelephoneControl(
-                company.CompanyOwnerTelephoneNumber, true))
+                company.CompanyTelephoneNumber, true))
                 return false;
 
             if (!Validation.EmailControl(
-                company.CompanyOwnerEmail, true))
+                company.CompanyEmail, true))
                 return false;
 
             if (!Validation.IntControl(

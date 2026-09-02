@@ -177,17 +177,9 @@
     <Compile Include="Meeting.cs" />
     <Compile Include="MeetingHasCompanyOwner.cs" />
     <Compile Include="MeetingHasEmployee.cs" />
-    <Compile Include="Migrations\20260831104219_InitialCreate.cs" />
-    <Compile Include="Migrations\20260831104219_InitialCreate.Designer.cs">
-      <DependentUpon>20260831104219_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20260831150156_AddUserSystem.cs" />
-    <Compile Include="Migrations\20260831150156_AddUserSystem.Designer.cs">
-      <DependentUpon>20260831150156_AddUserSystem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20260831150708_AddUserRoles.cs" />
-    <Compile Include="Migrations\20260831150708_AddUserRoles.Designer.cs">
-      <DependentUpon>20260831150708_AddUserRoles.cs</DependentUpon>
+    <Compile Include="Migrations\20260902111240_InitialCreate.cs" />
+    <Compile Include="Migrations\20260902111240_InitialCreate.Designer.cs">
+      <DependentUpon>20260902111240_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />

@@ -166,6 +166,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmCompaniesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompaniesForm.Designer.cs">
+      <DependentUpon>FrmCompaniesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCompanyAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyAddEditForm.Designer.cs">
+      <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmFirstAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +198,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmCompaniesForm.resx">
+      <DependentUpon>FrmCompaniesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyAddEditForm.resx">
+      <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmFirstAdminForm.resx">
       <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
     </EmbeddedResource>

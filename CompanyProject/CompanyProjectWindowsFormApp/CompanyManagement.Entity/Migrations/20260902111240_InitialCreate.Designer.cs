@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyManagement.Entity.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260831150156_AddUserSystem")]
-    partial class AddUserSystem
+    [Migration("20260902111240_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,16 +70,16 @@ namespace CompanyManagement.Entity.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
+                    b.Property<string>("CompanyEmail")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<string>("CompanyOwnerEmail")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("CompanyOwnerTelephoneNumber")
+                    b.Property<string>("CompanyTelephoneNumber")
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
@@ -698,6 +698,23 @@ namespace CompanyManagement.Entity.Migrations
                     b.HasKey("UserRoleId");
 
                     b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserRoleId = 1,
+                            UserRoleName = "Admin"
+                        },
+                        new
+                        {
+                            UserRoleId = 2,
+                            UserRoleName = "CompanyOwner"
+                        },
+                        new
+                        {
+                            UserRoleId = 3,
+                            UserRoleName = "Employee"
+                        });
                 });
 
             modelBuilder.Entity("Admin", b =>
