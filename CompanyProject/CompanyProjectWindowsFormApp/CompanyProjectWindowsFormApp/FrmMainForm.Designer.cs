@@ -32,10 +32,10 @@
             this.PnlLogo = new System.Windows.Forms.Panel();
             this.LblAppName = new System.Windows.Forms.Label();
             this.PnlMenu = new System.Windows.Forms.Panel();
+            this.PnlMenuButtons = new System.Windows.Forms.Panel();
             this.PnlUserInfo = new System.Windows.Forms.Panel();
             this.LblUserRole = new System.Windows.Forms.Label();
             this.LblUserName = new System.Windows.Forms.Label();
-            this.PnlMenuButtons = new System.Windows.Forms.Panel();
             this.PnlLogo.SuspendLayout();
             this.PnlMenu.SuspendLayout();
             this.PnlUserInfo.SuspendLayout();
@@ -83,6 +83,15 @@
             this.PnlMenu.Size = new System.Drawing.Size(230, 653);
             this.PnlMenu.TabIndex = 0;
             // 
+            // PnlMenuButtons
+            // 
+            this.PnlMenuButtons.AutoScroll = true;
+            this.PnlMenuButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PnlMenuButtons.Location = new System.Drawing.Point(0, 170);
+            this.PnlMenuButtons.Name = "PnlMenuButtons";
+            this.PnlMenuButtons.Size = new System.Drawing.Size(230, 483);
+            this.PnlMenuButtons.TabIndex = 0;
+            // 
             // PnlUserInfo
             // 
             this.PnlUserInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
@@ -120,15 +129,6 @@
             this.LblUserName.Text = "Kullanıcı Adı";
             this.LblUserName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // PnlMenuButtons
-            // 
-            this.PnlMenuButtons.AutoScroll = true;
-            this.PnlMenuButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlMenuButtons.Location = new System.Drawing.Point(0, 170);
-            this.PnlMenuButtons.Name = "PnlMenuButtons";
-            this.PnlMenuButtons.Size = new System.Drawing.Size(230, 483);
-            this.PnlMenuButtons.TabIndex = 0;
-            // 
             // FrmMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -141,6 +141,7 @@
             this.Name = "FrmMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Company Management";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMainForm_FormClosing);
             this.PnlLogo.ResumeLayout(false);
             this.PnlMenu.ResumeLayout(false);
             this.PnlUserInfo.ResumeLayout(false);

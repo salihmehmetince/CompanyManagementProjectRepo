@@ -131,7 +131,7 @@ namespace CompanyManagement.BusinessLogic
             if (string.IsNullOrWhiteSpace(identityNumber))
                 return false;
 
-            if (identityNumber.Length < 11 ||
+            if (identityNumber.Length < 10 ||
                 identityNumber.Length > 15)
                 return false;
 

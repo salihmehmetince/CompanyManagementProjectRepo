@@ -19,6 +19,7 @@ namespace CompanyProjectWindowsFormApp
         private bool definitionsCreated = false;
         private bool definitionsVisible = false;
         private Panel PnlDefinitions;
+        private bool isClosing = false;
 
         public FrmMainForm(User user)
         {
@@ -364,7 +365,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnCompanyOwners_Click(object sender, EventArgs e)
         {
-
+            FrmCompanyOwnersForm frmCompanyOwnersForm = new FrmCompanyOwnersForm();
+            frmCompanyOwnersForm.ShowDialog();
         }
         private void BtnEmployees_Click(object sender, EventArgs e)
         {
@@ -559,6 +561,26 @@ namespace CompanyProjectWindowsFormApp
         private void BtnPaymentTypes_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void FrmMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing)
+                return;
+
+            if (MessageBox.Show(
+                "Are you sure you want to exit the application?",
+                "Exit Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                isClosing = true;
+                Application.Exit();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
     }
 

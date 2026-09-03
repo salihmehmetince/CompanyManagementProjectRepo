@@ -29,47 +29,37 @@ namespace CompanyManagement.BusinessLogic
                 .CompanyOwnerGetById(companyOwnerId);
         }
 
-        public bool CompanyOwnerAdd(
-            CompanyOwner companyOwner)
+        public bool CompanyOwnerAdd(CompanyOwner companyOwner, User user)
         {
-            if (companyOwner == null)
+            if (companyOwner == null || user == null)
                 return false;
 
             if (!Validation.StringControl(
-                companyOwner.CompanyOwnerIdentityNumber,
-                11,
-                15))
+                companyOwner.CompanyOwnerIdentityNumber, 11, 15))
                 return false;
 
             if (!Validation.StringControl(
-                companyOwner.CompanyOwnerName,
-                1,
-                30))
+                companyOwner.CompanyOwnerName, 1, 30))
                 return false;
 
             if (!Validation.StringControl(
-                companyOwner.CompanyOwnerSurname,
-                1,
-                30))
+                companyOwner.CompanyOwnerSurname, 1, 30))
                 return false;
 
             if (!Validation.BirthDateControl(
-                companyOwner.CompanyOwnerBirthday,
-                false))
+                companyOwner.CompanyOwnerBirthday, false))
                 return false;
 
             if (!Validation.TelephoneControl(
-                companyOwner.CompanyOwnerTelephoneNumber,
-                false))
+                companyOwner.CompanyOwnerTelephoneNumber, false))
                 return false;
 
             if (!Validation.EmailControl(
-                companyOwner.CompanyOwnerEmail,
-                true))
+                companyOwner.CompanyOwnerEmail, true))
                 return false;
 
-            return dalCompanyOwner
-                .CompanyOwnerAdd(companyOwner);
+            return dalCompanyOwner.CompanyOwnerAdd(
+                companyOwner, user);
         }
 
         public bool CompanyOwnerUpdate(
@@ -127,6 +117,56 @@ namespace CompanyManagement.BusinessLogic
 
             return dalCompanyOwner
                 .CompanyOwnerUpdate(companyOwner);
+        }
+
+        public bool CompanyOwnerUpdate(
+    CompanyOwner companyOwner,
+    User user)
+        {
+            if (companyOwner == null || user == null)
+                return false;
+
+            if (!Validation.IntControl(
+                companyOwner.CompanyOwnerId, 1, int.MaxValue))
+                return false;
+
+            if (!Validation.StringControl(
+                companyOwner.CompanyOwnerIdentityNumber, 11, 15))
+                return false;
+
+            if (!Validation.StringControl(
+                companyOwner.CompanyOwnerName, 1, 30))
+                return false;
+
+            if (!Validation.StringControl(
+                companyOwner.CompanyOwnerSurname, 1, 30))
+                return false;
+
+            if (!Validation.BirthDateControl(
+                companyOwner.CompanyOwnerBirthday, false))
+                return false;
+
+            if (!Validation.TelephoneControl(
+                companyOwner.CompanyOwnerTelephoneNumber, false))
+                return false;
+
+            if (!Validation.EmailControl(
+                companyOwner.CompanyOwnerEmail, true))
+                return false;
+
+            if (!Validation.IntControl(
+                companyOwner.UserId, 1, int.MaxValue))
+                return false;
+
+            var existingCompanyOwner =
+                dalCompanyOwner.CompanyOwnerGetById(
+                    companyOwner.CompanyOwnerId);
+
+            if (existingCompanyOwner == null)
+                return false;
+
+            return dalCompanyOwner.CompanyOwnerUpdate(
+                companyOwner, user);
         }
 
         public bool CompanyOwnerDelete(

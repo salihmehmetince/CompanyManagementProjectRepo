@@ -178,6 +178,18 @@
     <Compile Include="FrmCompanyAddEditForm.Designer.cs">
       <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCompanyOwnerAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyOwnerAddEditForm.Designer.cs">
+      <DependentUpon>FrmCompanyOwnerAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCompanyOwnersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyOwnersForm.Designer.cs">
+      <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmFirstAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +215,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCompanyAddEditForm.resx">
       <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyOwnerAddEditForm.resx">
+      <DependentUpon>FrmCompanyOwnerAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyOwnersForm.resx">
+      <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmFirstAdminForm.resx">
       <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
