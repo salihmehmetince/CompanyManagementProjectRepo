@@ -181,6 +181,10 @@
     <Compile Include="Migrations\20260902111240_InitialCreate.Designer.cs">
       <DependentUpon>20260902111240_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20260903134603_AddEmployeeHireDate.cs" />
+    <Compile Include="Migrations\20260903134603_AddEmployeeHireDate.Designer.cs">
+      <DependentUpon>20260903134603_AddEmployeeHireDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />
     <Compile Include="ProductOrService.cs" />

@@ -13,6 +13,12 @@ namespace CompanyManagement.BusinessLogic
         DALMeeting dalMeeting =
             new DALMeeting();
 
+        BLCompanyOwner blCompanyOwner =
+            new BLCompanyOwner();
+
+        BLEmployee blEmployee =
+            new BLEmployee();
+
         public List<Meeting> MeetingList()
         {
             return dalMeeting.MeetingList();
@@ -32,7 +38,9 @@ namespace CompanyManagement.BusinessLogic
         }
 
         public bool MeetingAdd(
-            Meeting meeting)
+            Meeting meeting,
+            List<int> companyOwnerIds,
+            List<int> employeeIds)
         {
             if (meeting == null)
                 return false;
@@ -41,12 +49,6 @@ namespace CompanyManagement.BusinessLogic
                 meeting.MeetingPlot,
                 1,
                 150))
-                return false;
-
-            if (!Validation.StringControl(
-                meeting.MeetingDetail,
-                0,
-                1000))
                 return false;
 
             if (!Validation.StringControl(
@@ -60,12 +62,63 @@ namespace CompanyManagement.BusinessLogic
                 false))
                 return false;
 
-            return dalMeeting
-                .MeetingAdd(meeting);
+            if (companyOwnerIds == null)
+                companyOwnerIds = new List<int>();
+
+            if (employeeIds == null)
+                employeeIds = new List<int>();
+
+            companyOwnerIds =
+                companyOwnerIds
+                    .Distinct()
+                    .ToList();
+
+            employeeIds =
+                employeeIds
+                    .Distinct()
+                    .ToList();
+
+            if (companyOwnerIds.Count + employeeIds.Count < 2)
+                return false;
+
+            foreach (int companyOwnerId in companyOwnerIds)
+            {
+                if (!Validation.IntControl(
+                    companyOwnerId,
+                    1,
+                    int.MaxValue))
+                    return false;
+
+                if (blCompanyOwner
+                        .CompanyOwnerGetById(
+                            companyOwnerId) == null)
+                    return false;
+            }
+
+            foreach (int employeeId in employeeIds)
+            {
+                if (!Validation.IntControl(
+                    employeeId,
+                    1,
+                    int.MaxValue))
+                    return false;
+
+                if (blEmployee
+                        .EmployeeGetById(
+                            employeeId) == null)
+                    return false;
+            }
+
+            return dalMeeting.MeetingAdd(
+                meeting,
+                companyOwnerIds,
+                employeeIds);
         }
 
         public bool MeetingUpdate(
-            Meeting meeting)
+            Meeting meeting,
+            List<int> companyOwnerIds,
+            List<int> employeeIds)
         {
             if (meeting == null)
                 return false;
@@ -83,12 +136,6 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             if (!Validation.StringControl(
-                meeting.MeetingDetail,
-                0,
-                1000))
-                return false;
-
-            if (!Validation.StringControl(
                 meeting.MeetingPlace,
                 1,
                 200))
@@ -99,15 +146,64 @@ namespace CompanyManagement.BusinessLogic
                 false))
                 return false;
 
+            if (companyOwnerIds == null)
+                companyOwnerIds = new List<int>();
+
+            if (employeeIds == null)
+                employeeIds = new List<int>();
+
+            companyOwnerIds =
+                companyOwnerIds
+                    .Distinct()
+                    .ToList();
+
+            employeeIds =
+                employeeIds
+                    .Distinct()
+                    .ToList();
+            if (companyOwnerIds.Count + employeeIds.Count < 2)
+                return false;
+
+            foreach (int companyOwnerId in companyOwnerIds)
+            {
+                if (!Validation.IntControl(
+                    companyOwnerId,
+                    1,
+                    int.MaxValue))
+                    return false;
+
+                if (blCompanyOwner
+                        .CompanyOwnerGetById(
+                            companyOwnerId) == null)
+                    return false;
+            }
+
+            foreach (int employeeId in employeeIds)
+            {
+                if (!Validation.IntControl(
+                    employeeId,
+                    1,
+                    int.MaxValue))
+                    return false;
+
+                if (blEmployee
+                        .EmployeeGetById(
+                            employeeId) == null)
+                    return false;
+            }
+
             var existingMeeting =
                 dalMeeting
-                    .MeetingGetById(meeting.MeetingId);
+                    .MeetingGetById(
+                        meeting.MeetingId);
 
             if (existingMeeting == null)
                 return false;
 
-            return dalMeeting
-                .MeetingUpdate(meeting);
+            return dalMeeting.MeetingUpdate(
+                meeting,
+                companyOwnerIds,
+                employeeIds);
         }
 
         public bool MeetingDelete(
@@ -121,7 +217,8 @@ namespace CompanyManagement.BusinessLogic
 
             var existingMeeting =
                 dalMeeting
-                    .MeetingGetById(meetingId);
+                    .MeetingGetById(
+                        meetingId);
 
             if (existingMeeting == null)
                 return false;

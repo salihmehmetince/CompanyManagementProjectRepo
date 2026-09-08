@@ -45,8 +45,7 @@ namespace CompanyManagement.Entity
         public decimal EmployeeSalary { get; set; }
 
         [Required]
-        [Range(0, 100)]
-        public int EmployeeYearsSpent { get; set; }
+        public DateTime EmployeeHireDate { get; set; }
 
         [Required]
         public int UserId { get; set; }

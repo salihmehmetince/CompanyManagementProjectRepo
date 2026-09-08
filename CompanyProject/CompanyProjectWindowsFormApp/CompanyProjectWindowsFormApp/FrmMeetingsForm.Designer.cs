@@ -1,6 +1,6 @@
 ﻿namespace CompanyProjectWindowsFormApp
 {
-    partial class FrmCompanyOwnersForm
+    partial class FrmMeetingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlFooter = new System.Windows.Forms.Panel();
             this.LblRecordCount = new System.Windows.Forms.Label();
-            this.DgvCompanyOwners = new System.Windows.Forms.DataGridView();
+            this.DgvMeetings = new System.Windows.Forms.DataGridView();
             this.PnlToolbar = new System.Windows.Forms.Panel();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvMeetings)).BeginInit();
             this.PnlToolbar.SuspendLayout();
             this.PnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +54,7 @@
             // PnlMain
             // 
             this.PnlMain.Controls.Add(this.PnlFooter);
-            this.PnlMain.Controls.Add(this.DgvCompanyOwners);
+            this.PnlMain.Controls.Add(this.DgvMeetings);
             this.PnlMain.Controls.Add(this.PnlToolbar);
             this.PnlMain.Controls.Add(this.PnlHeader);
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -82,53 +82,53 @@
             this.LblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.LblRecordCount.Location = new System.Drawing.Point(20, 14);
             this.LblRecordCount.Name = "LblRecordCount";
-            this.LblRecordCount.Size = new System.Drawing.Size(133, 20);
+            this.LblRecordCount.Size = new System.Drawing.Size(82, 20);
             this.LblRecordCount.TabIndex = 0;
-            this.LblRecordCount.Text = "0 company owners";
+            this.LblRecordCount.Text = "0 Meetings";
             // 
-            // DgvCompanyOwners
+            // DgvMeetings
             // 
-            this.DgvCompanyOwners.AllowUserToAddRows = false;
-            this.DgvCompanyOwners.AllowUserToDeleteRows = false;
-            this.DgvCompanyOwners.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.DgvCompanyOwners.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvCompanyOwners.BackgroundColor = System.Drawing.Color.White;
-            this.DgvCompanyOwners.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvCompanyOwners.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvCompanyOwners.ColumnHeadersHeight = 40;
-            this.DgvCompanyOwners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCompanyOwners.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvCompanyOwners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvCompanyOwners.EnableHeadersVisualStyles = false;
-            this.DgvCompanyOwners.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.DgvCompanyOwners.Location = new System.Drawing.Point(0, 150);
-            this.DgvCompanyOwners.MultiSelect = false;
-            this.DgvCompanyOwners.Name = "DgvCompanyOwners";
-            this.DgvCompanyOwners.ReadOnly = true;
-            this.DgvCompanyOwners.RowHeadersVisible = false;
-            this.DgvCompanyOwners.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.DgvCompanyOwners.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DgvCompanyOwners.RowTemplate.Height = 35;
-            this.DgvCompanyOwners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvCompanyOwners.Size = new System.Drawing.Size(1082, 453);
-            this.DgvCompanyOwners.TabIndex = 2;
+            this.DgvMeetings.AllowUserToAddRows = false;
+            this.DgvMeetings.AllowUserToDeleteRows = false;
+            this.DgvMeetings.AllowUserToResizeRows = false;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.DgvMeetings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.DgvMeetings.BackgroundColor = System.Drawing.Color.White;
+            this.DgvMeetings.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvMeetings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.DgvMeetings.ColumnHeadersHeight = 40;
+            this.DgvMeetings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvMeetings.DefaultCellStyle = dataGridViewCellStyle15;
+            this.DgvMeetings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvMeetings.EnableHeadersVisualStyles = false;
+            this.DgvMeetings.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvMeetings.Location = new System.Drawing.Point(0, 150);
+            this.DgvMeetings.MultiSelect = false;
+            this.DgvMeetings.Name = "DgvMeetings";
+            this.DgvMeetings.ReadOnly = true;
+            this.DgvMeetings.RowHeadersVisible = false;
+            this.DgvMeetings.RowHeadersWidth = 51;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
+            this.DgvMeetings.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            this.DgvMeetings.RowTemplate.Height = 35;
+            this.DgvMeetings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvMeetings.Size = new System.Drawing.Size(1082, 453);
+            this.DgvMeetings.TabIndex = 2;
             // 
             // PnlToolbar
             // 
@@ -184,7 +184,7 @@
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(130, 35);
             this.BtnAdd.TabIndex = 1;
-            this.BtnAdd.Text = "New Owner";
+            this.BtnAdd.Text = "New Meeting";
             this.BtnAdd.UseVisualStyleBackColor = false;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -219,9 +219,9 @@
             this.LblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.LblDescription.Location = new System.Drawing.Point(27, 48);
             this.LblDescription.Name = "LblDescription";
-            this.LblDescription.Size = new System.Drawing.Size(257, 20);
+            this.LblDescription.Size = new System.Drawing.Size(204, 20);
             this.LblDescription.TabIndex = 1;
-            this.LblDescription.Text = "Manage company Owner information";
+            this.LblDescription.Text = "Manage meeting information";
             // 
             // LblTitle
             // 
@@ -231,11 +231,11 @@
             this.LblTitle.ForeColor = System.Drawing.Color.White;
             this.LblTitle.Location = new System.Drawing.Point(25, 15);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(255, 41);
+            this.LblTitle.Size = new System.Drawing.Size(142, 41);
             this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "Company Owners";
+            this.LblTitle.Text = "Meetings";
             // 
-            // FrmCompanyOwnersForm
+            // FrmMeetingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -245,13 +245,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmCompanyOwnersForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Company Owners";
+            this.Name = "FrmMeetingsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Meetings";
             this.PnlMain.ResumeLayout(false);
             this.PnlFooter.ResumeLayout(false);
             this.PnlFooter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvMeetings)).EndInit();
             this.PnlToolbar.ResumeLayout(false);
             this.PnlToolbar.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
@@ -265,7 +265,7 @@
         private System.Windows.Forms.Panel PnlMain;
         private System.Windows.Forms.Panel PnlFooter;
         private System.Windows.Forms.Label LblRecordCount;
-        private System.Windows.Forms.DataGridView DgvCompanyOwners;
+        private System.Windows.Forms.DataGridView DgvMeetings;
         private System.Windows.Forms.Panel PnlToolbar;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnEdit;

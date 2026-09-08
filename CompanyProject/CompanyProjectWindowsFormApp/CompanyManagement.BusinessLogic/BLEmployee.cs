@@ -35,9 +35,10 @@ namespace CompanyManagement.BusinessLogic
         }
 
         public bool EmployeeAdd(
-            Employee employee)
+    Employee employee,
+    User user)
         {
-            if (employee == null)
+            if (employee == null || user == null)
                 return false;
 
             if (!Validation.StringControl(
@@ -91,10 +92,9 @@ namespace CompanyManagement.BusinessLogic
                 decimal.MaxValue))
                 return false;
 
-            if (!Validation.IntControl(
-                employee.EmployeeYearsSpent,
-                0,
-                100))
+            if (!Validation.DateTimeControl(
+                employee.EmployeeHireDate,
+                false))
                 return false;
 
             if (!Validation.IntControl(
@@ -112,13 +112,14 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             return dalEmployee
-                .EmployeeAdd(employee);
+                .EmployeeAdd(employee, user);
         }
 
         public bool EmployeeUpdate(
-            Employee employee)
+    Employee employee,
+    User user)
         {
-            if (employee == null)
+            if (employee == null || user == null)
                 return false;
 
             if (!Validation.IntControl(
@@ -178,21 +179,26 @@ namespace CompanyManagement.BusinessLogic
                 decimal.MaxValue))
                 return false;
 
-            if (!Validation.IntControl(
-                employee.EmployeeYearsSpent,
-                0,
-                100))
-                return false;
-
+            if (!Validation.DateTimeControl(
+                employee.EmployeeHireDate,
+                false))
+                       return false;
             if (!Validation.IntControl(
                 employee.EmployeeProfessionTypeId,
                 1,
                 int.MaxValue))
                 return false;
 
+            if (!Validation.IntControl(
+                employee.UserId,
+                1,
+                int.MaxValue))
+                return false;
+
             var existingEmployee =
                 dalEmployee
-                    .EmployeeGetById(employee.EmployeeId);
+                    .EmployeeGetById(
+                        employee.EmployeeId);
 
             if (existingEmployee == null)
                 return false;
@@ -206,7 +212,7 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             return dalEmployee
-                .EmployeeUpdate(employee);
+                .EmployeeUpdate(employee, user);
         }
 
         public bool EmployeeDelete(

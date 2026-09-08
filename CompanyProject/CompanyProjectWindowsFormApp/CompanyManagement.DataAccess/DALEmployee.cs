@@ -34,43 +34,148 @@ namespace CompanyManagement.DataAccess
                     .Include(x => x.CompanyGivesBonusToEmployees)
                     .Include(x => x.MeetingHasEmployees)
                     .Include(x => x.TaskHasEmployees)
+                    .Include(x => x.User)
                     .FirstOrDefault(x => x.EmployeeId == employeeId);
             }
         }
 
-        public bool EmployeeAdd(Employee employee)
+        public bool EmployeeAdd(Employee employee, User user)
         {
             using (var context = new AppDbContext())
+            using (var transaction = context.Database.BeginTransaction())
             {
-                context.Employees.Add(employee);
+                try
+                {
+                    context.Users.Add(user);
+                    context.SaveChanges();
 
-                return context.SaveChanges() > 0;
+                    employee.UserId = user.UserId;
+
+                    context.Employees.Add(employee);
+                    context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+
+                    return false;
+                }
             }
         }
-
-        public bool EmployeeUpdate(Employee employee)
+        public bool EmployeeUpdate(Employee employee, User user)
         {
             using (var context = new AppDbContext())
+            using (var transaction = context.Database.BeginTransaction())
             {
-                context.Employees.Update(employee);
+                try
+                {
+                    var existingEmployee = context.Employees
+                        .FirstOrDefault(x =>
+                            x.EmployeeId == employee.EmployeeId);
 
-                return context.SaveChanges() > 0;
+                    if (existingEmployee == null)
+                        return false;
+
+                    var existingUser = context.Users
+                        .FirstOrDefault(x =>
+                            x.UserId == employee.UserId);
+
+                    if (existingUser == null)
+                        return false;
+
+                    existingEmployee.EmployeeName =
+                        employee.EmployeeName;
+
+                    existingEmployee.EmployeeSurname =
+                        employee.EmployeeSurname;
+
+                    existingEmployee.EmployeeIdentityNumber =
+                        employee.EmployeeIdentityNumber;
+
+                    existingEmployee.EmployeeBirthday =
+                        employee.EmployeeBirthday;
+
+                    existingEmployee.EmployeeTelephoneNumber =
+                        employee.EmployeeTelephoneNumber;
+
+                    existingEmployee.EmployeeEmail =
+                        employee.EmployeeEmail;
+
+                    existingEmployee.EmployeeAddress =
+                        employee.EmployeeAddress;
+
+                    existingEmployee.EmployeeSalary =
+                        employee.EmployeeSalary;
+
+                    existingEmployee.EmployeeHireDate =
+                        employee.EmployeeHireDate;
+
+                    existingEmployee.EmployeeProfessionTypeId =
+                        employee.EmployeeProfessionTypeId;
+
+                    existingUser.Username =
+                        user.Username;
+
+                    if (!string.IsNullOrWhiteSpace(user.PasswordHash))
+                    {
+                        existingUser.PasswordHash =
+                            user.PasswordHash;
+                    }
+
+                    existingUser.IsActive =
+                        user.IsActive;
+
+                    context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+
+                    return false;
+                }
             }
         }
-
         public bool EmployeeDelete(int employeeId)
         {
             using (var context = new AppDbContext())
+            using (var transaction = context.Database.BeginTransaction())
             {
-                var employee = context.Employees
-                    .FirstOrDefault(x => x.EmployeeId == employeeId);
+                try
+                {
+                    var employee = context.Employees
+                        .FirstOrDefault(x => x.EmployeeId == employeeId);
 
-                if (employee == null)
+                    if (employee == null)
+                        return false;
+
+                    var user = context.Users
+                        .FirstOrDefault(x => x.UserId == employee.UserId);
+
+                    context.Employees.Remove(employee);
+
+                    if (user != null)
+                        context.Users.Remove(user);
+
+                    context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch
+                {
+                    transaction.Rollback();
+
                     return false;
-
-                context.Employees.Remove(employee);
-
-                return context.SaveChanges() > 0;
+                }
             }
         }
     }

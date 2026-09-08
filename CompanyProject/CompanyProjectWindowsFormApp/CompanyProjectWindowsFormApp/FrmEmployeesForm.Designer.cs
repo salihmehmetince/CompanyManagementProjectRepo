@@ -1,6 +1,6 @@
 ﻿namespace CompanyProjectWindowsFormApp
 {
-    partial class FrmCompanyOwnersForm
+    partial class FrmEmployeesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlFooter = new System.Windows.Forms.Panel();
             this.LblRecordCount = new System.Windows.Forms.Label();
-            this.DgvCompanyOwners = new System.Windows.Forms.DataGridView();
+            this.DgvEmployees = new System.Windows.Forms.DataGridView();
             this.PnlToolbar = new System.Windows.Forms.Panel();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
             this.PnlToolbar.SuspendLayout();
             this.PnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -54,14 +54,14 @@
             // PnlMain
             // 
             this.PnlMain.Controls.Add(this.PnlFooter);
-            this.PnlMain.Controls.Add(this.DgvCompanyOwners);
+            this.PnlMain.Controls.Add(this.DgvEmployees);
             this.PnlMain.Controls.Add(this.PnlToolbar);
             this.PnlMain.Controls.Add(this.PnlHeader);
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
             this.PnlMain.Size = new System.Drawing.Size(1082, 603);
-            this.PnlMain.TabIndex = 1;
+            this.PnlMain.TabIndex = 2;
             // 
             // PnlFooter
             // 
@@ -82,20 +82,21 @@
             this.LblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.LblRecordCount.Location = new System.Drawing.Point(20, 14);
             this.LblRecordCount.Name = "LblRecordCount";
-            this.LblRecordCount.Size = new System.Drawing.Size(133, 20);
+            this.LblRecordCount.Size = new System.Drawing.Size(93, 20);
             this.LblRecordCount.TabIndex = 0;
-            this.LblRecordCount.Text = "0 company owners";
+            this.LblRecordCount.Text = "0 Employees";
             // 
-            // DgvCompanyOwners
+            // DgvEmployees
             // 
-            this.DgvCompanyOwners.AllowUserToAddRows = false;
-            this.DgvCompanyOwners.AllowUserToDeleteRows = false;
-            this.DgvCompanyOwners.AllowUserToResizeRows = false;
+            this.DgvEmployees.AllowUserToAddRows = false;
+            this.DgvEmployees.AllowUserToDeleteRows = false;
+            this.DgvEmployees.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.DgvCompanyOwners.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvCompanyOwners.BackgroundColor = System.Drawing.Color.White;
-            this.DgvCompanyOwners.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvEmployees.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvEmployees.BackgroundColor = System.Drawing.Color.White;
+            this.DgvEmployees.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -103,9 +104,9 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvCompanyOwners.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvCompanyOwners.ColumnHeadersHeight = 40;
-            this.DgvCompanyOwners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DgvEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvEmployees.ColumnHeadersHeight = 40;
+            this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -113,22 +114,22 @@
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCompanyOwners.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvCompanyOwners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvCompanyOwners.EnableHeadersVisualStyles = false;
-            this.DgvCompanyOwners.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.DgvCompanyOwners.Location = new System.Drawing.Point(0, 150);
-            this.DgvCompanyOwners.MultiSelect = false;
-            this.DgvCompanyOwners.Name = "DgvCompanyOwners";
-            this.DgvCompanyOwners.ReadOnly = true;
-            this.DgvCompanyOwners.RowHeadersVisible = false;
-            this.DgvCompanyOwners.RowHeadersWidth = 51;
+            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DgvEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvEmployees.EnableHeadersVisualStyles = false;
+            this.DgvEmployees.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvEmployees.Location = new System.Drawing.Point(0, 150);
+            this.DgvEmployees.MultiSelect = false;
+            this.DgvEmployees.Name = "DgvEmployees";
+            this.DgvEmployees.ReadOnly = true;
+            this.DgvEmployees.RowHeadersVisible = false;
+            this.DgvEmployees.RowHeadersWidth = 51;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.DgvCompanyOwners.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DgvCompanyOwners.RowTemplate.Height = 35;
-            this.DgvCompanyOwners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvCompanyOwners.Size = new System.Drawing.Size(1082, 453);
-            this.DgvCompanyOwners.TabIndex = 2;
+            this.DgvEmployees.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.DgvEmployees.RowTemplate.Height = 35;
+            this.DgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvEmployees.Size = new System.Drawing.Size(1082, 453);
+            this.DgvEmployees.TabIndex = 2;
             // 
             // PnlToolbar
             // 
@@ -184,7 +185,7 @@
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(130, 35);
             this.BtnAdd.TabIndex = 1;
-            this.BtnAdd.Text = "New Owner";
+            this.BtnAdd.Text = "New Employee";
             this.BtnAdd.UseVisualStyleBackColor = false;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -219,9 +220,9 @@
             this.LblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.LblDescription.Location = new System.Drawing.Point(27, 48);
             this.LblDescription.Name = "LblDescription";
-            this.LblDescription.Size = new System.Drawing.Size(257, 20);
+            this.LblDescription.Size = new System.Drawing.Size(221, 20);
             this.LblDescription.TabIndex = 1;
-            this.LblDescription.Text = "Manage company Owner information";
+            this.LblDescription.Text = "Manage employees information";
             // 
             // LblTitle
             // 
@@ -231,11 +232,11 @@
             this.LblTitle.ForeColor = System.Drawing.Color.White;
             this.LblTitle.Location = new System.Drawing.Point(25, 15);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(255, 41);
+            this.LblTitle.Size = new System.Drawing.Size(159, 41);
             this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "Company Owners";
+            this.LblTitle.Text = "Employess";
             // 
-            // FrmCompanyOwnersForm
+            // FrmEmployeesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -245,13 +246,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmCompanyOwnersForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Company Owners";
+            this.Name = "FrmEmployeesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Employees";
             this.PnlMain.ResumeLayout(false);
             this.PnlFooter.ResumeLayout(false);
             this.PnlFooter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).EndInit();
             this.PnlToolbar.ResumeLayout(false);
             this.PnlToolbar.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
@@ -265,7 +266,7 @@
         private System.Windows.Forms.Panel PnlMain;
         private System.Windows.Forms.Panel PnlFooter;
         private System.Windows.Forms.Label LblRecordCount;
-        private System.Windows.Forms.DataGridView DgvCompanyOwners;
+        private System.Windows.Forms.DataGridView DgvEmployees;
         private System.Windows.Forms.Panel PnlToolbar;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnEdit;

@@ -370,12 +370,14 @@ namespace CompanyProjectWindowsFormApp
         }
         private void BtnEmployees_Click(object sender, EventArgs e)
         {
-
+            FrmEmployeesForm frmEmployeesForm = new FrmEmployeesForm();
+            frmEmployeesForm.ShowDialog();
         }
 
         private void BtnMeetings_Click(object sender, EventArgs e)
         {
-
+            FrmMeetingsForm frmMeetingsForm = new FrmMeetingsForm();
+            frmMeetingsForm.ShowDialog();
         }
 
         private void BtnTasks_Click(object sender, EventArgs e)

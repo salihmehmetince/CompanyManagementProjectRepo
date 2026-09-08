@@ -30,6 +30,7 @@ namespace CompanyManagement.DataAccess
                     .Include(x => x.CompanyOwnerHasCompanies)
                     .Include(x => x.MeetingHasCompanyOwners)
                     .Include(x => x.TaskHasCompanyOwners)
+                    .Include(x => x.User)
                     .FirstOrDefault(x => x.CompanyOwnerId == companyOwnerId);
             }
         }

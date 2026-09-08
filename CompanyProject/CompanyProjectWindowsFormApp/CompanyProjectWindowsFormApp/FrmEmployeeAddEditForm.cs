@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -13,57 +14,76 @@ using System.Xml.Linq;
 
 namespace CompanyProjectWindowsFormApp
 {
-    public partial class FrmCompanyOwnerAddEditForm : Form
+    public partial class FrmEmployeeAddEditForm : Form
     {
-        private BLCompanyOwner blCompanyOwner = new BLCompanyOwner();
-
-        private CompanyOwner companyOwner;
-
-        public FrmCompanyOwnerAddEditForm(CompanyOwner companyOwner = null)
+        private BLEmployee bLEmployee=new BLEmployee();
+        private Employee employee; 
+        public FrmEmployeeAddEditForm(Employee employee=null)
         {
             InitializeComponent();
-            this.companyOwner = companyOwner;
-
-            if (companyOwner != null)
+            this.employee = employee;
+            LoadProfessionTypes();
+            if (employee != null) 
             {
-                LoadCompanyOwner();
+                LoadEmployee();
             }
         }
 
-        private void LoadCompanyOwner()
+        private void LoadEmployee()
         {
-            LblTitle.Text = "Edit Company Owner";
-            LblDescription.Text = "Update company owner information";
+            LblTitle.Text = "Edit Employee";
+            LblDescription.Text = "Update employee information";
 
-            TxtIdentityNumber.Text =
-                companyOwner.CompanyOwnerIdentityNumber;
+            TxtIdentityNumber.Text = employee.EmployeeIdentityNumber;
+            TxtEmployeeName.Text = employee.EmployeeName;
+            TxtSurname.Text = employee.EmployeeSurname;
+            DTPBirthday.Value = employee.EmployeeBirthday;
+            DTPHireDate.Value = employee.EmployeeHireDate;
+            MTBTelephoneNumber.Text = employee.EmployeeTelephoneNumber;
+            TxtEmail.Text = employee.EmployeeEmail;
+            RTBAddress.Text = employee.EmployeeAddress;
+            TxtSalary.Text = employee.EmployeeSalary.ToString();
 
-            TxtCompanyOwnerName.Text =
-                companyOwner.CompanyOwnerName;
+            TxtUsername.Text = employee.User.Username;
 
-            TxtSurname.Text =
-                companyOwner.CompanyOwnerSurname;
-
-            DTPBirthday.Value =
-                companyOwner.CompanyOwnerBirthday;
-
-            MTBTelephoneNumber.Text =
-                companyOwner.CompanyOwnerTelephoneNumber;
-
-            TxtEmail.Text =
-                companyOwner.CompanyOwnerEmail;
-
-            TxtUsername.Text =
-                companyOwner.User != null
-                    ? companyOwner.User.Username
-                    : "";
-
+            CMBProfessionType.SelectedValue =
+    employee.EmployeeProfessionTypeId;
         }
+
+        private void LoadProfessionTypes()
+        {
+
+            BLProfessionType blProfessionType = new BLProfessionType();
+            CMBProfessionType.DataSource =
+                blProfessionType.ProfessionTypeList();
+
+            CMBProfessionType.DisplayMember =
+                "ProfessionName";
+
+            CMBProfessionType.ValueMember =
+                "ProfessionTypeId";
+
+            CMBProfessionType.SelectedIndex = -1;
+        }
+
         private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                if (companyOwner == null)
+                decimal salary;
+
+                if (!decimal.TryParse(TxtSalary.Text.Trim(), out salary))
+                {
+                    MessageBox.Show(
+                        "Please enter a valid salary.",
+                        "Validation Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    TxtSalary.Focus();
+                    return;
+                }
+                if (employee == null)
                 {
                     // ADD
 
@@ -79,15 +99,15 @@ namespace CompanyProjectWindowsFormApp
                         return;
                     }
 
-                    var companyOwnerRole = new BLUserRole()
+                    var employeeRole = new BLUserRole()
                         .UserRoleList()
                         .FirstOrDefault(x =>
-                            x.UserRoleName == "CompanyOwner");
+                            x.UserRoleName == "Employee");
 
-                    if (companyOwnerRole == null)
+                    if (employeeRole == null)
                     {
                         MessageBox.Show(
-                            "CompanyOwner rolü bulunamadı.",
+                            "Employee rolü bulunamadı.",
                             "Hata",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
@@ -106,37 +126,52 @@ namespace CompanyProjectWindowsFormApp
                         IsActive = true,
 
                         UserRoleId =
-                            companyOwnerRole.UserRoleId
+                            employeeRole.UserRoleId
                     };
 
-                    var companyOwnerToSave = new CompanyOwner
+                    var employeeToSave = new Employee
                     {
-                        CompanyOwnerIdentityNumber =
+                        EmployeeIdentityNumber =
                             TxtIdentityNumber.Text.Trim(),
 
-                        CompanyOwnerName =
-                            TxtCompanyOwnerName.Text.Trim(),
+                        EmployeeName =
+                            TxtEmployeeName.Text.Trim(),
 
-                        CompanyOwnerSurname =
+                        EmployeeSurname =
                             TxtSurname.Text.Trim(),
 
-                        CompanyOwnerBirthday =
+                        EmployeeBirthday =
                             DTPBirthday.Value,
 
-                        CompanyOwnerTelephoneNumber =
+                        EmployeeHireDate =
+                            DTPHireDate.Value,
+
+                        EmployeeTelephoneNumber =
                             MTBTelephoneNumber.Text.Trim(),
 
-                        CompanyOwnerEmail =
+                        EmployeeEmail =
                             string.IsNullOrWhiteSpace(TxtEmail.Text)
                                 ? null
-                                : TxtEmail.Text.Trim()
+                                : TxtEmail.Text.Trim(),
+
+                        EmployeeAddress =
+                            string.IsNullOrWhiteSpace(RTBAddress.Text)
+                                ? null
+                                : RTBAddress.Text.Trim(),
+
+                        EmployeeSalary = salary,
+
+                        EmployeeProfessionTypeId =
+                            Convert.ToInt32(
+                                CMBProfessionType.SelectedValue)
                     };
 
-                    if (!blCompanyOwner.CompanyOwnerAdd(
-                        companyOwnerToSave, user))
+                    if (!bLEmployee.EmployeeAdd(
+                        employeeToSave,
+                        user))
                     {
                         MessageBox.Show(
-                            "Company owner could not be added.",
+                            "Employee could not be added.",
                             "Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
@@ -145,7 +180,7 @@ namespace CompanyProjectWindowsFormApp
                     }
 
                     MessageBox.Show(
-                        "Company owner added successfully.",
+                        "Employee added successfully.",
                         "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
@@ -172,9 +207,10 @@ namespace CompanyProjectWindowsFormApp
 
                 var userToUpdate = new User
                 {
-                    UserId = companyOwner.UserId,
+                    UserId = employee.UserId,
 
-                    Username = TxtUsername.Text.Trim(),
+                    Username =
+                        TxtUsername.Text.Trim(),
 
                     PasswordHash =
                         string.IsNullOrWhiteSpace(TxtPassword.Text)
@@ -184,36 +220,51 @@ namespace CompanyProjectWindowsFormApp
 
                     IsActive = true,
 
-                                    UserRoleId = companyOwner.User != null
-                    ? companyOwner.User.UserRoleId
-                    : 2
+                    UserRoleId = employee.User != null
+                        ? employee.User.UserRoleId
+                        : 3
                 };
 
-                companyOwner.CompanyOwnerIdentityNumber =
+                employee.EmployeeIdentityNumber =
                     TxtIdentityNumber.Text.Trim();
 
-                companyOwner.CompanyOwnerName =
-                    TxtCompanyOwnerName.Text.Trim();
+                employee.EmployeeName =
+                    TxtEmployeeName.Text.Trim();
 
-                companyOwner.CompanyOwnerSurname =
+                employee.EmployeeSurname =
                     TxtSurname.Text.Trim();
 
-                companyOwner.CompanyOwnerBirthday =
+                employee.EmployeeBirthday =
                     DTPBirthday.Value;
 
-                companyOwner.CompanyOwnerTelephoneNumber =
+                employee.EmployeeHireDate =
+                    DTPHireDate.Value;
+
+                employee.EmployeeTelephoneNumber =
                     MTBTelephoneNumber.Text.Trim();
 
-                companyOwner.CompanyOwnerEmail =
+                employee.EmployeeEmail =
                     string.IsNullOrWhiteSpace(TxtEmail.Text)
                         ? null
                         : TxtEmail.Text.Trim();
 
-                if (!blCompanyOwner.CompanyOwnerUpdate(
-                    companyOwner, userToUpdate))
+                employee.EmployeeAddress =
+                    string.IsNullOrWhiteSpace(RTBAddress.Text)
+                        ? null
+                        : RTBAddress.Text.Trim();
+
+                employee.EmployeeSalary = salary;
+
+                employee.EmployeeProfessionTypeId =
+                    Convert.ToInt32(
+                        CMBProfessionType.SelectedValue);
+
+                if (!bLEmployee.EmployeeUpdate(
+                    employee,
+                    userToUpdate))
                 {
                     MessageBox.Show(
-                        "Company owner could not be updated.",
+                        "Employee could not be updated.",
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
@@ -222,7 +273,7 @@ namespace CompanyProjectWindowsFormApp
                 }
 
                 MessageBox.Show(
-                    "Company owner updated successfully.",
+                    "Employee updated successfully.",
                     "Success",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -233,7 +284,7 @@ namespace CompanyProjectWindowsFormApp
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Company owner işleminde beklenmeyen bir hata oluştu.\n\n"
+                    "Employee işleminde beklenmeyen bir hata oluştu.\n\n"
                     + ex.Message,
                     "Hata",
                     MessageBoxButtons.OK,
@@ -241,14 +292,10 @@ namespace CompanyProjectWindowsFormApp
             }
         }
 
-        private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
-            TxtPassword.UseSystemPasswordChar = !ChkShowPassword.Checked;
-        }
-
-        private void ChkShowPasswordConfirmation_CheckedChanged(object sender, EventArgs e)
-        {
-            TxtPasswordComfirmation.UseSystemPasswordChar = !ChkShowPasswordConfirmation.Checked;
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void TxtPassword_TextChanged(object sender, EventArgs e)
@@ -296,10 +343,14 @@ namespace CompanyProjectWindowsFormApp
             }
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            TxtPassword.UseSystemPasswordChar = !ChkShowPassword.Checked;
+        }
+
+        private void ChkShowPasswordConfirmation_CheckedChanged(object sender, EventArgs e)
+        {
+            TxtPasswordComfirmation.UseSystemPasswordChar = !ChkShowPasswordConfirmation.Checked;
         }
     }
 }

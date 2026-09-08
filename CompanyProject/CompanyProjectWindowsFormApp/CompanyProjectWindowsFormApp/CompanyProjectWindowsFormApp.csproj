@@ -190,6 +190,18 @@
     <Compile Include="FrmCompanyOwnersForm.Designer.cs">
       <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmEmployeeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeeAddEditForm.Designer.cs">
+      <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEmployeesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeesForm.Designer.cs">
+      <DependentUpon>FrmEmployeesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmFirstAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +220,18 @@
     <Compile Include="FrmMainForm.Designer.cs">
       <DependentUpon>FrmMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmMeetingAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMeetingAddEditForm.Designer.cs">
+      <DependentUpon>FrmMeetingAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMeetingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMeetingsForm.Designer.cs">
+      <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmCompaniesForm.resx">
@@ -222,6 +246,12 @@
     <EmbeddedResource Include="FrmCompanyOwnersForm.resx">
       <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmployeeAddEditForm.resx">
+      <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmployeesForm.resx">
+      <DependentUpon>FrmEmployeesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmFirstAdminForm.resx">
       <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +260,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMainForm.resx">
       <DependentUpon>FrmMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMeetingAddEditForm.resx">
+      <DependentUpon>FrmMeetingAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMeetingsForm.resx">
+      <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
