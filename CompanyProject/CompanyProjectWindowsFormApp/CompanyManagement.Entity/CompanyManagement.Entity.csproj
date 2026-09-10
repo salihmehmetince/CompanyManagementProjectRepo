@@ -189,6 +189,10 @@
     <Compile Include="Migrations\20260909213304_RemoveDaysPassedToComplete.Designer.cs">
       <DependentUpon>20260909213304_RemoveDaysPassedToComplete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20260910125620_AddProductOrServiceImage.cs" />
+    <Compile Include="Migrations\20260910125620_AddProductOrServiceImage.Designer.cs">
+      <DependentUpon>20260910125620_AddProductOrServiceImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />
     <Compile Include="ProductOrService.cs" />

@@ -23,6 +23,9 @@ namespace CompanyManagement.Entity
         [Required]
         public int ProductOrServiceTypeId { get; set; }
 
+        public byte[] ProductOrServiceImage { get; set; }
+
+
         public virtual ProductOrServiceType ProductOrServiceType { get; set; }
 
         public virtual ICollection<CompanyHasProductOrService>

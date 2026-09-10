@@ -388,12 +388,13 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnProductsOrServices_Click(object sender, EventArgs e)
         {
-
+            FrmProductOrServiceForm frmProductOrServiceForm = new FrmProductOrServiceForm();
+            frmProductOrServiceForm.ShowDialog();
         }
 
         private void BtnCustomers_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void BtnPayments_Click(object sender, EventArgs e)

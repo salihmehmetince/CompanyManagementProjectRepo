@@ -232,6 +232,18 @@
     <Compile Include="FrmMeetingsForm.Designer.cs">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmProductOrServiceAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProductOrServiceAddEditForm.Designer.cs">
+      <DependentUpon>FrmProductOrServiceAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProductOrServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProductOrServiceForm.Designer.cs">
+      <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTaskAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,6 +290,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMeetingsForm.resx">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProductOrServiceAddEditForm.resx">
+      <DependentUpon>FrmProductOrServiceAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProductOrServiceForm.resx">
+      <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTaskAddEditForm.resx">
       <DependentUpon>FrmTaskAddEditForm.cs</DependentUpon>
