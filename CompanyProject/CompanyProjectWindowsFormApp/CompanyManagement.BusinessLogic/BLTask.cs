@@ -30,10 +30,18 @@ namespace CompanyManagement.BusinessLogic
         }
 
         public bool TaskAdd(
-            CompanyManagement.Entity.Task task)
+    CompanyManagement.Entity.Task task,
+    List<int> companyOwnerIds,
+    List<int> employeeIds)
         {
             if (task == null)
                 return false;
+
+            if (companyOwnerIds == null)
+                companyOwnerIds = new List<int>();
+
+            if (employeeIds == null)
+                employeeIds = new List<int>();
 
             if (!Validation.StringControl(
                 task.TaskName,
@@ -52,12 +60,6 @@ namespace CompanyManagement.BusinessLogic
                 false))
                 return false;
 
-            if (!Validation.IntControl(
-                task.DaysPassedToComplete,
-                0,
-                10000))
-                return false;
-
             if (task.TaskFinishDate.HasValue &&
                 !Validation.DateTimeControl(
                     task.TaskFinishDate.Value,
@@ -65,25 +67,48 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             if (task.TaskFinishDate.HasValue &&
-                task.TaskFinishDate.Value < task.TaskBeginningDate)
+                task.TaskFinishDate.Value.Date < task.TaskBeginningDate.Date)
                 return false;
 
-            if (!task.IsCompleted &&
-                task.TaskFinishDate.HasValue)
+            companyOwnerIds = companyOwnerIds
+                .Where(x => Validation.IntControl(
+                    x,
+                    1,
+                    int.MaxValue))
+                .Distinct()
+                .ToList();
+
+            employeeIds = employeeIds
+                .Where(x => Validation.IntControl(
+                    x,
+                    1,
+                    int.MaxValue))
+                .Distinct()
+                .ToList();
+
+            if (companyOwnerIds.Count == 0 ||
+    employeeIds.Count == 0)
                 return false;
 
-            if (task.IsCompleted &&
-                !task.TaskFinishDate.HasValue)
-                return false;
-
-            return dalTask.TaskAdd(task);
+            return dalTask.TaskAdd(
+                task,
+                companyOwnerIds,
+                employeeIds);
         }
 
         public bool TaskUpdate(
-            CompanyManagement.Entity.Task task)
+            CompanyManagement.Entity.Task task,
+            List<int> companyOwnerIds,
+            List<int> employeeIds)
         {
             if (task == null)
                 return false;
+
+            if (companyOwnerIds == null)
+                companyOwnerIds = new List<int>();
+
+            if (employeeIds == null)
+                employeeIds = new List<int>();
 
             if (!Validation.IntControl(
                 task.TaskId,
@@ -108,12 +133,6 @@ namespace CompanyManagement.BusinessLogic
                 false))
                 return false;
 
-            if (!Validation.IntControl(
-                task.DaysPassedToComplete,
-                0,
-                10000))
-                return false;
-
             if (task.TaskFinishDate.HasValue &&
                 !Validation.DateTimeControl(
                     task.TaskFinishDate.Value,
@@ -121,15 +140,7 @@ namespace CompanyManagement.BusinessLogic
                 return false;
 
             if (task.TaskFinishDate.HasValue &&
-                task.TaskFinishDate.Value < task.TaskBeginningDate)
-                return false;
-
-            if (!task.IsCompleted &&
-                task.TaskFinishDate.HasValue)
-                return false;
-
-            if (task.IsCompleted &&
-                !task.TaskFinishDate.HasValue)
+                task.TaskFinishDate.Value.Date < task.TaskBeginningDate.Date)
                 return false;
 
             var existingTask =
@@ -138,11 +149,33 @@ namespace CompanyManagement.BusinessLogic
             if (existingTask == null)
                 return false;
 
-            return dalTask.TaskUpdate(task);
+            companyOwnerIds = companyOwnerIds
+                .Where(x => Validation.IntControl(
+                    x,
+                    1,
+                    int.MaxValue))
+                .Distinct()
+                .ToList();
+
+            employeeIds = employeeIds
+                .Where(x => Validation.IntControl(
+                    x,
+                    1,
+                    int.MaxValue))
+                .Distinct()
+                .ToList();
+
+            if (companyOwnerIds.Count == 0 ||
+    employeeIds.Count == 0)
+                return false;
+
+            return dalTask.TaskUpdate(
+                task,
+                companyOwnerIds,
+                employeeIds);
         }
 
-        public bool TaskDelete(
-            int taskId)
+        public bool TaskDelete(int taskId)
         {
             if (!Validation.IntControl(
                 taskId,

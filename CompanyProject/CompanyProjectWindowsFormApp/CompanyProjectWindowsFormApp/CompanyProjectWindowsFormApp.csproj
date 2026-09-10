@@ -232,6 +232,18 @@
     <Compile Include="FrmMeetingsForm.Designer.cs">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTaskAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTaskAddEditForm.Designer.cs">
+      <DependentUpon>FrmTaskAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTaskForm.Designer.cs">
+      <DependentUpon>FrmTaskForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmCompaniesForm.resx">
@@ -266,6 +278,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMeetingsForm.resx">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTaskAddEditForm.resx">
+      <DependentUpon>FrmTaskAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTaskForm.resx">
+      <DependentUpon>FrmTaskForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

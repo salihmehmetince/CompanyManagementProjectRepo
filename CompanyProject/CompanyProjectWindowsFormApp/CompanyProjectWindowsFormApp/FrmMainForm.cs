@@ -382,7 +382,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnTasks_Click(object sender, EventArgs e)
         {
-
+            FrmTaskForm frmTaskForm = new FrmTaskForm();
+            frmTaskForm.ShowDialog();
         }
 
         private void BtnProductsOrServices_Click(object sender, EventArgs e)

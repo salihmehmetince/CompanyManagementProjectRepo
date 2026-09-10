@@ -25,9 +25,6 @@ namespace CompanyManagement.Entity
         [Required]
         public bool IsCompleted { get; set; }
 
-        [Range(0, 10000)]
-        public int DaysPassedToComplete { get; set; }
-
         public DateTime? TaskFinishDate { get; set; }
 
         public virtual ICollection<TaskHasCompanyOwner>
