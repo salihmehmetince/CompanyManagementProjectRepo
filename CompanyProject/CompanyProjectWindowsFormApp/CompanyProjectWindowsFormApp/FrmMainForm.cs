@@ -394,7 +394,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnCustomers_Click(object sender, EventArgs e)
         {
-            
+            FrmCustomerForm frmCustomerForm = new FrmCustomerForm();
+            frmCustomerForm.ShowDialog();
         }
 
         private void BtnPayments_Click(object sender, EventArgs e)
@@ -404,7 +405,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnUsers_Click(object sender, EventArgs e)
         {
-
+            FrmUserForm frmUserForm = new FrmUserForm();
+            frmUserForm.ShowDialog();
         }
 
         private void BtnDefinitions_Click(object sender, EventArgs e)
@@ -544,17 +546,20 @@ namespace CompanyProjectWindowsFormApp
         }
         private void BtnCompanyTypes_Click(object sender, EventArgs e)
         {
-
+            FrmCompanyTypesForm form = new FrmCompanyTypesForm();
+            form.ShowDialog();
         }
 
         private void BtnDepartmentTypes_Click(object sender, EventArgs e)
         {
-
+            FrmDepartmentTypesForm form = new FrmDepartmentTypesForm();
+            form.ShowDialog();
         }
 
         private void BtnProfessionTypes_Click(object sender, EventArgs e)
         {
-
+            FrmProfessionTypesForm form = new FrmProfessionTypesForm();
+            form.ShowDialog();
         }
 
         private void BtnProductOrServiceTypes_Click(object sender, EventArgs e)
@@ -564,7 +569,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnPaymentTypes_Click(object sender, EventArgs e)
         {
-
+            FrmPaymentTypeForm frmPaymentTypeForm = new FrmPaymentTypeForm();
+            frmPaymentTypeForm.ShowDialog();
         }
 
         private void FrmMainForm_FormClosing(object sender, FormClosingEventArgs e)

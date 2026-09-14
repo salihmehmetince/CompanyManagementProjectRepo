@@ -190,6 +190,42 @@
     <Compile Include="FrmCompanyOwnersForm.Designer.cs">
       <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCompanyTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmCompanyTypeAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCompanyTypesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyTypesForm.Designer.cs">
+      <DependentUpon>FrmCompanyTypesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCustomerAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCustomerAddEditForm.Designer.cs">
+      <DependentUpon>FrmCustomerAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCustomerForm.Designer.cs">
+      <DependentUpon>FrmCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDepartmentTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDepartmentTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmDepartmentTypeAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDepartmentTypesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDepartmentTypesForm.Designer.cs">
+      <DependentUpon>FrmDepartmentTypesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmEmployeeAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,6 +268,18 @@
     <Compile Include="FrmMeetingsForm.Designer.cs">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPaymentTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPaymentTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmPaymentTypeAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPaymentTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPaymentTypeForm.Designer.cs">
+      <DependentUpon>FrmPaymentTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmProductOrServiceAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,6 +292,24 @@
     <Compile Include="FrmProductOrServiceForm.Designer.cs">
       <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmProductOrServiceTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProductOrServiceTypeForm.Designer.cs">
+      <DependentUpon>FrmProductOrServiceTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProfessionTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProfessionTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmProfessionTypeAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProfessionTypesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProfessionTypesForm.Designer.cs">
+      <DependentUpon>FrmProfessionTypesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTaskAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +321,18 @@
     </Compile>
     <Compile Include="FrmTaskForm.Designer.cs">
       <DependentUpon>FrmTaskForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmUserEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmUserEditForm.Designer.cs">
+      <DependentUpon>FrmUserEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmUserForm.Designer.cs">
+      <DependentUpon>FrmUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -269,6 +347,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCompanyOwnersForm.resx">
       <DependentUpon>FrmCompanyOwnersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyTypeAddEditForm.resx">
+      <DependentUpon>FrmCompanyTypeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyTypesForm.resx">
+      <DependentUpon>FrmCompanyTypesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCustomerAddEditForm.resx">
+      <DependentUpon>FrmCustomerAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCustomerForm.resx">
+      <DependentUpon>FrmCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDepartmentTypeAddEditForm.resx">
+      <DependentUpon>FrmDepartmentTypeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDepartmentTypesForm.resx">
+      <DependentUpon>FrmDepartmentTypesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmployeeAddEditForm.resx">
       <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>
@@ -291,17 +387,38 @@
     <EmbeddedResource Include="FrmMeetingsForm.resx">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPaymentTypeAddEditForm.resx">
+      <DependentUpon>FrmPaymentTypeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPaymentTypeForm.resx">
+      <DependentUpon>FrmPaymentTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmProductOrServiceAddEditForm.resx">
       <DependentUpon>FrmProductOrServiceAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmProductOrServiceForm.resx">
       <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmProductOrServiceTypeForm.resx">
+      <DependentUpon>FrmProductOrServiceTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProfessionTypeAddEditForm.resx">
+      <DependentUpon>FrmProfessionTypeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProfessionTypesForm.resx">
+      <DependentUpon>FrmProfessionTypesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTaskAddEditForm.resx">
       <DependentUpon>FrmTaskAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTaskForm.resx">
       <DependentUpon>FrmTaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmUserEditForm.resx">
+      <DependentUpon>FrmUserEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmUserForm.resx">
+      <DependentUpon>FrmUserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
