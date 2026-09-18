@@ -400,7 +400,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnPayments_Click(object sender, EventArgs e)
         {
-
+            FrmPaymentForm frmPaymentForm = new FrmPaymentForm();
+            frmPaymentForm.ShowDialog();
         }
 
         private void BtnUsers_Click(object sender, EventArgs e)
@@ -564,7 +565,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnProductOrServiceTypes_Click(object sender, EventArgs e)
         {
-
+            FrmProductOrServiceTypeForm form = new FrmProductOrServiceTypeForm();   
+            form.ShowDialog();
         }
 
         private void BtnPaymentTypes_Click(object sender, EventArgs e)

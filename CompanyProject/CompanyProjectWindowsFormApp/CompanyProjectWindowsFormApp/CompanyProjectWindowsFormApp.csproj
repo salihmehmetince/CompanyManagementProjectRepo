@@ -268,6 +268,18 @@
     <Compile Include="FrmMeetingsForm.Designer.cs">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPaymentAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPaymentAddEditForm.Designer.cs">
+      <DependentUpon>FrmPaymentAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPaymentForm.Designer.cs">
+      <DependentUpon>FrmPaymentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPaymentTypeAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,6 +303,12 @@
     </Compile>
     <Compile Include="FrmProductOrServiceForm.Designer.cs">
       <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProductOrServicesTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProductOrServicesTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmProductOrServicesTypeAddEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmProductOrServiceTypeForm.cs">
       <SubType>Form</SubType>
@@ -387,6 +405,12 @@
     <EmbeddedResource Include="FrmMeetingsForm.resx">
       <DependentUpon>FrmMeetingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPaymentAddEditForm.resx">
+      <DependentUpon>FrmPaymentAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPaymentForm.resx">
+      <DependentUpon>FrmPaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPaymentTypeAddEditForm.resx">
       <DependentUpon>FrmPaymentTypeAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -398,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmProductOrServiceForm.resx">
       <DependentUpon>FrmProductOrServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProductOrServicesTypeAddEditForm.resx">
+      <DependentUpon>FrmProductOrServicesTypeAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmProductOrServiceTypeForm.resx">
       <DependentUpon>FrmProductOrServiceTypeForm.cs</DependentUpon>

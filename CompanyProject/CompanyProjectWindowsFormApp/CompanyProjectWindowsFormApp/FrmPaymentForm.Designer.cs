@@ -1,6 +1,6 @@
 ﻿namespace CompanyProjectWindowsFormApp
 {
-    partial class FrmProductOrServiceTypeForm
+    partial class FrmPaymentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlFooter = new System.Windows.Forms.Panel();
             this.LblRecordCount = new System.Windows.Forms.Label();
-            this.DgvProductOrServiceTypes = new System.Windows.Forms.DataGridView();
+            this.DgvPayments = new System.Windows.Forms.DataGridView();
             this.PnlToolbar = new System.Windows.Forms.Panel();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvProductOrServiceTypes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvPayments)).BeginInit();
             this.PnlToolbar.SuspendLayout();
             this.PnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -54,14 +54,14 @@
             // PnlMain
             // 
             this.PnlMain.Controls.Add(this.PnlFooter);
-            this.PnlMain.Controls.Add(this.DgvProductOrServiceTypes);
+            this.PnlMain.Controls.Add(this.DgvPayments);
             this.PnlMain.Controls.Add(this.PnlToolbar);
             this.PnlMain.Controls.Add(this.PnlHeader);
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
             this.PnlMain.Size = new System.Drawing.Size(1082, 603);
-            this.PnlMain.TabIndex = 3;
+            this.PnlMain.TabIndex = 2;
             // 
             // PnlFooter
             // 
@@ -82,20 +82,20 @@
             this.LblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.LblRecordCount.Location = new System.Drawing.Point(20, 14);
             this.LblRecordCount.Name = "LblRecordCount";
-            this.LblRecordCount.Size = new System.Drawing.Size(58, 20);
+            this.LblRecordCount.Size = new System.Drawing.Size(83, 20);
             this.LblRecordCount.TabIndex = 0;
-            this.LblRecordCount.Text = "0 Types";
+            this.LblRecordCount.Text = "0 Payments";
             // 
-            // DgvProductOrServiceTypes
+            // DgvPayments
             // 
-            this.DgvProductOrServiceTypes.AllowUserToAddRows = false;
-            this.DgvProductOrServiceTypes.AllowUserToDeleteRows = false;
-            this.DgvProductOrServiceTypes.AllowUserToResizeRows = false;
+            this.DgvPayments.AllowUserToAddRows = false;
+            this.DgvPayments.AllowUserToDeleteRows = false;
+            this.DgvPayments.AllowUserToResizeRows = false;
             dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.DgvProductOrServiceTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
-            this.DgvProductOrServiceTypes.BackgroundColor = System.Drawing.Color.White;
-            this.DgvProductOrServiceTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DgvPayments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.DgvPayments.BackgroundColor = System.Drawing.Color.White;
+            this.DgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -103,9 +103,9 @@
             dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvProductOrServiceTypes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.DgvProductOrServiceTypes.ColumnHeadersHeight = 40;
-            this.DgvProductOrServiceTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DgvPayments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.DgvPayments.ColumnHeadersHeight = 40;
+            this.DgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -113,22 +113,22 @@
             dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvProductOrServiceTypes.DefaultCellStyle = dataGridViewCellStyle15;
-            this.DgvProductOrServiceTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvProductOrServiceTypes.EnableHeadersVisualStyles = false;
-            this.DgvProductOrServiceTypes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.DgvProductOrServiceTypes.Location = new System.Drawing.Point(0, 150);
-            this.DgvProductOrServiceTypes.MultiSelect = false;
-            this.DgvProductOrServiceTypes.Name = "DgvProductOrServiceTypes";
-            this.DgvProductOrServiceTypes.ReadOnly = true;
-            this.DgvProductOrServiceTypes.RowHeadersVisible = false;
-            this.DgvProductOrServiceTypes.RowHeadersWidth = 51;
+            this.DgvPayments.DefaultCellStyle = dataGridViewCellStyle15;
+            this.DgvPayments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvPayments.EnableHeadersVisualStyles = false;
+            this.DgvPayments.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvPayments.Location = new System.Drawing.Point(0, 150);
+            this.DgvPayments.MultiSelect = false;
+            this.DgvPayments.Name = "DgvPayments";
+            this.DgvPayments.ReadOnly = true;
+            this.DgvPayments.RowHeadersVisible = false;
+            this.DgvPayments.RowHeadersWidth = 51;
             dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
-            this.DgvProductOrServiceTypes.RowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.DgvProductOrServiceTypes.RowTemplate.Height = 35;
-            this.DgvProductOrServiceTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvProductOrServiceTypes.Size = new System.Drawing.Size(1082, 453);
-            this.DgvProductOrServiceTypes.TabIndex = 2;
+            this.DgvPayments.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            this.DgvPayments.RowTemplate.Height = 35;
+            this.DgvPayments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvPayments.Size = new System.Drawing.Size(1082, 453);
+            this.DgvPayments.TabIndex = 2;
             // 
             // PnlToolbar
             // 
@@ -150,7 +150,7 @@
             this.BtnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnDelete.ForeColor = System.Drawing.Color.White;
-            this.BtnDelete.Location = new System.Drawing.Point(691, 17);
+            this.BtnDelete.Location = new System.Drawing.Point(630, 17);
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(90, 35);
             this.BtnDelete.TabIndex = 3;
@@ -165,7 +165,7 @@
             this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnEdit.ForeColor = System.Drawing.Color.White;
-            this.BtnEdit.Location = new System.Drawing.Point(591, 17);
+            this.BtnEdit.Location = new System.Drawing.Point(530, 17);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(90, 35);
             this.BtnEdit.TabIndex = 2;
@@ -182,9 +182,9 @@
             this.BtnAdd.ForeColor = System.Drawing.Color.White;
             this.BtnAdd.Location = new System.Drawing.Point(390, 17);
             this.BtnAdd.Name = "BtnAdd";
-            this.BtnAdd.Size = new System.Drawing.Size(195, 35);
+            this.BtnAdd.Size = new System.Drawing.Size(130, 35);
             this.BtnAdd.TabIndex = 1;
-            this.BtnAdd.Text = "New Product/Service Type";
+            this.BtnAdd.Text = "New Payment";
             this.BtnAdd.UseVisualStyleBackColor = false;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -219,9 +219,9 @@
             this.LblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.LblDescription.Location = new System.Drawing.Point(27, 48);
             this.LblDescription.Name = "LblDescription";
-            this.LblDescription.Size = new System.Drawing.Size(301, 20);
+            this.LblDescription.Size = new System.Drawing.Size(207, 20);
             this.LblDescription.TabIndex = 1;
-            this.LblDescription.Text = "Manage product or service type information";
+            this.LblDescription.Text = "Manage payment information";
             // 
             // LblTitle
             // 
@@ -229,13 +229,13 @@
             this.LblTitle.BackColor = System.Drawing.Color.Transparent;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblTitle.ForeColor = System.Drawing.Color.White;
-            this.LblTitle.Location = new System.Drawing.Point(25, 4);
+            this.LblTitle.Location = new System.Drawing.Point(25, 15);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(348, 41);
+            this.LblTitle.Size = new System.Drawing.Size(146, 41);
             this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "Product Or Service Types";
+            this.LblTitle.Text = "Payments";
             // 
-            // FrmProductOrServiceTypeForm
+            // FrmPaymentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -245,13 +245,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmProductOrServiceTypeForm";
+            this.Name = "FrmPaymentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Product Or Service Types";
+            this.Text = "Payments";
             this.PnlMain.ResumeLayout(false);
             this.PnlFooter.ResumeLayout(false);
             this.PnlFooter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvProductOrServiceTypes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvPayments)).EndInit();
             this.PnlToolbar.ResumeLayout(false);
             this.PnlToolbar.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
@@ -265,7 +265,7 @@
         private System.Windows.Forms.Panel PnlMain;
         private System.Windows.Forms.Panel PnlFooter;
         private System.Windows.Forms.Label LblRecordCount;
-        private System.Windows.Forms.DataGridView DgvProductOrServiceTypes;
+        private System.Windows.Forms.DataGridView DgvPayments;
         private System.Windows.Forms.Panel PnlToolbar;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnEdit;

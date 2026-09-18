@@ -78,8 +78,8 @@ namespace CompanyProjectWindowsFormApp
                 if (user == null)
                 {
                     MessageBox.Show(
-                        "Kullanıcı adı veya şifre hatalı.",
-                        "Giriş Başarısız",
+                        "Invalid username or password.",
+                        "Login Failed",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
@@ -89,8 +89,8 @@ namespace CompanyProjectWindowsFormApp
                 if (!user.IsActive)
                 {
                     MessageBox.Show(
-                        "Kullanıcı hesabı aktif değil.",
-                        "Giriş Başarısız",
+                        "The user account is not active.",
+                        "Login Failed",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
@@ -102,8 +102,8 @@ namespace CompanyProjectWindowsFormApp
                     user.PasswordHash))
                 {
                     MessageBox.Show(
-                        "Kullanıcı adı veya şifre hatalı.",
-                        "Giriş Başarısız",
+                        "Invalid username or password.",
+                        "Login Failed",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
@@ -111,8 +111,8 @@ namespace CompanyProjectWindowsFormApp
                 }
 
                 MessageBox.Show(
-                    "Giriş başarılı.",
-                    "Başarılı",
+                    "Login successful.",
+                    "Success",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
@@ -121,14 +121,13 @@ namespace CompanyProjectWindowsFormApp
                 Hide();
 
                 frmMainForm.Show();
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Giriş yapılırken beklenmeyen bir hata oluştu.\n\n" +
+                    "An unexpected error occurred while logging in.\n\n" +
                     ex.Message,
-                    "Hata",
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
