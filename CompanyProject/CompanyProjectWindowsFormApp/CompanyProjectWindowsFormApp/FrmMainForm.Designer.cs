@@ -43,10 +43,11 @@
             // 
             // PnlContent
             // 
+            this.PnlContent.AutoScroll = true;
             this.PnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlContent.Location = new System.Drawing.Point(230, 0);
             this.PnlContent.Name = "PnlContent";
-            this.PnlContent.Size = new System.Drawing.Size(952, 653);
+            this.PnlContent.Size = new System.Drawing.Size(1252, 653);
             this.PnlContent.TabIndex = 1;
             // 
             // PnlLogo
@@ -133,8 +134,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1182, 653);
+            this.ClientSize = new System.Drawing.Size(1482, 653);
             this.Controls.Add(this.PnlContent);
             this.Controls.Add(this.PnlMenu);
             this.MinimumSize = new System.Drawing.Size(1000, 600);

@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace CompanyProjectWindowsFormApp
         private BLCustomer blCustomer=new BLCustomer();
         private BLCompanyHasProductOrService blCompanyHasProductOrService=new BLCompanyHasProductOrService();
         private BLPaymentType blPaymentType = new BLPaymentType();
+
+        private BLCompany blCompany =new BLCompany();
         public FrmPaymentAddEditForm(CustomerBuysCompanyHasProductOrService customerBuysCompanyHasProductOrService = null)
         {
             InitializeComponent();
@@ -28,6 +31,7 @@ namespace CompanyProjectWindowsFormApp
             LoadCustomers();
             LoadPaymentTypes();
             LoadProducts();
+            LoadCompanies();
             SetButtonsBorder();
             if(customerBuysCompanyHasProductOrService!=null)
             {
@@ -71,14 +75,33 @@ namespace CompanyProjectWindowsFormApp
 
         private void LoadProducts()
         {
-            List<CompanyHasProductOrService> products =
-                blCompanyHasProductOrService.CompanyHasProductOrServiceList();
+            if (CmbCompany.SelectedItem == null)
+                return;
+
+            Company company = CmbCompany.SelectedItem as Company;
+
+            if (company == null)
+                return;
+
+            int companyId = company.CompanyId;
+
+            var products =
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceList()
+                    .Where(x => x.CompanyId == companyId)
+                    .Select(x => new
+                    {
+                        x.CompanyHasProductOrServiceId,
+                        ProductOrServiceName =
+                            x.ProductOrService.ProductOrServiceName,
+                        x.CompanyHasProductOrServiceQuantity
+                    })
+                    .ToList();
 
             CmbProducts.DataSource = products;
-            CmbProducts.DisplayMember = "ProductOrService.ProductOrServiceName";
+            CmbProducts.DisplayMember = "ProductOrServiceName";
             CmbProducts.ValueMember = "CompanyHasProductOrServiceId";
         }
-
         private void LoadPaymentTypes()
         {
             List<PaymentType> paymentTypes =
@@ -87,6 +110,16 @@ namespace CompanyProjectWindowsFormApp
             CmbPaymentTypes.DataSource = paymentTypes;
             CmbPaymentTypes.DisplayMember = "PaymentTypeName";
             CmbPaymentTypes.ValueMember = "PaymentTypeId";
+        }
+
+        private void LoadCompanies()
+        {
+            List<Company> companies =
+                blCompany.CompanyList();
+
+            CmbCompany.DataSource = companies;
+            CmbCompany.DisplayMember = "CompanyName";
+            CmbCompany.ValueMember = "CompanyId";
         }
 
         private void SetButtonsBorder()
@@ -116,6 +149,51 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
+            decimal quantity;
+
+            if (!decimal.TryParse(TxtQuantity.Text, out quantity) ||
+                quantity <= 0)
+            {
+                MessageBox.Show(
+                    "Please enter a valid quantity.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            int companyHasProductOrServiceId =
+                Convert.ToInt32(CmbProducts.SelectedValue);
+
+            CompanyHasProductOrService companyHasProductOrService =
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceGetById(
+                        companyHasProductOrServiceId);
+
+            if (companyHasProductOrService == null)
+            {
+                MessageBox.Show(
+                    "Product or service could not be found.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            if (companyHasProductOrService
+                    .CompanyHasProductOrServiceQuantity < quantity)
+            {
+                MessageBox.Show(
+                    "There is not enough stock for this product.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
             CustomerBuysCompanyHasProductOrService payment;
 
             if (customerBuysCompanyHasProductOrService == null)
@@ -133,13 +211,13 @@ namespace CompanyProjectWindowsFormApp
                 Convert.ToInt32(CmbCustomer.SelectedValue);
 
             payment.CompanyHasProductOrServiceId =
-                Convert.ToInt32(CmbProducts.SelectedValue);
+                companyHasProductOrServiceId;
 
             payment.PaymentTypeId =
                 Convert.ToInt32(CmbPaymentTypes.SelectedValue);
 
             payment.CustomerBuysCompanyHasProductOrServiceQuantity =
-                Convert.ToDecimal(TxtQuantity.Text);
+                quantity;
 
             payment.CustomerBuysCompanyHasProductOrServiceDate =
                 DTPDate.Value;
@@ -170,6 +248,25 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
+            companyHasProductOrService
+                .CompanyHasProductOrServiceQuantity -= quantity;
+
+            bool stockResult =
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceUpdate(
+                        companyHasProductOrService);
+
+            if (!stockResult)
+            {
+                MessageBox.Show(
+                    "Payment was saved, but the stock could not be updated.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
             MessageBox.Show(
                 "Payment saved successfully.",
                 "Success",
@@ -178,6 +275,22 @@ namespace CompanyProjectWindowsFormApp
 
             DialogResult = DialogResult.OK;
             Close();
+        }
+        private void CmbProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CmbProducts.SelectedItem == null)
+                return;
+
+            dynamic product = CmbProducts.SelectedItem;
+
+            LblInstockQuantity.Text =
+                "In Stock: " +
+                product.CompanyHasProductOrServiceQuantity.ToString();
+        }
+
+        private void CmbCompany_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadProducts();
         }
     }
 }

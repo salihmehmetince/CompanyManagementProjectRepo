@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CompanyProjectWindowsFormApp
 {
@@ -20,6 +21,17 @@ namespace CompanyProjectWindowsFormApp
         private bool definitionsVisible = false;
         private Panel PnlDefinitions;
         private bool isClosing = false;
+
+
+        private BLCompany blCompany = new BLCompany();
+        private BLEmployee blEmployee = new BLEmployee();
+        private BLCustomer blCustomer = new BLCustomer();
+        private BLProductOrService blProductOrService =
+            new BLProductOrService();
+
+        private BLCustomerBuysCompanyHasProductOrService
+            blCustomerBuysCompanyHasProductOrService =
+            new BLCustomerBuysCompanyHasProductOrService();
 
         public FrmMainForm(User user)
         {
@@ -108,10 +120,11 @@ namespace CompanyProjectWindowsFormApp
             CreateTasksButton();
             CreateProductsOrServicesButton();
             CreateCustomersButton();
+            CreateCompanyInventorysButton();
             CreatePaymentsButton();
             CreateUsersButton();
             CreateDefinitionsButton();
-
+            CreateAdminDashboard();
         }
 
         private void CreateCompanyOwnerMenu()
@@ -277,6 +290,28 @@ namespace CompanyProjectWindowsFormApp
             btnCustomers.Click += BtnCustomers_Click;
         }
 
+        private void CreateCompanyInventorysButton()
+        {
+            Button btnCompanyInventory = new Button();
+
+            btnCompanyInventory.Name = "BtnCompanyInventory";
+            btnCompanyInventory.Text = "Inventory";
+            btnCompanyInventory.Dock = DockStyle.Top;
+            btnCompanyInventory.Height = 50;
+            btnCompanyInventory.FlatStyle = FlatStyle.Flat;
+            btnCompanyInventory.BackColor = Color.FromArgb(15, 23, 42);
+            btnCompanyInventory.ForeColor = Color.White;
+            btnCompanyInventory.Font = new Font("Segoe UI", 10F);
+            btnCompanyInventory.TextAlign = ContentAlignment.MiddleLeft;
+            btnCompanyInventory.Padding = new Padding(20, 0, 0, 0);
+            btnCompanyInventory.Cursor = Cursors.Hand;
+            btnCompanyInventory.FlatAppearance.BorderSize = 0;
+
+            PnlMenuButtons.Controls.Add(btnCompanyInventory);
+            btnCompanyInventory.BringToFront();
+            btnCompanyInventory.Click += BtnCompanyInventories_Click;
+        }
+
         private void CreatePaymentsButton()
         {
             Button btnPayments = new Button();
@@ -398,6 +433,12 @@ namespace CompanyProjectWindowsFormApp
             frmCustomerForm.ShowDialog();
         }
 
+        private void BtnCompanyInventories_Click(object sender, EventArgs e)
+        {
+            FrmCompanyInventoryForm frmCompanyInventoryForm = new FrmCompanyInventoryForm();
+            frmCompanyInventoryForm.ShowDialog();
+        }
+
         private void BtnPayments_Click(object sender, EventArgs e)
         {
             FrmPaymentForm frmPaymentForm = new FrmPaymentForm();
@@ -412,25 +453,25 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnDefinitions_Click(object sender, EventArgs e)
         {
-    if (!definitionsCreated)
-    {
+            if (!definitionsCreated)
+            {
 
-        CreateCompanyTypesButton();
-        CreateDepartmentTypesButton();
-        CreateProfessionTypesButton();
-        CreateProductOrServiceTypesButton();
-        CreatePaymentTypesButton();
+                CreateCompanyTypesButton();
+                CreateDepartmentTypesButton();
+                CreateProfessionTypesButton();
+                CreateProductOrServiceTypesButton();
+                CreatePaymentTypesButton();
 
-        definitionsCreated = true;
-        definitionsVisible = true;
+                definitionsCreated = true;
+                definitionsVisible = true;
 
-        PnlDefinitions.Visible = true;
-    }
-    else
-    {
-        definitionsVisible = !definitionsVisible;
-        PnlDefinitions.Visible = definitionsVisible;
-    }
+                PnlDefinitions.Visible = true;
+            }
+            else
+            {
+                definitionsVisible = !definitionsVisible;
+                PnlDefinitions.Visible = definitionsVisible;
+            }
 
         }
 
@@ -565,7 +606,7 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnProductOrServiceTypes_Click(object sender, EventArgs e)
         {
-            FrmProductOrServiceTypeForm form = new FrmProductOrServiceTypeForm();   
+            FrmProductOrServiceTypeForm form = new FrmProductOrServiceTypeForm();
             form.ShowDialog();
         }
 
@@ -593,6 +634,1003 @@ namespace CompanyProjectWindowsFormApp
             {
                 e.Cancel = true;
             }
+        }
+
+        private void CreateAdminDashboard()
+        {
+            //six flpgauges
+            PnlContent.Controls.Clear();
+
+            PnlContent.BackColor =
+                Color.FromArgb(15, 23, 42);
+
+            Panel pnlDashboardHeader =
+                new Panel();
+
+            pnlDashboardHeader.Dock =
+                DockStyle.Top;
+
+            pnlDashboardHeader.Height =
+                80;
+
+            pnlDashboardHeader.BackColor =
+                Color.FromArgb(15, 23, 42);
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Dashboard";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    22,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(30, 15);
+
+            pnlDashboardHeader.Controls.Add(
+                lblTitle);
+
+            Label lblDescription =
+                new Label();
+
+            lblDescription.Text =
+                "Company management overview";
+
+            lblDescription.Font =
+                new Font(
+                    "Segoe UI",
+                    10,
+                    FontStyle.Regular);
+
+            lblDescription.ForeColor =
+                Color.FromArgb(148, 163, 184);
+
+            lblDescription.AutoSize =
+                true;
+
+            lblDescription.Location =
+                new Point(32, 50);
+
+            pnlDashboardHeader.Controls.Add(
+                lblDescription);
+
+            PnlContent.Controls.Add(
+                pnlDashboardHeader);
+
+
+            FlowLayoutPanel flpGauges =
+                new FlowLayoutPanel();
+
+            flpGauges.Dock =
+                DockStyle.Top;
+
+            flpGauges.Height =
+                360;
+
+            flpGauges.Padding =
+                new Padding(25, 10, 25, 10);
+
+            flpGauges.BackColor =
+                Color.FromArgb(15, 23, 42);
+
+            flpGauges.WrapContents =
+                true;
+
+            flpGauges.AutoScroll =
+                false;
+
+            flpGauges.FlowDirection =
+                FlowDirection.LeftToRight;
+
+
+            int companyCount =
+    blCompany
+        .CompanyList()
+        .Count;
+
+            int employeeCount =
+                blEmployee
+                    .EmployeeList()
+                    .Count;
+
+            int customerCount =
+                blCustomer
+                    .CustomerList()
+                    .Count;
+
+            int productOrServiceCount =
+                blProductOrService
+                    .ProductOrServiceList()
+                    .Count;
+
+            List<CustomerBuysCompanyHasProductOrService> payments =
+                blCustomerBuysCompanyHasProductOrService
+                    .CustomerBuysCompanyHasProductOrServiceList();
+
+            int salesCount = payments.Count;
+
+            decimal totalRevenue =
+                payments.Sum(x =>
+                    x.CompanyHasProductOrService
+                        .CompanyHasProductOrServicePrice *
+                    x.CustomerBuysCompanyHasProductOrServiceQuantity);
+
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Companies",
+                    companyCount,
+                    100));
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Employees",
+                    employeeCount,
+                    10000));
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Customers",
+                    customerCount,
+                    20000));
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Products / Services",
+                    productOrServiceCount,
+                    2000));
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Sales",
+                    salesCount,
+                    50000));
+
+            flpGauges.Controls.Add(
+                CreateGauge(
+                    "Revenue",
+                    totalRevenue,
+                    2000000));
+
+
+            PnlContent.Controls.Add(
+                flpGauges);
+
+            //some summary charts
+            Panel pnlSalesOverview =
+            CreateSalesOverviewPanel(payments);
+
+            PnlContent.Controls.Add(
+                pnlSalesOverview);
+
+            Panel pnlTopProducts =
+                CreateTopProductsPanel(payments);
+
+            PnlContent.Controls.Add(
+                pnlTopProducts);
+
+            Panel pnlSalesByCompany =
+                CreateSalesByCompanyPanel(payments);
+
+            PnlContent.Controls.Add(
+                pnlSalesByCompany);
+
+            Panel pnlRecentSales =
+                CreateRecentSalesPanel(payments);
+
+            PnlContent.Controls.Add(
+                pnlRecentSales);
+
+            Panel pnlLowStock =
+                CreateLowStockPanel();
+
+            PnlContent.Controls.Add(
+                pnlLowStock);
+        }
+
+        private Control CreateGauge(
+    string title,
+    decimal value,
+    decimal maximum)
+        {
+            DashboardGaugeControl gauge =
+                new DashboardGaugeControl(
+                    title,
+                    value,
+                    maximum);
+
+            gauge.Margin =
+                new Padding(10);
+
+            return gauge;
+        }
+
+        private Panel CreateSalesOverviewPanel(List<CustomerBuysCompanyHasProductOrService> payments)
+        {
+            Panel pnlSalesOverview =
+                new Panel();
+
+            pnlSalesOverview.Location =
+                new Point(20, 460);
+
+            pnlSalesOverview.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    300);
+
+            pnlSalesOverview.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlSalesOverview.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Sales Overview";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlSalesOverview.Controls.Add(
+                lblTitle);
+
+
+            Chart chartSales =
+                new Chart();
+
+            chartSales.Location =
+                new Point(20, 55);
+
+            chartSales.Size =
+                new Size(
+                    pnlSalesOverview.Width - 40,
+                    220);
+
+            chartSales.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            chartSales.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+
+            ChartArea chartArea =
+                new ChartArea();
+
+            chartArea.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            chartArea.AxisX.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisY.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisX.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartArea.AxisY.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartSales.ChartAreas.Add(
+                chartArea);
+
+
+            Series series =
+                new Series();
+
+            series.Name =
+                "Revenue";
+
+            series.ChartType =
+                SeriesChartType.Line;
+
+            series.BorderWidth =
+                3;
+
+            series.Color =
+                Color.FromArgb(37, 99, 235);
+
+            for (int month = 1; month <= 12; month++)
+            {
+                decimal monthlyRevenue =
+                    payments
+                        .Where(x =>
+                            x.CustomerBuysCompanyHasProductOrServiceDate.Month ==
+                            month)
+                        .Sum(x =>
+                            x.CompanyHasProductOrService
+                                .CompanyHasProductOrServicePrice *
+                            x.CustomerBuysCompanyHasProductOrServiceQuantity);
+
+                series.Points.AddXY(
+                    new DateTime(
+                        DateTime.Now.Year,
+                        month,
+                        1).ToString("MMM"),
+                    monthlyRevenue);
+            }
+
+            chartSales.Series.Add(
+                series);
+
+
+            pnlSalesOverview.Controls.Add(
+                chartSales);
+
+            return pnlSalesOverview;
+        }
+
+        private Panel CreateTopProductsPanel(
+    List<CustomerBuysCompanyHasProductOrService> payments)
+        {
+            Panel pnlTopProducts =
+                new Panel();
+
+            pnlTopProducts.Location =
+                new Point(20, 780);
+
+            pnlTopProducts.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    300);
+
+            pnlTopProducts.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlTopProducts.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Top Products / Services";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlTopProducts.Controls.Add(
+                lblTitle);
+
+            Chart chartTopProducts =
+                new Chart();
+
+            chartTopProducts.Location =
+                new Point(20, 55);
+
+            chartTopProducts.Size =
+                new Size(
+                    pnlTopProducts.Width - 40,
+                    220);
+
+            chartTopProducts.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            chartTopProducts.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            ChartArea chartArea =
+                new ChartArea();
+
+            chartArea.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            chartArea.AxisX.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisY.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisX.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartArea.AxisY.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartTopProducts.ChartAreas.Add(
+                chartArea);
+
+            Series series =
+                new Series();
+
+            series.Name =
+                "Sales";
+
+            series.ChartType =
+                SeriesChartType.Column;
+
+            series.BorderWidth =
+                2;
+
+            series.Color =
+                Color.FromArgb(37, 99, 235);
+
+            var topProducts =
+    payments
+        .GroupBy(x =>
+            x.CompanyHasProductOrService
+                .ProductOrService)
+        .Select(x => new
+        {
+            ProductOrService =
+                x.Key.ProductOrServiceName,
+
+            Quantity =
+                x.Sum(y =>
+                    y.CustomerBuysCompanyHasProductOrServiceQuantity)
+        })
+        .OrderByDescending(x => x.Quantity)
+        .Take(50)
+        .ToList();
+
+            foreach (var product in topProducts)
+            {
+                series.Points.AddXY(
+                    product.ProductOrService,
+                    product.Quantity);
+            }
+
+            chartTopProducts.Series.Add(
+                series);
+
+            pnlTopProducts.Controls.Add(
+                chartTopProducts);
+
+            return pnlTopProducts;
+        }
+
+        private Panel CreateSalesByCompanyPanel(
+    List<CustomerBuysCompanyHasProductOrService> payments)
+        {
+            Panel pnlSalesByCompany =
+                new Panel();
+
+            pnlSalesByCompany.Location =
+                new Point(20, 1100);
+
+            pnlSalesByCompany.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    300);
+
+            pnlSalesByCompany.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlSalesByCompany.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Sales by Company";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlSalesByCompany.Controls.Add(
+                lblTitle);
+
+            Chart chartSalesByCompany =
+                new Chart();
+
+            chartSalesByCompany.Location =
+                new Point(20, 55);
+
+            chartSalesByCompany.Size =
+                new Size(
+                    pnlSalesByCompany.Width - 40,
+                    220);
+
+            chartSalesByCompany.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            chartSalesByCompany.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            ChartArea chartArea =
+                new ChartArea();
+
+            chartArea.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            chartArea.AxisX.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisY.LabelStyle.ForeColor =
+                Color.FromArgb(203, 213, 225);
+
+            chartArea.AxisX.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartArea.AxisY.MajorGrid.LineColor =
+                Color.FromArgb(71, 85, 105);
+
+            chartSalesByCompany.ChartAreas.Add(
+                chartArea);
+
+            Series series =
+                new Series();
+
+            series.Name =
+                "Revenue";
+
+            series.ChartType =
+                SeriesChartType.Column;
+
+            series.BorderWidth =
+                2;
+
+            series.Color =
+                Color.FromArgb(37, 99, 235);
+
+            var salesByCompany =
+    payments
+        .GroupBy(x =>
+            x.CompanyHasProductOrService.Company)
+        .Select(x => new
+        {
+            CompanyName =
+                x.Key.CompanyName,
+
+            Revenue =
+                x.Sum(y =>
+                    y.CompanyHasProductOrService
+                        .CompanyHasProductOrServicePrice *
+                    y.CustomerBuysCompanyHasProductOrServiceQuantity)
+        })
+        .OrderByDescending(x =>
+            x.Revenue)
+        .ToList();
+
+            foreach (var company in salesByCompany)
+            {
+                series.Points.AddXY(
+                    company.CompanyName,
+                    company.Revenue);
+            }
+
+            chartSalesByCompany.Series.Add(
+                series);
+
+            pnlSalesByCompany.Controls.Add(
+                chartSalesByCompany);
+
+            return pnlSalesByCompany;
+        }
+
+        private Panel CreateRecentSalesPanel(
+    List<CustomerBuysCompanyHasProductOrService> payments)
+        {
+            Panel pnlRecentSales =
+                new Panel();
+
+            pnlRecentSales.Location =
+                new Point(20, 1420);
+
+            pnlRecentSales.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    350);
+
+            pnlRecentSales.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlRecentSales.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Recent Sales";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlRecentSales.Controls.Add(
+                lblTitle);
+
+            DataGridView dgvRecentSales =
+                new DataGridView();
+
+            dgvRecentSales.Location =
+                new Point(20, 55);
+
+            dgvRecentSales.Size =
+                new Size(
+                    pnlRecentSales.Width - 40,
+                    270);
+
+            dgvRecentSales.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            dgvRecentSales.BackgroundColor =
+                Color.FromArgb(248, 250, 252);
+
+            dgvRecentSales.BorderStyle =
+                BorderStyle.None;
+
+            dgvRecentSales.AllowUserToAddRows =
+                false;
+
+            dgvRecentSales.AllowUserToDeleteRows =
+                false;
+
+            dgvRecentSales.ReadOnly =
+                true;
+
+            dgvRecentSales.RowHeadersVisible =
+                false;
+
+            dgvRecentSales.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvRecentSales.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvRecentSales.MultiSelect =
+                false;
+
+            dgvRecentSales.EnableHeadersVisualStyles =
+                false;
+
+            dgvRecentSales.ColumnHeadersDefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(71, 85, 105),
+
+                    ForeColor =
+                        Color.White,
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9,
+                            FontStyle.Bold)
+                };
+
+            dgvRecentSales.DefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(248, 250, 252),
+
+                    ForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    SelectionBackColor =
+                        Color.FromArgb(219, 234, 254),
+
+                    SelectionForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9)
+                };
+
+            dgvRecentSales.Columns.Add(
+                "Customer",
+                "Customer");
+
+            dgvRecentSales.Columns.Add(
+                "Company",
+                "Company");
+
+            dgvRecentSales.Columns.Add(
+                "ProductOrService",
+                "Product / Service");
+
+            dgvRecentSales.Columns.Add(
+                "Quantity",
+                "Quantity");
+
+            dgvRecentSales.Columns.Add(
+                "PaymentType",
+                "Payment Type");
+
+            dgvRecentSales.Columns.Add(
+                "Date",
+                "Date");
+
+            dgvRecentSales.Columns.Add(
+                "Revenue",
+                "Revenue");
+
+            var recentSales =
+                payments
+                    .OrderByDescending(x =>
+                        x.CustomerBuysCompanyHasProductOrServiceDate)
+                    .Take(10)
+                    .ToList();
+
+            foreach (var sale in recentSales)
+            {
+                decimal revenue =
+                    sale.CompanyHasProductOrService
+                        .CompanyHasProductOrServicePrice *
+                    sale.CustomerBuysCompanyHasProductOrServiceQuantity;
+
+                dgvRecentSales.Rows.Add(
+                    sale.Customer.CustomerName +
+                    " " +
+                    sale.Customer.CustomerSurname,
+
+                    sale.CompanyHasProductOrService
+                        .Company.CompanyName,
+
+                    sale.CompanyHasProductOrService
+                        .ProductOrService.ProductOrServiceName,
+
+                    sale.CustomerBuysCompanyHasProductOrServiceQuantity,
+
+                    sale.PaymentType.PaymentTypeName,
+
+                    sale.CustomerBuysCompanyHasProductOrServiceDate
+                        .ToString("dd.MM.yyyy"),
+
+                    revenue.ToString("N2"));
+            }
+
+            pnlRecentSales.Controls.Add(
+                dgvRecentSales);
+
+            return pnlRecentSales;
+        }
+
+        private Panel CreateLowStockPanel()
+        {
+            Panel pnlLowStock =
+                new Panel();
+
+            pnlLowStock.Location =
+                new Point(20, 1790);
+
+            pnlLowStock.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    350);
+
+            pnlLowStock.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlLowStock.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Low Stock";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlLowStock.Controls.Add(
+                lblTitle);
+
+            DataGridView dgvLowStock =
+                new DataGridView();
+
+            dgvLowStock.Location =
+                new Point(20, 55);
+
+            dgvLowStock.Size =
+                new Size(
+                    pnlLowStock.Width - 40,
+                    270);
+
+            dgvLowStock.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            dgvLowStock.BackgroundColor =
+                Color.FromArgb(248, 250, 252);
+
+            dgvLowStock.BorderStyle =
+                BorderStyle.None;
+
+            dgvLowStock.AllowUserToAddRows =
+                false;
+
+            dgvLowStock.AllowUserToDeleteRows =
+                false;
+
+            dgvLowStock.ReadOnly =
+                true;
+
+            dgvLowStock.RowHeadersVisible =
+                false;
+
+            dgvLowStock.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvLowStock.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvLowStock.MultiSelect =
+                false;
+
+            dgvLowStock.EnableHeadersVisualStyles =
+                false;
+
+            dgvLowStock.ColumnHeadersDefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(71, 85, 105),
+
+                    ForeColor =
+                        Color.White,
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9,
+                            FontStyle.Bold)
+                };
+
+            dgvLowStock.DefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(248, 250, 252),
+
+                    ForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    SelectionBackColor =
+                        Color.FromArgb(219, 234, 254),
+
+                    SelectionForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9)
+                };
+
+            dgvLowStock.Columns.Add(
+                "Company",
+                "Company");
+
+            dgvLowStock.Columns.Add(
+                "ProductOrService",
+                "Product / Service");
+
+            dgvLowStock.Columns.Add(
+                "Quantity",
+                "Quantity");
+
+            List<CompanyHasProductOrService> companyProducts =
+                new BLCompanyHasProductOrService()
+                    .CompanyHasProductOrServiceList();
+
+            var lowStock =
+                companyProducts
+                    .Where(x =>
+                        x.CompanyHasProductOrServiceQuantity <= 10)
+                    .OrderBy(x =>
+                        x.CompanyHasProductOrServiceQuantity)
+                    .Take(10)
+                    .ToList();
+
+            foreach (var item in lowStock)
+            {
+                dgvLowStock.Rows.Add(
+                    item.Company.CompanyName,
+
+                    item.ProductOrService
+                        .ProductOrServiceName,
+
+                    item.CompanyHasProductOrServiceQuantity);
+            }
+
+            pnlLowStock.Controls.Add(
+                dgvLowStock);
+
+            return pnlLowStock;
         }
     }
 

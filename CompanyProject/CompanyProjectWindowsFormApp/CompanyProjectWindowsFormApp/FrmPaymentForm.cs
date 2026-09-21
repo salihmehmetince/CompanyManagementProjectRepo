@@ -45,22 +45,70 @@ namespace CompanyProjectWindowsFormApp
             var paymentList = payments.Select(x => new
             {
                 x.CustomerBuysCompanyHasProductOrServiceId,
-                x.Customer,
-                x.CompanyHasProductOrService,
-                x.PaymentType,
+
+                CustomerName =
+                    x.Customer != null
+                        ? x.Customer.CustomerName
+                        : "",
+
+                ProductOrServiceName =
+                    x.CompanyHasProductOrService != null &&
+                    x.CompanyHasProductOrService.ProductOrService != null
+                        ? x.CompanyHasProductOrService
+                            .ProductOrService.ProductOrServiceName
+                        : "",
+
+                PaymentTypeName =
+                    x.PaymentType != null
+                        ? x.PaymentType.PaymentTypeName
+                        : "",
+
                 x.CustomerBuysCompanyHasProductOrServiceQuantity,
+
                 TotalPrice =
-                    x.CompanyHasProductOrService.CompanyHasProductOrServicePrice *
-                    x.CustomerBuysCompanyHasProductOrServiceQuantity,
+                    x.CompanyHasProductOrService != null
+                        ? x.CompanyHasProductOrService
+                            .CompanyHasProductOrServicePrice *
+                          x.CustomerBuysCompanyHasProductOrServiceQuantity
+                        : 0,
+
                 x.CustomerBuysCompanyHasProductOrServiceDate
+
             }).ToList();
 
             DgvPayments.DataSource = paymentList;
-            DgvPayments.Columns["TotalPrice"].HeaderText = "Total Price";
+
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceId"
+            ].HeaderText = "Payment ID";
+
+            DgvPayments.Columns[
+                "CustomerName"
+            ].HeaderText = "Customer";
+
+            DgvPayments.Columns[
+                "ProductOrServiceName"
+            ].HeaderText = "Product / Service";
+
+            DgvPayments.Columns[
+                "PaymentTypeName"
+            ].HeaderText = "Payment Type";
+
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceQuantity"
+            ].HeaderText = "Quantity";
+
+            DgvPayments.Columns[
+                "TotalPrice"
+            ].HeaderText = "Total Price";
+
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceDate"
+            ].HeaderText = "Date";
+
             LblRecordCount.Text =
                 payments.Count + " payments";
         }
-
         private CustomerBuysCompanyHasProductOrService GetSelectedPayment()
         {
             if (DgvPayments.CurrentRow == null)
@@ -88,13 +136,46 @@ namespace CompanyProjectWindowsFormApp
             {
                 payments = payments
                     .Where(x =>
-                        x.Customer.ToString().ToLower().Contains(searchText) ||
-                        x.CompanyHasProductOrService.ToString().ToLower().Contains(searchText) ||
-                        x.PaymentType.ToString().ToLower().Contains(searchText) ||
+                        x.Customer.CustomerName
+                            .ToLower()
+                            .Contains(searchText) ||
+
+                        x.CompanyHasProductOrService
+                            .ProductOrService.ProductOrServiceName
+                            .ToLower()
+                            .Contains(searchText) ||
+
+                        x.PaymentType.PaymentTypeName
+                            .ToLower()
+                            .Contains(searchText) ||
+
                         x.CustomerBuysCompanyHasProductOrServiceQuantity
-                            .ToString().Contains(searchText) ||
+                            .ToString()
+                            .Contains(searchText) ||
+
+                        x.CompanyHasProductOrService
+                            .CompanyHasProductOrServicePrice
+                            .ToString()
+                            .Contains(searchText) ||
+
+                        (
+                            x.CompanyHasProductOrService
+                                .CompanyHasProductOrServicePrice *
+                            x.CustomerBuysCompanyHasProductOrServiceQuantity
+                        )
+                        .ToString()
+                        .Contains(searchText) ||
+
                         x.CustomerBuysCompanyHasProductOrServiceDate
                             .ToString("dd.MM.yyyy")
+                            .Contains(searchText) ||
+
+                        x.CustomerBuysCompanyHasProductOrServiceDate
+                            .ToString("dd/MM/yyyy")
+                            .Contains(searchText) ||
+
+                        x.CustomerBuysCompanyHasProductOrServiceDate
+                            .ToString("yyyy-MM-dd")
                             .Contains(searchText)
                     )
                     .ToList();
@@ -103,21 +184,62 @@ namespace CompanyProjectWindowsFormApp
             var paymentList = payments.Select(x => new
             {
                 x.CustomerBuysCompanyHasProductOrServiceId,
-                x.Customer,
-                x.CompanyHasProductOrService,
-                x.PaymentType,
+
+                CustomerName =
+                    x.Customer.CustomerName,
+
+                ProductOrServiceName =
+                    x.CompanyHasProductOrService
+                        .ProductOrService
+                        .ProductOrServiceName,
+
+                PaymentTypeName =
+                    x.PaymentType.PaymentTypeName,
+
                 x.CustomerBuysCompanyHasProductOrServiceQuantity,
+
                 TotalPrice =
-        x.CompanyHasProductOrService.CompanyHasProductOrServicePrice *
-        x.CustomerBuysCompanyHasProductOrServiceQuantity,
+                    x.CompanyHasProductOrService
+                        .CompanyHasProductOrServicePrice *
+                    x.CustomerBuysCompanyHasProductOrServiceQuantity,
+
                 x.CustomerBuysCompanyHasProductOrServiceDate
+
             }).ToList();
 
             DgvPayments.DataSource = paymentList;
-            DgvPayments.Columns["TotalPrice"].HeaderText = "Total Price";
-            LblRecordCount.Text = payments.Count + " payments";
-        }
 
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceId"
+            ].HeaderText = "Payment ID";
+
+            DgvPayments.Columns[
+                "CustomerName"
+            ].HeaderText = "Customer";
+
+            DgvPayments.Columns[
+                "ProductOrServiceName"
+            ].HeaderText = "Product / Service";
+
+            DgvPayments.Columns[
+                "PaymentTypeName"
+            ].HeaderText = "Payment Type";
+
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceQuantity"
+            ].HeaderText = "Quantity";
+
+            DgvPayments.Columns[
+                "TotalPrice"
+            ].HeaderText = "Total Price";
+
+            DgvPayments.Columns[
+                "CustomerBuysCompanyHasProductOrServiceDate"
+            ].HeaderText = "Date";
+
+            LblRecordCount.Text =
+                payments.Count + " payments";
+        }
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchPayments();

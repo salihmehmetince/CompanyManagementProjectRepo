@@ -45,6 +45,10 @@
             this.PnlHeader = new System.Windows.Forms.Panel();
             this.LblDescription = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
+            this.CmbCompany = new System.Windows.Forms.ComboBox();
+            this.LblCompany = new System.Windows.Forms.Label();
+            this.LblItemInInventory = new System.Windows.Forms.Label();
+            this.LblInstockQuantity = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlContent.SuspendLayout();
             this.PnlHeader.SuspendLayout();
@@ -63,6 +67,10 @@
             // PnlContent
             // 
             this.PnlContent.AutoScroll = true;
+            this.PnlContent.Controls.Add(this.LblInstockQuantity);
+            this.PnlContent.Controls.Add(this.LblItemInInventory);
+            this.PnlContent.Controls.Add(this.CmbCompany);
+            this.PnlContent.Controls.Add(this.LblCompany);
             this.PnlContent.Controls.Add(this.CmbPaymentTypes);
             this.PnlContent.Controls.Add(this.LblPaymentType);
             this.PnlContent.Controls.Add(this.CmbProducts);
@@ -89,7 +97,7 @@
             this.CmbPaymentTypes.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.CmbPaymentTypes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.CmbPaymentTypes.FormattingEnabled = true;
-            this.CmbPaymentTypes.Location = new System.Drawing.Point(30, 200);
+            this.CmbPaymentTypes.Location = new System.Drawing.Point(30, 275);
             this.CmbPaymentTypes.Name = "CmbPaymentTypes";
             this.CmbPaymentTypes.Size = new System.Drawing.Size(275, 31);
             this.CmbPaymentTypes.TabIndex = 20;
@@ -99,7 +107,7 @@
             this.LblPaymentType.AutoSize = true;
             this.LblPaymentType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblPaymentType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblPaymentType.Location = new System.Drawing.Point(30, 175);
+            this.LblPaymentType.Location = new System.Drawing.Point(30, 250);
             this.LblPaymentType.Name = "LblPaymentType";
             this.LblPaymentType.Size = new System.Drawing.Size(100, 20);
             this.LblPaymentType.TabIndex = 19;
@@ -112,17 +120,18 @@
             this.CmbProducts.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.CmbProducts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.CmbProducts.FormattingEnabled = true;
-            this.CmbProducts.Location = new System.Drawing.Point(30, 125);
+            this.CmbProducts.Location = new System.Drawing.Point(30, 200);
             this.CmbProducts.Name = "CmbProducts";
             this.CmbProducts.Size = new System.Drawing.Size(275, 31);
             this.CmbProducts.TabIndex = 18;
+            this.CmbProducts.SelectedIndexChanged += new System.EventHandler(this.CmbProducts_SelectedIndexChanged);
             // 
             // LblProducts
             // 
             this.LblProducts.AutoSize = true;
             this.LblProducts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblProducts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblProducts.Location = new System.Drawing.Point(30, 100);
+            this.LblProducts.Location = new System.Drawing.Point(30, 175);
             this.LblProducts.Name = "LblProducts";
             this.LblProducts.Size = new System.Drawing.Size(60, 20);
             this.LblProducts.TabIndex = 17;
@@ -155,7 +164,7 @@
             // 
             this.DTPDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.DTPDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DTPDate.Location = new System.Drawing.Point(30, 350);
+            this.DTPDate.Location = new System.Drawing.Point(30, 425);
             this.DTPDate.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.DTPDate.Name = "DTPDate";
             this.DTPDate.Size = new System.Drawing.Size(200, 30);
@@ -196,7 +205,7 @@
             this.LblDate.AutoSize = true;
             this.LblDate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblDate.Location = new System.Drawing.Point(30, 325);
+            this.LblDate.Location = new System.Drawing.Point(30, 400);
             this.LblDate.Name = "LblDate";
             this.LblDate.Size = new System.Drawing.Size(41, 20);
             this.LblDate.TabIndex = 4;
@@ -208,7 +217,7 @@
             this.TxtQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtQuantity.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TxtQuantity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.TxtQuantity.Location = new System.Drawing.Point(30, 275);
+            this.TxtQuantity.Location = new System.Drawing.Point(30, 350);
             this.TxtQuantity.Name = "TxtQuantity";
             this.TxtQuantity.Size = new System.Drawing.Size(570, 30);
             this.TxtQuantity.TabIndex = 3;
@@ -218,7 +227,7 @@
             this.LblQuanity.AutoSize = true;
             this.LblQuanity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblQuanity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblQuanity.Location = new System.Drawing.Point(30, 250);
+            this.LblQuanity.Location = new System.Drawing.Point(30, 325);
             this.LblQuanity.Name = "LblQuanity";
             this.LblQuanity.Size = new System.Drawing.Size(65, 20);
             this.LblQuanity.TabIndex = 2;
@@ -258,6 +267,52 @@
             this.LblTitle.Size = new System.Drawing.Size(201, 41);
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "New Payment";
+            // 
+            // CmbCompany
+            // 
+            this.CmbCompany.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.CmbCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbCompany.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.CmbCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.CmbCompany.FormattingEnabled = true;
+            this.CmbCompany.Location = new System.Drawing.Point(30, 125);
+            this.CmbCompany.Name = "CmbCompany";
+            this.CmbCompany.Size = new System.Drawing.Size(275, 31);
+            this.CmbCompany.TabIndex = 22;
+            this.CmbCompany.SelectedIndexChanged += new System.EventHandler(this.CmbCompany_SelectedIndexChanged);
+            // 
+            // LblCompany
+            // 
+            this.LblCompany.AutoSize = true;
+            this.LblCompany.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblCompany.Location = new System.Drawing.Point(30, 100);
+            this.LblCompany.Name = "LblCompany";
+            this.LblCompany.Size = new System.Drawing.Size(72, 20);
+            this.LblCompany.TabIndex = 21;
+            this.LblCompany.Text = "Company";
+            // 
+            // LblItemInInventory
+            // 
+            this.LblItemInInventory.AutoSize = true;
+            this.LblItemInInventory.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblItemInInventory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblItemInInventory.Location = new System.Drawing.Point(330, 200);
+            this.LblItemInInventory.Name = "LblItemInInventory";
+            this.LblItemInInventory.Size = new System.Drawing.Size(58, 20);
+            this.LblItemInInventory.TabIndex = 23;
+            this.LblItemInInventory.Text = "Instock:";
+            // 
+            // LblInstockQuantity
+            // 
+            this.LblInstockQuantity.AutoSize = true;
+            this.LblInstockQuantity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblInstockQuantity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblInstockQuantity.Location = new System.Drawing.Point(400, 200);
+            this.LblInstockQuantity.Name = "LblInstockQuantity";
+            this.LblInstockQuantity.Size = new System.Drawing.Size(17, 20);
+            this.LblInstockQuantity.TabIndex = 24;
+            this.LblInstockQuantity.Text = "0";
             // 
             // FrmPaymentAddEditForm
             // 
@@ -300,5 +355,9 @@
         private System.Windows.Forms.Label LblType;
         private System.Windows.Forms.ComboBox CmbPaymentTypes;
         private System.Windows.Forms.Label LblPaymentType;
+        private System.Windows.Forms.ComboBox CmbCompany;
+        private System.Windows.Forms.Label LblCompany;
+        private System.Windows.Forms.Label LblInstockQuantity;
+        private System.Windows.Forms.Label LblItemInInventory;
     }
 }

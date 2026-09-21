@@ -11,27 +11,33 @@ namespace CompanyManagement.DataAccess
     public class DALCustomerBuysCompanyHasProductOrService
     {
         public List<CustomerBuysCompanyHasProductOrService>
-            CustomerBuysCompanyHasProductOrServiceList()
+    CustomerBuysCompanyHasProductOrServiceList()
         {
             using (var context = new AppDbContext())
             {
                 return context.CustomerBuysCompanyHasProductOrServices
                     .Include(x => x.Customer)
                     .Include(x => x.CompanyHasProductOrService)
+                        .ThenInclude(x => x.ProductOrService)
+                    .Include(x => x.CompanyHasProductOrService)
+                        .ThenInclude(x => x.Company)
                     .Include(x => x.PaymentType)
                     .ToList();
             }
         }
 
         public CustomerBuysCompanyHasProductOrService
-            CustomerBuysCompanyHasProductOrServiceGetById(
-                int customerBuysCompanyHasProductOrServiceId)
+    CustomerBuysCompanyHasProductOrServiceGetById(
+        int customerBuysCompanyHasProductOrServiceId)
         {
             using (var context = new AppDbContext())
             {
                 return context.CustomerBuysCompanyHasProductOrServices
                     .Include(x => x.Customer)
                     .Include(x => x.CompanyHasProductOrService)
+                        .ThenInclude(x => x.ProductOrService)
+                    .Include(x => x.CompanyHasProductOrService)
+                        .ThenInclude(x => x.Company)
                     .Include(x => x.PaymentType)
                     .FirstOrDefault(x =>
                         x.CustomerBuysCompanyHasProductOrServiceId ==
