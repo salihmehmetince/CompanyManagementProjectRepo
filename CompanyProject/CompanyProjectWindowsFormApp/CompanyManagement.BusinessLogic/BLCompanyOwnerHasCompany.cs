@@ -57,7 +57,7 @@ namespace CompanyManagement.BusinessLogic
                 int.MaxValue))
                 return false;
 
-            if (!Validation.IntControl(
+            if (!Validation.DecimalControl(
                 companyOwnerHasCompany.CompanyOwnerPercent,
                 0,
                 100))
@@ -106,7 +106,7 @@ namespace CompanyManagement.BusinessLogic
                 int.MaxValue))
                 return false;
 
-            if (!Validation.IntControl(
+            if (!Validation.DecimalControl(
                 companyOwnerHasCompany.CompanyOwnerPercent,
                 0,
                 100))

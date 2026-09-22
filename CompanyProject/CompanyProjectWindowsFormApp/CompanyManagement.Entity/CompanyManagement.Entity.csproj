@@ -193,6 +193,10 @@
     <Compile Include="Migrations\20260910125620_AddProductOrServiceImage.Designer.cs">
       <DependentUpon>20260910125620_AddProductOrServiceImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20260922110024_ChangeCompanyOwnerPercentageToDecimal.cs" />
+    <Compile Include="Migrations\20260922110024_ChangeCompanyOwnerPercentageToDecimal.Designer.cs">
+      <DependentUpon>20260922110024_ChangeCompanyOwnerPercentageToDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />
     <Compile Include="ProductOrService.cs" />

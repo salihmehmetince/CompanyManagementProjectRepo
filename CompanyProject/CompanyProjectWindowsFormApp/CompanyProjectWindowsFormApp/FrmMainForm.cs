@@ -115,6 +115,7 @@ namespace CompanyProjectWindowsFormApp
         {
             CreateCompaniesButton();
             CreateCompanyOwnersButton();
+            CreateCompanyDeparmentsButton();
             CreateEmployeesButton();
             CreateMeetingsButton();
             CreateTasksButton();
@@ -179,6 +180,27 @@ namespace CompanyProjectWindowsFormApp
             PnlMenuButtons.Controls.Add(btnCompanyOwners);
             btnCompanyOwners.BringToFront();
             btnCompanyOwners.Click += BtnCompanyOwners_Click;
+        }
+        private void CreateCompanyDeparmentsButton()
+        {
+            Button btnCompanyDepartments = new Button();
+
+            btnCompanyDepartments.Name = "BtnCompanyDepartments";
+            btnCompanyDepartments.Text = "Company Departments";
+            btnCompanyDepartments.Dock = DockStyle.Top;
+            btnCompanyDepartments.Height = 50;
+            btnCompanyDepartments.FlatStyle = FlatStyle.Flat;
+            btnCompanyDepartments.BackColor = Color.FromArgb(15, 23, 42);
+            btnCompanyDepartments.ForeColor = Color.White;
+            btnCompanyDepartments.Font = new Font("Segoe UI", 10F);
+            btnCompanyDepartments.TextAlign = ContentAlignment.MiddleLeft;
+            btnCompanyDepartments.Padding = new Padding(20, 0, 0, 0);
+            btnCompanyDepartments.Cursor = Cursors.Hand;
+            btnCompanyDepartments.FlatAppearance.BorderSize = 0;
+
+            PnlMenuButtons.Controls.Add(btnCompanyDepartments);
+            btnCompanyDepartments.BringToFront();
+            btnCompanyDepartments.Click += BtnCompanyDepartments_Click;
         }
 
         private void CreateEmployeesButton()
@@ -402,6 +424,11 @@ namespace CompanyProjectWindowsFormApp
         {
             FrmCompanyOwnersForm frmCompanyOwnersForm = new FrmCompanyOwnersForm();
             frmCompanyOwnersForm.ShowDialog();
+        }
+        private void BtnCompanyDepartments_Click(object sender, EventArgs e)
+        {
+            FrmCompanyDepartmentsForm frmCompanyDepartmentsForm = new FrmCompanyDepartmentsForm();
+            frmCompanyDepartmentsForm.ShowDialog();
         }
         private void BtnEmployees_Click(object sender, EventArgs e)
         {

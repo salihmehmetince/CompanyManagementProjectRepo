@@ -108,9 +108,9 @@
             this.LblEmployees.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.LblEmployees.Location = new System.Drawing.Point(375, 600);
             this.LblEmployees.Name = "LblEmployees";
-            this.LblEmployees.Size = new System.Drawing.Size(125, 20);
+            this.LblEmployees.Size = new System.Drawing.Size(81, 20);
             this.LblEmployees.TabIndex = 45;
-            this.LblEmployees.Text = "Company Owners";
+            this.LblEmployees.Text = "Employees";
             // 
             // CLBCompanyOwners
             // 

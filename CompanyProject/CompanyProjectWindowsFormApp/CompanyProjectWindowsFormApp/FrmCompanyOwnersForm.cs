@@ -17,6 +17,7 @@ namespace CompanyProjectWindowsFormApp
     {
 
         BLCompanyOwner blCompanyOwner = new BLCompanyOwner();
+        private BLUser blUser = new BLUser();
         public FrmCompanyOwnersForm()
         {
             InitializeComponent();
@@ -51,7 +52,19 @@ namespace CompanyProjectWindowsFormApp
 
         private void ListCompanyOwners()
         {
-            List<CompanyOwner> companyOwners =blCompanyOwner.CompanyOwnerList();
+            List<CompanyOwner> companyOwners =
+                blCompanyOwner.CompanyOwnerList();
+
+            companyOwners = companyOwners
+                .Where(x =>
+                {
+                    User user =
+                        blUser.UserGetById(x.UserId);
+
+                    return user != null &&
+                           user.IsActive;
+                })
+                .ToList();
 
             var companyOwnerList = companyOwners.Select(x => new
             {
@@ -62,14 +75,16 @@ namespace CompanyProjectWindowsFormApp
                 x.CompanyOwnerBirthday,
                 x.CompanyOwnerTelephoneNumber,
                 x.CompanyOwnerEmail
+
             }).ToList();
 
-            DgvCompanyOwners.DataSource = companyOwnerList;
+            DgvCompanyOwners.DataSource =
+                companyOwnerList;
 
             LblRecordCount.Text =
-                companyOwners.Count + " company owners";
+                companyOwners.Count +
+                " company owners";
         }
-
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             using (var form = new FrmCompanyOwnerAddEditForm())
@@ -98,34 +113,63 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            CompanyOwner companyOwner = GetSelectedCompanyOwner();
+            CompanyOwner companyOwner =
+                GetSelectedCompanyOwner();
 
             if (companyOwner == null)
             {
-                MessageBox.Show("Please select a company owner.");
+                MessageBox.Show(
+                    "Please select a company owner.");
+
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete the selected company owner?",
-                "Delete Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
+            DialogResult result =
+                MessageBox.Show(
+                    "Are you sure you want to deactivate the selected company owner?",
+                    "Deactivate Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
 
             if (result != DialogResult.Yes)
                 return;
 
-            if (blCompanyOwner.CompanyOwnerDelete(companyOwner.CompanyOwnerId))
+            User user =
+                blUser.UserGetById(
+                    companyOwner.UserId);
+
+            if (user == null)
+            {
+                MessageBox.Show(
+                    "Company owner user record could not be found.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            user.IsActive = false;
+
+            if (blUser.UserUpdate(user))
             {
                 ListCompanyOwners();
-                MessageBox.Show("Company owner deleted successfully.");
+
+                MessageBox.Show(
+                    "Company owner deactivated successfully.",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Company owner could not be deleted.");
+                MessageBox.Show(
+                    "Company owner could not be deactivated.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
-
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchCompanyOwners();
@@ -133,10 +177,22 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchCompanyOwners()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
             List<CompanyOwner> companyOwners =
                 blCompanyOwner.CompanyOwnerList();
+
+            companyOwners = companyOwners
+                .Where(x =>
+                {
+                    User user =
+                        blUser.UserGetById(x.UserId);
+
+                    return user != null &&
+                           user.IsActive;
+                })
+                .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -170,13 +226,15 @@ namespace CompanyProjectWindowsFormApp
                 x.CompanyOwnerBirthday,
                 x.CompanyOwnerTelephoneNumber,
                 x.CompanyOwnerEmail
+
             }).ToList();
 
             DgvCompanyOwners.DataSource =
                 companyOwnerList;
 
             LblRecordCount.Text =
-                companyOwners.Count + " company owners";
+                companyOwners.Count +
+                " company owners";
         }
     }
 }

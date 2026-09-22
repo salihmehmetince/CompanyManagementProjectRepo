@@ -30,6 +30,14 @@
         {
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlContent = new System.Windows.Forms.Panel();
+            this.DTPHireDate = new System.Windows.Forms.DateTimePicker();
+            this.LblHireDate = new System.Windows.Forms.Label();
+            this.TxtSalary = new System.Windows.Forms.TextBox();
+            this.LblSalary = new System.Windows.Forms.Label();
+            this.CMBProfessionType = new System.Windows.Forms.ComboBox();
+            this.LblProfession = new System.Windows.Forms.Label();
+            this.RTBAddress = new System.Windows.Forms.RichTextBox();
+            this.LblAddress = new System.Windows.Forms.Label();
             this.ChkShowPasswordConfirmation = new System.Windows.Forms.CheckBox();
             this.LblPasswordStrength = new System.Windows.Forms.Label();
             this.ChkShowPassword = new System.Windows.Forms.CheckBox();
@@ -56,14 +64,10 @@
             this.PnlHeader = new System.Windows.Forms.Panel();
             this.LblDescription = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
-            this.LblAddress = new System.Windows.Forms.Label();
-            this.RTBAddress = new System.Windows.Forms.RichTextBox();
-            this.LblProfession = new System.Windows.Forms.Label();
-            this.CMBProfessionType = new System.Windows.Forms.ComboBox();
-            this.LblSalary = new System.Windows.Forms.Label();
-            this.TxtSalary = new System.Windows.Forms.TextBox();
-            this.LblHireDate = new System.Windows.Forms.Label();
-            this.DTPHireDate = new System.Windows.Forms.DateTimePicker();
+            this.CmbCompany = new System.Windows.Forms.ComboBox();
+            this.LblCompany = new System.Windows.Forms.Label();
+            this.CmbDepartment = new System.Windows.Forms.ComboBox();
+            this.LblDepartment = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlContent.SuspendLayout();
             this.PnlHeader.SuspendLayout();
@@ -76,12 +80,16 @@
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
-            this.PnlMain.Size = new System.Drawing.Size(630, 1102);
+            this.PnlMain.Size = new System.Drawing.Size(650, 1102);
             this.PnlMain.TabIndex = 2;
             // 
             // PnlContent
             // 
             this.PnlContent.AutoScroll = true;
+            this.PnlContent.Controls.Add(this.CmbDepartment);
+            this.PnlContent.Controls.Add(this.LblDepartment);
+            this.PnlContent.Controls.Add(this.CmbCompany);
+            this.PnlContent.Controls.Add(this.LblCompany);
             this.PnlContent.Controls.Add(this.DTPHireDate);
             this.PnlContent.Controls.Add(this.LblHireDate);
             this.PnlContent.Controls.Add(this.TxtSalary);
@@ -117,8 +125,98 @@
             this.PnlContent.Location = new System.Drawing.Point(0, 80);
             this.PnlContent.Name = "PnlContent";
             this.PnlContent.Padding = new System.Windows.Forms.Padding(30, 25, 30, 20);
-            this.PnlContent.Size = new System.Drawing.Size(630, 1022);
+            this.PnlContent.Size = new System.Drawing.Size(650, 1022);
             this.PnlContent.TabIndex = 1;
+            // 
+            // DTPHireDate
+            // 
+            this.DTPHireDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.DTPHireDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DTPHireDate.Location = new System.Drawing.Point(400, 350);
+            this.DTPHireDate.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.DTPHireDate.Name = "DTPHireDate";
+            this.DTPHireDate.Size = new System.Drawing.Size(200, 30);
+            this.DTPHireDate.TabIndex = 48;
+            // 
+            // LblHireDate
+            // 
+            this.LblHireDate.AutoSize = true;
+            this.LblHireDate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblHireDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblHireDate.Location = new System.Drawing.Point(400, 325);
+            this.LblHireDate.Name = "LblHireDate";
+            this.LblHireDate.Size = new System.Drawing.Size(73, 20);
+            this.LblHireDate.TabIndex = 47;
+            this.LblHireDate.Text = "Hire Date";
+            // 
+            // TxtSalary
+            // 
+            this.TxtSalary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.TxtSalary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TxtSalary.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.TxtSalary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.TxtSalary.Location = new System.Drawing.Point(400, 275);
+            this.TxtSalary.Name = "TxtSalary";
+            this.TxtSalary.Size = new System.Drawing.Size(200, 30);
+            this.TxtSalary.TabIndex = 46;
+            // 
+            // LblSalary
+            // 
+            this.LblSalary.AutoSize = true;
+            this.LblSalary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblSalary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblSalary.Location = new System.Drawing.Point(400, 250);
+            this.LblSalary.Name = "LblSalary";
+            this.LblSalary.Size = new System.Drawing.Size(49, 20);
+            this.LblSalary.TabIndex = 45;
+            this.LblSalary.Text = "Salary";
+            // 
+            // CMBProfessionType
+            // 
+            this.CMBProfessionType.BackColor = System.Drawing.Color.White;
+            this.CMBProfessionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CMBProfessionType.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.CMBProfessionType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.CMBProfessionType.FormattingEnabled = true;
+            this.CMBProfessionType.Location = new System.Drawing.Point(30, 600);
+            this.CMBProfessionType.Name = "CMBProfessionType";
+            this.CMBProfessionType.Size = new System.Drawing.Size(570, 31);
+            this.CMBProfessionType.TabIndex = 44;
+            // 
+            // LblProfession
+            // 
+            this.LblProfession.AutoSize = true;
+            this.LblProfession.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblProfession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblProfession.Location = new System.Drawing.Point(30, 575);
+            this.LblProfession.Name = "LblProfession";
+            this.LblProfession.Size = new System.Drawing.Size(77, 20);
+            this.LblProfession.TabIndex = 43;
+            this.LblProfession.Text = "Profession";
+            // 
+            // RTBAddress
+            // 
+            this.RTBAddress.BackColor = System.Drawing.Color.White;
+            this.RTBAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RTBAddress.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.RTBAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.RTBAddress.Location = new System.Drawing.Point(30, 500);
+            this.RTBAddress.MaxLength = 250;
+            this.RTBAddress.Name = "RTBAddress";
+            this.RTBAddress.Size = new System.Drawing.Size(570, 70);
+            this.RTBAddress.TabIndex = 42;
+            this.RTBAddress.Text = "";
+            // 
+            // LblAddress
+            // 
+            this.LblAddress.AutoSize = true;
+            this.LblAddress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblAddress.Location = new System.Drawing.Point(30, 475);
+            this.LblAddress.Name = "LblAddress";
+            this.LblAddress.Size = new System.Drawing.Size(62, 20);
+            this.LblAddress.TabIndex = 41;
+            this.LblAddress.Text = "Address";
             // 
             // ChkShowPasswordConfirmation
             // 
@@ -126,7 +224,7 @@
             this.ChkShowPasswordConfirmation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ChkShowPasswordConfirmation.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.ChkShowPasswordConfirmation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.ChkShowPasswordConfirmation.Location = new System.Drawing.Point(30, 940);
+            this.ChkShowPasswordConfirmation.Location = new System.Drawing.Point(30, 1084);
             this.ChkShowPasswordConfirmation.Name = "ChkShowPasswordConfirmation";
             this.ChkShowPasswordConfirmation.Size = new System.Drawing.Size(121, 21);
             this.ChkShowPasswordConfirmation.TabIndex = 40;
@@ -138,7 +236,7 @@
             // 
             this.LblPasswordStrength.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblPasswordStrength.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.LblPasswordStrength.Location = new System.Drawing.Point(30, 815);
+            this.LblPasswordStrength.Location = new System.Drawing.Point(30, 959);
             this.LblPasswordStrength.Name = "LblPasswordStrength";
             this.LblPasswordStrength.Size = new System.Drawing.Size(220, 22);
             this.LblPasswordStrength.TabIndex = 39;
@@ -151,7 +249,7 @@
             this.ChkShowPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ChkShowPassword.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.ChkShowPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.ChkShowPassword.Location = new System.Drawing.Point(30, 790);
+            this.ChkShowPassword.Location = new System.Drawing.Point(30, 934);
             this.ChkShowPassword.Name = "ChkShowPassword";
             this.ChkShowPassword.Size = new System.Drawing.Size(121, 21);
             this.ChkShowPassword.TabIndex = 38;
@@ -165,7 +263,7 @@
             this.TxtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtUsername.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TxtUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.TxtUsername.Location = new System.Drawing.Point(30, 665);
+            this.TxtUsername.Location = new System.Drawing.Point(30, 809);
             this.TxtUsername.Name = "TxtUsername";
             this.TxtUsername.Size = new System.Drawing.Size(570, 30);
             this.TxtUsername.TabIndex = 18;
@@ -175,7 +273,7 @@
             this.LblUsername.AutoSize = true;
             this.LblUsername.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblUsername.Location = new System.Drawing.Point(30, 640);
+            this.LblUsername.Location = new System.Drawing.Point(30, 784);
             this.LblUsername.Name = "LblUsername";
             this.LblUsername.Size = new System.Drawing.Size(75, 20);
             this.LblUsername.TabIndex = 17;
@@ -187,7 +285,7 @@
             this.TxtPasswordComfirmation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtPasswordComfirmation.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TxtPasswordComfirmation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.TxtPasswordComfirmation.Location = new System.Drawing.Point(30, 890);
+            this.TxtPasswordComfirmation.Location = new System.Drawing.Point(30, 1034);
             this.TxtPasswordComfirmation.Name = "TxtPasswordComfirmation";
             this.TxtPasswordComfirmation.Size = new System.Drawing.Size(570, 30);
             this.TxtPasswordComfirmation.TabIndex = 22;
@@ -198,7 +296,7 @@
             this.LblPasswordComfirmation.AutoSize = true;
             this.LblPasswordComfirmation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblPasswordComfirmation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblPasswordComfirmation.Location = new System.Drawing.Point(30, 865);
+            this.LblPasswordComfirmation.Location = new System.Drawing.Point(30, 1009);
             this.LblPasswordComfirmation.Name = "LblPasswordComfirmation";
             this.LblPasswordComfirmation.Size = new System.Drawing.Size(166, 20);
             this.LblPasswordComfirmation.TabIndex = 21;
@@ -210,7 +308,7 @@
             this.TxtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtPassword.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TxtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.TxtPassword.Location = new System.Drawing.Point(29, 740);
+            this.TxtPassword.Location = new System.Drawing.Point(29, 884);
             this.TxtPassword.Name = "TxtPassword";
             this.TxtPassword.Size = new System.Drawing.Size(570, 30);
             this.TxtPassword.TabIndex = 20;
@@ -222,7 +320,7 @@
             this.LblPassword.AutoSize = true;
             this.LblPassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblPassword.Location = new System.Drawing.Point(29, 715);
+            this.LblPassword.Location = new System.Drawing.Point(29, 859);
             this.LblPassword.Name = "LblPassword";
             this.LblPassword.Size = new System.Drawing.Size(70, 20);
             this.LblPassword.TabIndex = 19;
@@ -289,7 +387,7 @@
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnCancel.ForeColor = System.Drawing.Color.White;
-            this.BtnCancel.Location = new System.Drawing.Point(510, 975);
+            this.BtnCancel.Location = new System.Drawing.Point(510, 1119);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(110, 35);
             this.BtnCancel.TabIndex = 11;
@@ -304,7 +402,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(390, 975);
+            this.BtnSave.Location = new System.Drawing.Point(390, 1119);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(110, 35);
             this.BtnSave.TabIndex = 10;
@@ -398,7 +496,7 @@
             this.PnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.PnlHeader.Location = new System.Drawing.Point(0, 0);
             this.PnlHeader.Name = "PnlHeader";
-            this.PnlHeader.Size = new System.Drawing.Size(630, 80);
+            this.PnlHeader.Size = new System.Drawing.Size(650, 80);
             this.PnlHeader.TabIndex = 0;
             // 
             // LblDescription
@@ -425,95 +523,52 @@
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "New Employee";
             // 
-            // LblAddress
+            // CmbCompany
             // 
-            this.LblAddress.AutoSize = true;
-            this.LblAddress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblAddress.Location = new System.Drawing.Point(30, 475);
-            this.LblAddress.Name = "LblAddress";
-            this.LblAddress.Size = new System.Drawing.Size(62, 20);
-            this.LblAddress.TabIndex = 41;
-            this.LblAddress.Text = "Address";
+            this.CmbCompany.BackColor = System.Drawing.Color.White;
+            this.CmbCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbCompany.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.CmbCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.CmbCompany.FormattingEnabled = true;
+            this.CmbCompany.Location = new System.Drawing.Point(30, 675);
+            this.CmbCompany.Name = "CmbCompany";
+            this.CmbCompany.Size = new System.Drawing.Size(570, 31);
+            this.CmbCompany.TabIndex = 50;
+            this.CmbCompany.SelectedIndexChanged += new System.EventHandler(this.CmbCompany_SelectedIndexChanged);
             // 
-            // RTBAddress
+            // LblCompany
             // 
-            this.RTBAddress.BackColor = System.Drawing.Color.White;
-            this.RTBAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RTBAddress.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.RTBAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.RTBAddress.Location = new System.Drawing.Point(30, 500);
-            this.RTBAddress.MaxLength = 250;
-            this.RTBAddress.Name = "RTBAddress";
-            this.RTBAddress.Size = new System.Drawing.Size(570, 70);
-            this.RTBAddress.TabIndex = 42;
-            this.RTBAddress.Text = "";
+            this.LblCompany.AutoSize = true;
+            this.LblCompany.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblCompany.Location = new System.Drawing.Point(30, 650);
+            this.LblCompany.Name = "LblCompany";
+            this.LblCompany.Size = new System.Drawing.Size(72, 20);
+            this.LblCompany.TabIndex = 49;
+            this.LblCompany.Text = "Company";
             // 
-            // LblProfession
+            // CmbDepartment
             // 
-            this.LblProfession.AutoSize = true;
-            this.LblProfession.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LblProfession.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblProfession.Location = new System.Drawing.Point(30, 575);
-            this.LblProfession.Name = "LblProfession";
-            this.LblProfession.Size = new System.Drawing.Size(77, 20);
-            this.LblProfession.TabIndex = 43;
-            this.LblProfession.Text = "Profession";
+            this.CmbDepartment.BackColor = System.Drawing.Color.White;
+            this.CmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbDepartment.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.CmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.CmbDepartment.FormattingEnabled = true;
+            this.CmbDepartment.Location = new System.Drawing.Point(30, 750);
+            this.CmbDepartment.Name = "CmbDepartment";
+            this.CmbDepartment.Size = new System.Drawing.Size(570, 31);
+            this.CmbDepartment.TabIndex = 52;
             // 
-            // CMBProfessionType
+            // LblDepartment
             // 
-            this.CMBProfessionType.BackColor = System.Drawing.Color.White;
-            this.CMBProfessionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CMBProfessionType.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.CMBProfessionType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.CMBProfessionType.FormattingEnabled = true;
-            this.CMBProfessionType.Location = new System.Drawing.Point(30, 600);
-            this.CMBProfessionType.Name = "CMBProfessionType";
-            this.CMBProfessionType.Size = new System.Drawing.Size(570, 31);
-            this.CMBProfessionType.TabIndex = 44;
-            // 
-            // LblSalary
-            // 
-            this.LblSalary.AutoSize = true;
-            this.LblSalary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LblSalary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblSalary.Location = new System.Drawing.Point(400, 250);
-            this.LblSalary.Name = "LblSalary";
-            this.LblSalary.Size = new System.Drawing.Size(49, 20);
-            this.LblSalary.TabIndex = 45;
-            this.LblSalary.Text = "Salary";
-            // 
-            // TxtSalary
-            // 
-            this.TxtSalary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.TxtSalary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TxtSalary.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.TxtSalary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.TxtSalary.Location = new System.Drawing.Point(400, 275);
-            this.TxtSalary.Name = "TxtSalary";
-            this.TxtSalary.Size = new System.Drawing.Size(200, 30);
-            this.TxtSalary.TabIndex = 46;
-            // 
-            // LblHireDate
-            // 
-            this.LblHireDate.AutoSize = true;
-            this.LblHireDate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LblHireDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.LblHireDate.Location = new System.Drawing.Point(400, 325);
-            this.LblHireDate.Name = "LblHireDate";
-            this.LblHireDate.Size = new System.Drawing.Size(73, 20);
-            this.LblHireDate.TabIndex = 47;
-            this.LblHireDate.Text = "Hire Date";
-            // 
-            // DTPHireDate
-            // 
-            this.DTPHireDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.DTPHireDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DTPHireDate.Location = new System.Drawing.Point(400, 350);
-            this.DTPHireDate.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.DTPHireDate.Name = "DTPHireDate";
-            this.DTPHireDate.Size = new System.Drawing.Size(200, 30);
-            this.DTPHireDate.TabIndex = 48;
+            this.LblDepartment.AutoSize = true;
+            this.LblDepartment.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblDepartment.Location = new System.Drawing.Point(30, 716);
+            this.LblDepartment.Name = "LblDepartment";
+            this.LblDepartment.Size = new System.Drawing.Size(89, 20);
+            this.LblDepartment.TabIndex = 51;
+            this.LblDepartment.Text = "Department";
             // 
             // FrmEmployeeAddEditForm
             // 
@@ -521,7 +576,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(630, 1102);
+            this.ClientSize = new System.Drawing.Size(650, 1102);
             this.Controls.Add(this.PnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -576,5 +631,9 @@
         private System.Windows.Forms.Label LblSalary;
         private System.Windows.Forms.Label LblHireDate;
         private System.Windows.Forms.DateTimePicker DTPHireDate;
+        private System.Windows.Forms.ComboBox CmbDepartment;
+        private System.Windows.Forms.Label LblDepartment;
+        private System.Windows.Forms.ComboBox CmbCompany;
+        private System.Windows.Forms.Label LblCompany;
     }
 }

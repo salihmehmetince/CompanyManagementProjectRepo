@@ -17,7 +17,7 @@ namespace CompanyManagement.Entity
         public int CompanyOwnerId { get; set; }
 
         [Required]
-        public int CompanyOwnerPercent {  get; set; }
+        public decimal CompanyOwnerPercent {  get; set; }
 
         public virtual CompanyOwner CompanyOwner { get; set; }
 

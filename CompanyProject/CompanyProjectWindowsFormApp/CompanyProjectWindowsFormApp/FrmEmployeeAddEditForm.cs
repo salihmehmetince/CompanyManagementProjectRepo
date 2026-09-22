@@ -17,12 +17,19 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmEmployeeAddEditForm : Form
     {
         private BLEmployee bLEmployee=new BLEmployee();
-        private Employee employee; 
-        public FrmEmployeeAddEditForm(Employee employee=null)
+        private BLEmployeeHasCompanyHasDepartmentType blEmployeeHasCompanyHasDepartmentType=new BLEmployeeHasCompanyHasDepartmentType();
+        private Employee employee;
+        private EmployeeHasCompanyHasDepartmentType employeeHasCompanyHasDepartmentType;
+        private BLCompany blCompany=new BLCompany();
+        private BLCompanyHasDepartmentType blCompanyHasDepartmentType = new BLCompanyHasDepartmentType();
+        public FrmEmployeeAddEditForm(Employee employee=null, EmployeeHasCompanyHasDepartmentType employeeHasCompanyHasDepartmentType=null)
         {
             InitializeComponent();
             this.employee = employee;
+            this.employeeHasCompanyHasDepartmentType = employeeHasCompanyHasDepartmentType;
             LoadProfessionTypes();
+            LoadCompanies();
+            LoadDepartments();
             if (employee != null) 
             {
                 LoadEmployee();
@@ -31,23 +38,64 @@ namespace CompanyProjectWindowsFormApp
 
         private void LoadEmployee()
         {
-            LblTitle.Text = "Edit Employee";
-            LblDescription.Text = "Update employee information";
+            LblTitle.Text =
+                "Edit Employee";
 
-            TxtIdentityNumber.Text = employee.EmployeeIdentityNumber;
-            TxtEmployeeName.Text = employee.EmployeeName;
-            TxtSurname.Text = employee.EmployeeSurname;
-            DTPBirthday.Value = employee.EmployeeBirthday;
-            DTPHireDate.Value = employee.EmployeeHireDate;
-            MTBTelephoneNumber.Text = employee.EmployeeTelephoneNumber;
-            TxtEmail.Text = employee.EmployeeEmail;
-            RTBAddress.Text = employee.EmployeeAddress;
-            TxtSalary.Text = employee.EmployeeSalary.ToString();
+            LblDescription.Text =
+                "Update employee information";
 
-            TxtUsername.Text = employee.User.Username;
+            TxtIdentityNumber.Text =
+                employee.EmployeeIdentityNumber;
+
+            TxtEmployeeName.Text =
+                employee.EmployeeName;
+
+            TxtSurname.Text =
+                employee.EmployeeSurname;
+
+            DTPBirthday.Value =
+                employee.EmployeeBirthday;
+
+            DTPHireDate.Value =
+                employee.EmployeeHireDate;
+
+            MTBTelephoneNumber.Text =
+                employee.EmployeeTelephoneNumber;
+
+            TxtEmail.Text =
+                employee.EmployeeEmail;
+
+            RTBAddress.Text =
+                employee.EmployeeAddress;
+
+            TxtSalary.Text =
+                employee.EmployeeSalary.ToString();
+
+            TxtUsername.Text =
+                employee.User.Username;
 
             CMBProfessionType.SelectedValue =
-    employee.EmployeeProfessionTypeId;
+                employee.EmployeeProfessionTypeId;
+
+            if (employeeHasCompanyHasDepartmentType != null)
+            {
+                CompanyHasDepartmentType
+                    companyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentType
+                            .CompanyHasDepartmentType;
+
+                if (companyHasDepartmentType != null)
+                {
+                    CmbCompany.SelectedValue =
+                        companyHasDepartmentType.CompanyId;
+
+                    LoadDepartments();
+
+                    CmbDepartment.SelectedValue =
+                        companyHasDepartmentType
+                            .CompanyHasDepartmentTypeId;
+                }
+            }
         }
 
         private void LoadProfessionTypes()
@@ -66,13 +114,70 @@ namespace CompanyProjectWindowsFormApp
             CMBProfessionType.SelectedIndex = -1;
         }
 
+        private void LoadDepartments()
+        {
+            CmbDepartment.DataSource = null;
+
+            List<CompanyHasDepartmentType>
+                companyHasDepartmentTypes =
+                blCompanyHasDepartmentType
+                    .CompanyHasDepartmentTypeList();
+
+            if (CmbCompany.SelectedValue is int)
+            {
+                int companyId =
+                    Convert.ToInt32(
+                        CmbCompany.SelectedValue);
+
+                companyHasDepartmentTypes =
+                    companyHasDepartmentTypes
+                        .Where(x =>
+                            x.CompanyId == companyId)
+                        .ToList();
+            }
+
+            CmbDepartment.DataSource =
+                companyHasDepartmentTypes
+                    .Select(x => new
+                    {
+                        x.CompanyHasDepartmentTypeId,
+
+                        DepartmentName =
+                            x.DepartmentType.DepartmentName
+                    })
+                    .ToList();
+
+            CmbDepartment.DisplayMember =
+                "DepartmentName";
+
+            CmbDepartment.ValueMember =
+                "CompanyHasDepartmentTypeId";
+
+            CmbDepartment.SelectedIndex = -1;
+        }
+        private void LoadCompanies()
+        {
+            CmbCompany.DataSource =
+                blCompany.CompanyList();
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
+
+            CmbCompany.SelectedIndex = -1;
+        }
+
         private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
                 decimal salary;
 
-                if (!decimal.TryParse(TxtSalary.Text.Trim(), out salary))
+                if (!decimal.TryParse(
+                    TxtSalary.Text.Trim(),
+                    out salary))
                 {
                     MessageBox.Show(
                         "Please enter a valid salary.",
@@ -83,11 +188,41 @@ namespace CompanyProjectWindowsFormApp
                     TxtSalary.Focus();
                     return;
                 }
+
+                if (CmbCompany.SelectedValue == null)
+                {
+                    MessageBox.Show(
+                        "Please select a company.",
+                        "Validation Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    CmbCompany.Focus();
+                    return;
+                }
+
+                if (CmbDepartment.SelectedValue == null)
+                {
+                    MessageBox.Show(
+                        "Please select a department.",
+                        "Validation Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    CmbDepartment.Focus();
+                    return;
+                }
+
+                int companyHasDepartmentTypeId =
+                    Convert.ToInt32(
+                        CmbDepartment.SelectedValue);
+
                 if (employee == null)
                 {
                     // ADD
 
-                    if (TxtPassword.Text != TxtPasswordComfirmation.Text)
+                    if (TxtPassword.Text !=
+                        TxtPasswordComfirmation.Text)
                     {
                         MessageBox.Show(
                             "Passwords do not match.",
@@ -99,10 +234,11 @@ namespace CompanyProjectWindowsFormApp
                         return;
                     }
 
-                    var employeeRole = new BLUserRole()
-                        .UserRoleList()
-                        .FirstOrDefault(x =>
-                            x.UserRoleName == "Employee");
+                    var employeeRole =
+                        new BLUserRole()
+                            .UserRoleList()
+                            .FirstOrDefault(x =>
+                                x.UserRoleName == "Employee");
 
                     if (employeeRole == null)
                     {
@@ -117,7 +253,8 @@ namespace CompanyProjectWindowsFormApp
 
                     var user = new User
                     {
-                        Username = TxtUsername.Text.Trim(),
+                        Username =
+                            TxtUsername.Text.Trim(),
 
                         PasswordHash =
                             PasswordHelper.PasswordHash(
@@ -150,16 +287,19 @@ namespace CompanyProjectWindowsFormApp
                             MTBTelephoneNumber.Text.Trim(),
 
                         EmployeeEmail =
-                            string.IsNullOrWhiteSpace(TxtEmail.Text)
+                            string.IsNullOrWhiteSpace(
+                                TxtEmail.Text)
                                 ? null
                                 : TxtEmail.Text.Trim(),
 
                         EmployeeAddress =
-                            string.IsNullOrWhiteSpace(RTBAddress.Text)
+                            string.IsNullOrWhiteSpace(
+                                RTBAddress.Text)
                                 ? null
                                 : RTBAddress.Text.Trim(),
 
-                        EmployeeSalary = salary,
+                        EmployeeSalary =
+                            salary,
 
                         EmployeeProfessionTypeId =
                             Convert.ToInt32(
@@ -179,13 +319,39 @@ namespace CompanyProjectWindowsFormApp
                         return;
                     }
 
+                    EmployeeHasCompanyHasDepartmentType
+                        employeeHasCompanyHasDepartmentTypeToSave =
+                            new EmployeeHasCompanyHasDepartmentType
+                            {
+                                EmployeeId =
+                                    employeeToSave.EmployeeId,
+
+                                CompanyHasDepartmentTypeId =
+                                    companyHasDepartmentTypeId
+                            };
+
+                    if (!blEmployeeHasCompanyHasDepartmentType
+                        .EmployeeHasCompanyHasDepartmentTypeAdd(
+                            employeeHasCompanyHasDepartmentTypeToSave))
+                    {
+                        MessageBox.Show(
+                            "Employee was added, but company department assignment could not be added.",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        return;
+                    }
+
                     MessageBox.Show(
                         "Employee added successfully.",
                         "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
 
-                    DialogResult = DialogResult.OK;
+                    DialogResult =
+                        DialogResult.OK;
+
                     Close();
 
                     return;
@@ -193,7 +359,8 @@ namespace CompanyProjectWindowsFormApp
 
                 // UPDATE
 
-                if (TxtPassword.Text != TxtPasswordComfirmation.Text)
+                if (TxtPassword.Text !=
+                    TxtPasswordComfirmation.Text)
                 {
                     MessageBox.Show(
                         "Passwords do not match.",
@@ -207,22 +374,25 @@ namespace CompanyProjectWindowsFormApp
 
                 var userToUpdate = new User
                 {
-                    UserId = employee.UserId,
+                    UserId =
+                        employee.UserId,
 
                     Username =
                         TxtUsername.Text.Trim(),
 
                     PasswordHash =
-                        string.IsNullOrWhiteSpace(TxtPassword.Text)
+                        string.IsNullOrWhiteSpace(
+                            TxtPassword.Text)
                             ? null
                             : PasswordHelper.PasswordHash(
                                 TxtPassword.Text),
 
                     IsActive = true,
 
-                    UserRoleId = employee.User != null
-                        ? employee.User.UserRoleId
-                        : 3
+                    UserRoleId =
+                        employee.User != null
+                            ? employee.User.UserRoleId
+                            : 3
                 };
 
                 employee.EmployeeIdentityNumber =
@@ -244,16 +414,19 @@ namespace CompanyProjectWindowsFormApp
                     MTBTelephoneNumber.Text.Trim();
 
                 employee.EmployeeEmail =
-                    string.IsNullOrWhiteSpace(TxtEmail.Text)
+                    string.IsNullOrWhiteSpace(
+                        TxtEmail.Text)
                         ? null
                         : TxtEmail.Text.Trim();
 
                 employee.EmployeeAddress =
-                    string.IsNullOrWhiteSpace(RTBAddress.Text)
+                    string.IsNullOrWhiteSpace(
+                        RTBAddress.Text)
                         ? null
                         : RTBAddress.Text.Trim();
 
-                employee.EmployeeSalary = salary;
+                employee.EmployeeSalary =
+                    salary;
 
                 employee.EmployeeProfessionTypeId =
                     Convert.ToInt32(
@@ -272,19 +445,70 @@ namespace CompanyProjectWindowsFormApp
                     return;
                 }
 
+                if (employeeHasCompanyHasDepartmentType == null)
+                {
+                    employeeHasCompanyHasDepartmentType =
+                        new EmployeeHasCompanyHasDepartmentType
+                        {
+                            EmployeeId =
+                                employee.EmployeeId,
+
+                            CompanyHasDepartmentTypeId =
+                                companyHasDepartmentTypeId
+                        };
+
+                    if (!blEmployeeHasCompanyHasDepartmentType
+                        .EmployeeHasCompanyHasDepartmentTypeAdd(
+                            employeeHasCompanyHasDepartmentType))
+                    {
+                        MessageBox.Show(
+                            "Employee updated, but company department assignment could not be added.",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        return;
+                    }
+                }
+                else
+                {
+                    employeeHasCompanyHasDepartmentType
+                        .EmployeeId =
+                            employee.EmployeeId;
+
+                    employeeHasCompanyHasDepartmentType
+                        .CompanyHasDepartmentTypeId =
+                            companyHasDepartmentTypeId;
+
+                    if (!blEmployeeHasCompanyHasDepartmentType
+                        .EmployeeHasCompanyHasDepartmentTypeUpdate(
+                            employeeHasCompanyHasDepartmentType))
+                    {
+                        MessageBox.Show(
+                            "Employee updated, but company department assignment could not be updated.",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                        return;
+                    }
+                }
+
                 MessageBox.Show(
                     "Employee updated successfully.",
                     "Success",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                DialogResult = DialogResult.OK;
+                DialogResult =
+                    DialogResult.OK;
+
                 Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Employee işleminde beklenmeyen bir hata oluştu.\n\n"
+                    "Employee işleminde beklenmeyen bir hata oluş.\n\n"
                     + ex.Message,
                     "Hata",
                     MessageBoxButtons.OK,
@@ -351,6 +575,11 @@ namespace CompanyProjectWindowsFormApp
         private void ChkShowPasswordConfirmation_CheckedChanged(object sender, EventArgs e)
         {
             TxtPasswordComfirmation.UseSystemPasswordChar = !ChkShowPasswordConfirmation.Checked;
+        }
+
+        private void CmbCompany_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadDepartments();
         }
     }
 }

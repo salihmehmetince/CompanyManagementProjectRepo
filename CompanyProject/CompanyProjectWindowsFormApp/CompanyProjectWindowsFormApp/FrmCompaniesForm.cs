@@ -15,7 +15,7 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmCompaniesForm : Form
     {
         private BLCompany blCompany = new BLCompany();
-
+        private BLCompanyOwnerHasCompany blCompanyOwnerHasCompany=new BLCompanyOwnerHasCompany();
         public FrmCompaniesForm()
         {
             InitializeComponent();
@@ -104,7 +104,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            Company company = GetSelectedCompany();
+            Company company =
+                GetSelectedCompany();
 
             if (company == null)
             {
@@ -118,17 +119,39 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this company?",
-                "Delete Company",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
+            DialogResult result =
+                MessageBox.Show(
+                    "Are you sure you want to delete this company?",
+                    "Delete Company",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
 
             if (result != DialogResult.Yes)
                 return;
 
-            bool deleted = blCompany.CompanyDelete(company.CompanyId);
+            List<CompanyOwnerHasCompany>
+                companyOwnerHasCompanies =
+                    blCompanyOwnerHasCompany
+                        .CompanyOwnerHasCompanyList()
+                        .Where(x =>
+                            x.CompanyId ==
+                            company.CompanyId)
+                        .ToList();
+
+            foreach (CompanyOwnerHasCompany
+                companyOwnerHasCompany
+                in companyOwnerHasCompanies)
+            {
+                blCompanyOwnerHasCompany
+                    .CompanyOwnerHasCompanyDelete(
+                        companyOwnerHasCompany
+                            .CompanyOwnerHasCompanyId);
+            }
+
+            bool deleted =
+                blCompany.CompanyDelete(
+                    company.CompanyId);
 
             if (deleted)
             {
@@ -151,7 +174,6 @@ namespace CompanyProjectWindowsFormApp
                 );
             }
         }
-
         private void SearchCompanies()
         {
             string searchText = TxtSearch.Text.Trim().ToLower();

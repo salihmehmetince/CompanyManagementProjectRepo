@@ -1,6 +1,6 @@
 ﻿namespace CompanyProjectWindowsFormApp
 {
-    partial class FrmCompaniesForm
+    partial class FrmCompanyDepartmentsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlFooter = new System.Windows.Forms.Panel();
             this.LblRecordCount = new System.Windows.Forms.Label();
-            this.DgvCompanies = new System.Windows.Forms.DataGridView();
+            this.DgvCompanyDepartmentTypes = new System.Windows.Forms.DataGridView();
             this.PnlToolbar = new System.Windows.Forms.Panel();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyDepartmentTypes)).BeginInit();
             this.PnlToolbar.SuspendLayout();
             this.PnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -54,24 +54,24 @@
             // PnlMain
             // 
             this.PnlMain.Controls.Add(this.PnlFooter);
-            this.PnlMain.Controls.Add(this.DgvCompanies);
+            this.PnlMain.Controls.Add(this.DgvCompanyDepartmentTypes);
             this.PnlMain.Controls.Add(this.PnlToolbar);
             this.PnlMain.Controls.Add(this.PnlHeader);
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
             this.PnlMain.Size = new System.Drawing.Size(1082, 603);
-            this.PnlMain.TabIndex = 0;
+            this.PnlMain.TabIndex = 4;
             // 
             // PnlFooter
             // 
             this.PnlFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.PnlFooter.Controls.Add(this.LblRecordCount);
             this.PnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PnlFooter.Location = new System.Drawing.Point(0, 552);
+            this.PnlFooter.Location = new System.Drawing.Point(0, 558);
             this.PnlFooter.Name = "PnlFooter";
             this.PnlFooter.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.PnlFooter.Size = new System.Drawing.Size(1082, 51);
+            this.PnlFooter.Size = new System.Drawing.Size(1082, 45);
             this.PnlFooter.TabIndex = 3;
             // 
             // LblRecordCount
@@ -82,53 +82,53 @@
             this.LblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.LblRecordCount.Location = new System.Drawing.Point(20, 14);
             this.LblRecordCount.Name = "LblRecordCount";
-            this.LblRecordCount.Size = new System.Drawing.Size(93, 20);
+            this.LblRecordCount.Size = new System.Drawing.Size(209, 20);
             this.LblRecordCount.TabIndex = 0;
-            this.LblRecordCount.Text = "0 companies";
+            this.LblRecordCount.Text = "0 Company Department Types";
             // 
-            // DgvCompanies
+            // DgvCompanyDepartmentTypes
             // 
-            this.DgvCompanies.AllowUserToAddRows = false;
-            this.DgvCompanies.AllowUserToDeleteRows = false;
-            this.DgvCompanies.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.DgvCompanies.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvCompanies.BackgroundColor = System.Drawing.Color.White;
-            this.DgvCompanies.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvCompanies.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvCompanies.ColumnHeadersHeight = 40;
-            this.DgvCompanies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvCompanies.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvCompanies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvCompanies.EnableHeadersVisualStyles = false;
-            this.DgvCompanies.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.DgvCompanies.Location = new System.Drawing.Point(0, 150);
-            this.DgvCompanies.MultiSelect = false;
-            this.DgvCompanies.Name = "DgvCompanies";
-            this.DgvCompanies.ReadOnly = true;
-            this.DgvCompanies.RowHeadersVisible = false;
-            this.DgvCompanies.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.DgvCompanies.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DgvCompanies.RowTemplate.Height = 35;
-            this.DgvCompanies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvCompanies.Size = new System.Drawing.Size(1082, 453);
-            this.DgvCompanies.TabIndex = 2;
+            this.DgvCompanyDepartmentTypes.AllowUserToAddRows = false;
+            this.DgvCompanyDepartmentTypes.AllowUserToDeleteRows = false;
+            this.DgvCompanyDepartmentTypes.AllowUserToResizeRows = false;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.DgvCompanyDepartmentTypes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            this.DgvCompanyDepartmentTypes.BackgroundColor = System.Drawing.Color.White;
+            this.DgvCompanyDepartmentTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvCompanyDepartmentTypes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.DgvCompanyDepartmentTypes.ColumnHeadersHeight = 40;
+            this.DgvCompanyDepartmentTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCompanyDepartmentTypes.DefaultCellStyle = dataGridViewCellStyle19;
+            this.DgvCompanyDepartmentTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvCompanyDepartmentTypes.EnableHeadersVisualStyles = false;
+            this.DgvCompanyDepartmentTypes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvCompanyDepartmentTypes.Location = new System.Drawing.Point(0, 150);
+            this.DgvCompanyDepartmentTypes.MultiSelect = false;
+            this.DgvCompanyDepartmentTypes.Name = "DgvCompanyDepartmentTypes";
+            this.DgvCompanyDepartmentTypes.ReadOnly = true;
+            this.DgvCompanyDepartmentTypes.RowHeadersVisible = false;
+            this.DgvCompanyDepartmentTypes.RowHeadersWidth = 51;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
+            this.DgvCompanyDepartmentTypes.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            this.DgvCompanyDepartmentTypes.RowTemplate.Height = 35;
+            this.DgvCompanyDepartmentTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvCompanyDepartmentTypes.Size = new System.Drawing.Size(1082, 453);
+            this.DgvCompanyDepartmentTypes.TabIndex = 2;
             // 
             // PnlToolbar
             // 
@@ -150,7 +150,7 @@
             this.BtnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnDelete.ForeColor = System.Drawing.Color.White;
-            this.BtnDelete.Location = new System.Drawing.Point(630, 17);
+            this.BtnDelete.Location = new System.Drawing.Point(732, 17);
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(90, 35);
             this.BtnDelete.TabIndex = 3;
@@ -165,7 +165,7 @@
             this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnEdit.ForeColor = System.Drawing.Color.White;
-            this.BtnEdit.Location = new System.Drawing.Point(530, 17);
+            this.BtnEdit.Location = new System.Drawing.Point(632, 17);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(90, 35);
             this.BtnEdit.TabIndex = 2;
@@ -182,9 +182,9 @@
             this.BtnAdd.ForeColor = System.Drawing.Color.White;
             this.BtnAdd.Location = new System.Drawing.Point(390, 17);
             this.BtnAdd.Name = "BtnAdd";
-            this.BtnAdd.Size = new System.Drawing.Size(130, 35);
+            this.BtnAdd.Size = new System.Drawing.Size(236, 35);
             this.BtnAdd.TabIndex = 1;
-            this.BtnAdd.Text = "New Company";
+            this.BtnAdd.Text = "New Company Department Type";
             this.BtnAdd.UseVisualStyleBackColor = false;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -219,9 +219,9 @@
             this.LblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.LblDescription.Location = new System.Drawing.Point(27, 48);
             this.LblDescription.Name = "LblDescription";
-            this.LblDescription.Size = new System.Drawing.Size(210, 20);
+            this.LblDescription.Size = new System.Drawing.Size(325, 20);
             this.LblDescription.TabIndex = 1;
-            this.LblDescription.Text = "Manage company information";
+            this.LblDescription.Text = "Manage company department type information";
             // 
             // LblTitle
             // 
@@ -229,13 +229,13 @@
             this.LblTitle.BackColor = System.Drawing.Color.Transparent;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblTitle.ForeColor = System.Drawing.Color.White;
-            this.LblTitle.Location = new System.Drawing.Point(25, 15);
+            this.LblTitle.Location = new System.Drawing.Point(25, 4);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(167, 41);
+            this.LblTitle.Size = new System.Drawing.Size(397, 41);
             this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "Companies";
+            this.LblTitle.Text = "Company Department Types";
             // 
-            // FrmCompaniesForm
+            // FrmCompanyDepartmentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -245,13 +245,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmCompaniesForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Companies";
+            this.Name = "FrmCompanyDepartmentsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Company Departments";
             this.PnlMain.ResumeLayout(false);
             this.PnlFooter.ResumeLayout(false);
             this.PnlFooter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyDepartmentTypes)).EndInit();
             this.PnlToolbar.ResumeLayout(false);
             this.PnlToolbar.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
@@ -263,16 +263,16 @@
         #endregion
 
         private System.Windows.Forms.Panel PnlMain;
-        private System.Windows.Forms.Panel PnlHeader;
-        private System.Windows.Forms.Panel PnlToolbar;
-        private System.Windows.Forms.Label LblDescription;
-        private System.Windows.Forms.Label LblTitle;
-        private System.Windows.Forms.Button BtnAdd;
-        private System.Windows.Forms.TextBox TxtSearch;
-        private System.Windows.Forms.Button BtnEdit;
-        private System.Windows.Forms.Button BtnDelete;
-        private System.Windows.Forms.DataGridView DgvCompanies;
         private System.Windows.Forms.Panel PnlFooter;
         private System.Windows.Forms.Label LblRecordCount;
+        private System.Windows.Forms.DataGridView DgvCompanyDepartmentTypes;
+        private System.Windows.Forms.Panel PnlToolbar;
+        private System.Windows.Forms.Button BtnDelete;
+        private System.Windows.Forms.Button BtnEdit;
+        private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.TextBox TxtSearch;
+        private System.Windows.Forms.Panel PnlHeader;
+        private System.Windows.Forms.Label LblDescription;
+        private System.Windows.Forms.Label LblTitle;
     }
 }

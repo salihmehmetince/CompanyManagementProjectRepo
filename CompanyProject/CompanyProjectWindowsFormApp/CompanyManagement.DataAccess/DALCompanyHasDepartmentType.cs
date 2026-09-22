@@ -54,8 +54,21 @@ namespace CompanyManagement.DataAccess
         {
             using (var context = new AppDbContext())
             {
-                context.CompanyHasDepartmentTypes
-                    .Update(companyHasDepartmentType);
+                CompanyHasDepartmentType existing =
+                    context.CompanyHasDepartmentTypes
+                        .FirstOrDefault(x =>
+                            x.CompanyHasDepartmentTypeId ==
+                            companyHasDepartmentType
+                                .CompanyHasDepartmentTypeId);
+
+                if (existing == null)
+                    return false;
+
+                existing.CompanyId =
+                    companyHasDepartmentType.CompanyId;
+
+                existing.DepartmentTypeId =
+                    companyHasDepartmentType.DepartmentTypeId;
 
                 return context.SaveChanges() > 0;
             }

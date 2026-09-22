@@ -179,6 +179,18 @@
     <Compile Include="FrmCompanyAddEditForm.Designer.cs">
       <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCompanyDepartmentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyDepartmentsForm.Designer.cs">
+      <DependentUpon>FrmCompanyDepartmentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCompanyHasDepartmentTypeAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompanyHasDepartmentTypeAddEditForm.Designer.cs">
+      <DependentUpon>FrmCompanyHasDepartmentTypeAddEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmCompanyHasItemsAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -375,6 +387,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCompanyAddEditForm.resx">
       <DependentUpon>FrmCompanyAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyDepartmentsForm.resx">
+      <DependentUpon>FrmCompanyDepartmentsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompanyHasDepartmentTypeAddEditForm.resx">
+      <DependentUpon>FrmCompanyHasDepartmentTypeAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCompanyHasItemsAddEditForm.resx">
       <DependentUpon>FrmCompanyHasItemsAddEditForm.cs</DependentUpon>

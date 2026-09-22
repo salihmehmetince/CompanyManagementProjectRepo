@@ -28,8 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlContent = new System.Windows.Forms.Panel();
+            this.MTBTelephoneNumber = new System.Windows.Forms.MaskedTextBox();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.CmbCompanyType = new System.Windows.Forms.ComboBox();
@@ -44,10 +49,12 @@
             this.PnlHeader = new System.Windows.Forms.Panel();
             this.LblDescription = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
-            this.MTBTelephoneNumber = new System.Windows.Forms.MaskedTextBox();
+            this.LblCompanyOwners = new System.Windows.Forms.Label();
+            this.DgvCompanyOwners = new System.Windows.Forms.DataGridView();
             this.PnlMain.SuspendLayout();
             this.PnlContent.SuspendLayout();
             this.PnlHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).BeginInit();
             this.SuspendLayout();
             // 
             // PnlMain
@@ -57,11 +64,13 @@
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
-            this.PnlMain.Size = new System.Drawing.Size(650, 500);
+            this.PnlMain.Size = new System.Drawing.Size(650, 800);
             this.PnlMain.TabIndex = 0;
             // 
             // PnlContent
             // 
+            this.PnlContent.Controls.Add(this.DgvCompanyOwners);
+            this.PnlContent.Controls.Add(this.LblCompanyOwners);
             this.PnlContent.Controls.Add(this.MTBTelephoneNumber);
             this.PnlContent.Controls.Add(this.BtnCancel);
             this.PnlContent.Controls.Add(this.BtnSave);
@@ -78,8 +87,21 @@
             this.PnlContent.Location = new System.Drawing.Point(0, 80);
             this.PnlContent.Name = "PnlContent";
             this.PnlContent.Padding = new System.Windows.Forms.Padding(30, 25, 30, 20);
-            this.PnlContent.Size = new System.Drawing.Size(650, 420);
+            this.PnlContent.Size = new System.Drawing.Size(650, 720);
             this.PnlContent.TabIndex = 1;
+            // 
+            // MTBTelephoneNumber
+            // 
+            this.MTBTelephoneNumber.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.MTBTelephoneNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MTBTelephoneNumber.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.MTBTelephoneNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.MTBTelephoneNumber.Location = new System.Drawing.Point(30, 200);
+            this.MTBTelephoneNumber.Mask = "(999) 000-0000";
+            this.MTBTelephoneNumber.Name = "MTBTelephoneNumber";
+            this.MTBTelephoneNumber.Size = new System.Drawing.Size(275, 30);
+            this.MTBTelephoneNumber.TabIndex = 12;
+            this.MTBTelephoneNumber.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // BtnCancel
             // 
@@ -88,7 +110,7 @@
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnCancel.ForeColor = System.Drawing.Color.White;
-            this.BtnCancel.Location = new System.Drawing.Point(510, 340);
+            this.BtnCancel.Location = new System.Drawing.Point(507, 662);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(110, 35);
             this.BtnCancel.TabIndex = 11;
@@ -103,7 +125,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(390, 340);
+            this.BtnSave.Location = new System.Drawing.Point(387, 662);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(110, 35);
             this.BtnSave.TabIndex = 10;
@@ -247,25 +269,65 @@
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "New Company";
             // 
-            // MTBTelephoneNumber
+            // LblCompanyOwners
             // 
-            this.MTBTelephoneNumber.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.MTBTelephoneNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MTBTelephoneNumber.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.MTBTelephoneNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.MTBTelephoneNumber.Location = new System.Drawing.Point(30, 200);
-            this.MTBTelephoneNumber.Mask = "(999) 000-0000";
-            this.MTBTelephoneNumber.Name = "MTBTelephoneNumber";
-            this.MTBTelephoneNumber.Size = new System.Drawing.Size(275, 30);
-            this.MTBTelephoneNumber.TabIndex = 12;
-            this.MTBTelephoneNumber.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.LblCompanyOwners.AutoSize = true;
+            this.LblCompanyOwners.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblCompanyOwners.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblCompanyOwners.Location = new System.Drawing.Point(30, 400);
+            this.LblCompanyOwners.Name = "LblCompanyOwners";
+            this.LblCompanyOwners.Size = new System.Drawing.Size(125, 20);
+            this.LblCompanyOwners.TabIndex = 45;
+            this.LblCompanyOwners.Text = "Company Owners";
+            // 
+            // DgvCompanyOwners
+            // 
+            this.DgvCompanyOwners.AllowUserToAddRows = false;
+            this.DgvCompanyOwners.AllowUserToDeleteRows = false;
+            this.DgvCompanyOwners.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.DgvCompanyOwners.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvCompanyOwners.BackgroundColor = System.Drawing.Color.White;
+            this.DgvCompanyOwners.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvCompanyOwners.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvCompanyOwners.ColumnHeadersHeight = 40;
+            this.DgvCompanyOwners.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvCompanyOwners.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DgvCompanyOwners.EnableHeadersVisualStyles = false;
+            this.DgvCompanyOwners.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvCompanyOwners.Location = new System.Drawing.Point(30, 423);
+            this.DgvCompanyOwners.MultiSelect = false;
+            this.DgvCompanyOwners.Name = "DgvCompanyOwners";
+            this.DgvCompanyOwners.RowHeadersVisible = false;
+            this.DgvCompanyOwners.RowHeadersWidth = 51;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.DgvCompanyOwners.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.DgvCompanyOwners.RowTemplate.Height = 35;
+            this.DgvCompanyOwners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvCompanyOwners.Size = new System.Drawing.Size(570, 215);
+            this.DgvCompanyOwners.TabIndex = 46;
             // 
             // FrmCompanyAddEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(650, 500);
+            this.ClientSize = new System.Drawing.Size(650, 800);
             this.Controls.Add(this.PnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmCompanyAddEditForm";
@@ -276,6 +338,7 @@
             this.PnlContent.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
             this.PnlHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvCompanyOwners)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -299,5 +362,7 @@
         private System.Windows.Forms.Label LblCompanyType;
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.MaskedTextBox MTBTelephoneNumber;
+        private System.Windows.Forms.Label LblCompanyOwners;
+        private System.Windows.Forms.DataGridView DgvCompanyOwners;
     }
 }

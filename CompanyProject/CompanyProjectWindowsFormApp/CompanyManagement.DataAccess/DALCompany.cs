@@ -66,7 +66,7 @@ namespace CompanyManagement.DataAccess
                 existingCompany.CompanyEmail = company.CompanyEmail;
                 existingCompany.CompanyTypeId = company.CompanyTypeId;
 
-                return context.SaveChanges() > 0;
+                return context.SaveChanges() >= 0;
             }
         }
 

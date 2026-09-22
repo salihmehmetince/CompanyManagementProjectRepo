@@ -26,6 +26,8 @@ namespace CompanyProjectWindowsFormApp
 
         private BLEmployee blEmployee =
             new BLEmployee();
+
+        private BLUser blUser =new BLUser();
         public FrmMeetingAddEditForm(Meeting meeting=null)
         {
             InitializeComponent();
@@ -96,6 +98,14 @@ namespace CompanyProjectWindowsFormApp
             var companyOwners =
                 blCompanyOwner
                     .CompanyOwnerList()
+                    .Where(x =>
+                    {
+                        User user =
+                            blUser.UserGetById(x.UserId);
+
+                        return user != null &&
+                               user.IsActive;
+                    })
                     .Select(x => new
                     {
                         x.CompanyOwnerId,
@@ -105,17 +115,28 @@ namespace CompanyProjectWindowsFormApp
                     })
                     .ToList();
 
-            CLBCompanyOwners.DataSource = companyOwners;
+            CLBCompanyOwners.DataSource =
+                companyOwners;
 
-            CLBCompanyOwners.DisplayMember = "FullName";
-            CLBCompanyOwners.ValueMember = "CompanyOwnerId";
+            CLBCompanyOwners.DisplayMember =
+                "FullName";
+
+            CLBCompanyOwners.ValueMember =
+                "CompanyOwnerId";
         }
-
         private void LoadEmployees()
         {
             var employees =
                 blEmployee
                     .EmployeeList()
+                    .Where(x =>
+                    {
+                        User user =
+                            blUser.UserGetById(x.UserId);
+
+                        return user != null &&
+                               user.IsActive;
+                    })
                     .Select(x => new
                     {
                         x.EmployeeId,
@@ -125,12 +146,15 @@ namespace CompanyProjectWindowsFormApp
                     })
                     .ToList();
 
-            CLBEmployees.DataSource = employees;
+            CLBEmployees.DataSource =
+                employees;
 
-            CLBEmployees.DisplayMember = "FullName";
-            CLBEmployees.ValueMember = "EmployeeId";
+            CLBEmployees.DisplayMember =
+                "FullName";
+
+            CLBEmployees.ValueMember =
+                "EmployeeId";
         }
-
         private void BtnSave_Click(object sender, EventArgs e)
         {
             Meeting meetingToSave;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CompanyManagement.DataAccess
 {
@@ -170,8 +171,9 @@ namespace CompanyManagement.DataAccess
 
                     return true;
                 }
-                catch
+                catch(Exception e)
                 {
+                    MessageBox.Show(e.InnerException.ToString()+" - "+e.Message);
                     transaction.Rollback();
 
                     return false;

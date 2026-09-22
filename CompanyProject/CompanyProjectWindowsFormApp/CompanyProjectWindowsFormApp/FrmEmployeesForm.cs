@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,12 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmEmployeesForm : Form
     {
 
-        BLEmployee blEmployee = new BLEmployee();
+        private BLEmployee blEmployee = new BLEmployee();
+        private BLEmployeeHasCompanyHasDepartmentType blEmployeeHasCompanyHasDepartmentType=new BLEmployeeHasCompanyHasDepartmentType();
+        private BLCompany blCompany = new BLCompany();
+        private BLDepartmentType blDepartmentType = new BLDepartmentType();
+        private BLUser blUser = new BLUser();
+        
         public FrmEmployeesForm()
         {
             InitializeComponent();
@@ -36,44 +42,130 @@ namespace CompanyProjectWindowsFormApp
             this.Icon = Properties.Resources.icon_company;
         }
 
-        private Employee GetSelectedEmployee()
+        private (
+            Employee Employee,
+            EmployeeHasCompanyHasDepartmentType
+                EmployeeHasCompanyHasDepartmentType)
+            GetSelectedEmployee()
         {
             if (DgvEmployees.CurrentRow == null)
-                return null;
+                return (null, null);
 
-            int employeeId = Convert.ToInt32(
-                DgvEmployees.CurrentRow.Cells["EmployeeId"].Value
+            int employeeId =
+                Convert.ToInt32(
+                    DgvEmployees.CurrentRow
+                        .Cells["EmployeeId"]
+                        .Value);
+
+            Employee employee =
+                blEmployee.EmployeeGetById(employeeId);
+
+            EmployeeHasCompanyHasDepartmentType
+                employeeHasCompanyHasDepartmentType =
+                    blEmployeeHasCompanyHasDepartmentType
+                        .EmployeeHasCompanyHasDepartmentTypeList()
+                        .FirstOrDefault(x =>
+                            x.EmployeeId == employeeId);
+
+            return (
+                employee,
+                employeeHasCompanyHasDepartmentType
             );
-
-            return blEmployee.EmployeeGetById(employeeId);
         }
 
         private void ListEmployees()
         {
-            List<Employee> employees = blEmployee.EmployeeList();
+            List<Employee> employees =
+                blEmployee.EmployeeList();
 
-            var employeeList = employees.Select(x => new
+            List<EmployeeHasCompanyHasDepartmentType>
+                employeeHasCompanyHasDepartmentTypes =
+                blEmployeeHasCompanyHasDepartmentType
+                    .EmployeeHasCompanyHasDepartmentTypeList();
+
+            employees = employees
+                .Where(x =>
+                {
+                    User user =
+                        blUser.UserGetById(x.UserId);
+
+                    return user != null &&
+                           user.IsActive;
+                })
+                .ToList();
+
+            var employeeList = employees.Select(x =>
             {
-                x.EmployeeId,
-                x.EmployeeIdentityNumber,
-                x.EmployeeName,
-                x.EmployeeSurname,
-                x.EmployeeBirthday,
-                x.EmployeeHireDate,
-                x.EmployeeTelephoneNumber,
-                x.EmployeeEmail,
-                x.EmployeeSalary,
-                ProfessionTypeName = x.ProfessionType != null
-                    ? x.ProfessionType.ProfessionName
-                    : ""
+                EmployeeHasCompanyHasDepartmentType
+                    employeeHasCompanyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentTypes
+                            .FirstOrDefault(y =>
+                                y.EmployeeId == x.EmployeeId);
+
+                string companyName = "";
+                string departmentName = "";
+
+                if (employeeHasCompanyHasDepartmentType != null)
+                {
+                    CompanyHasDepartmentType
+                        companyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentType
+                            .CompanyHasDepartmentType;
+
+                    if (companyHasDepartmentType != null)
+                    {
+                        Company company =
+                            blCompany.CompanyGetById(
+                                companyHasDepartmentType.CompanyId);
+
+                        DepartmentType departmentType =
+                            blDepartmentType.DepartmentTypeGetById(
+                                companyHasDepartmentType.DepartmentTypeId);
+
+                        companyName =
+                            company != null
+                                ? company.CompanyName
+                                : "";
+
+                        departmentName =
+                            departmentType != null
+                                ? departmentType.DepartmentName
+                                : "";
+                    }
+                }
+
+                return new
+                {
+                    x.EmployeeId,
+                    x.EmployeeIdentityNumber,
+                    x.EmployeeName,
+                    x.EmployeeSurname,
+                    x.EmployeeBirthday,
+                    x.EmployeeHireDate,
+                    x.EmployeeTelephoneNumber,
+                    x.EmployeeEmail,
+                    x.EmployeeSalary,
+
+                    ProfessionTypeName =
+                        x.ProfessionType != null
+                            ? x.ProfessionType.ProfessionName
+                            : "",
+
+                    CompanyName =
+                        companyName,
+
+                    DepartmentName =
+                        departmentName
+                };
             }).ToList();
 
-            DgvEmployees.DataSource = employeeList;
+            DgvEmployees.DataSource =
+                employeeList;
 
             LblRecordCount.Text =
-                employees.Count + " employees";
+                employees.Count +
+                " employees";
         }
-
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             using (var form = new FrmEmployeeAddEditForm())
@@ -85,7 +177,16 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            Employee employee = GetSelectedEmployee();
+            var selectedEmployee =
+                GetSelectedEmployee();
+
+            Employee employee =
+                selectedEmployee.Employee;
+
+            EmployeeHasCompanyHasDepartmentType
+                employeeHasCompanyHasDepartmentType =
+                    selectedEmployee
+                        .EmployeeHasCompanyHasDepartmentType;
 
             if (employee == null)
             {
@@ -93,7 +194,10 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
-            using (var form = new FrmEmployeeAddEditForm(employee))
+            using (var form =
+                new FrmEmployeeAddEditForm(
+                    employee,
+                    employeeHasCompanyHasDepartmentType))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     ListEmployees();
@@ -102,90 +206,233 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            Employee employee = GetSelectedEmployee();
+            var selectedEmployee =
+                GetSelectedEmployee();
+
+            Employee employee =
+                selectedEmployee.Employee;
 
             if (employee == null)
             {
-                MessageBox.Show("Please select an employee.");
+                MessageBox.Show(
+                    "Please select an employee.");
+
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete the selected employee?",
-                "Delete Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
+            DialogResult result =
+                MessageBox.Show(
+                    "Are you sure you want to deactivate the selected employee?",
+                    "Deactivate Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
 
             if (result != DialogResult.Yes)
                 return;
 
-            if (blEmployee.EmployeeDelete(employee.EmployeeId))
+            User user =
+                blUser.UserGetById(
+                    employee.UserId);
+
+            if (user == null)
+            {
+                MessageBox.Show(
+                    "Employee user record could not be found.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            user.IsActive = false;
+
+            if (blUser.UserUpdate(user))
             {
                 ListEmployees();
-                MessageBox.Show("Employee deleted successfully.");
+
+                MessageBox.Show(
+                    "Employee deactivated successfully.",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Employee could not be deleted.");
+                MessageBox.Show(
+                    "Employee could not be deactivated.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
-
         private void SearchEmployees()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
             List<Employee> employees =
                 blEmployee.EmployeeList();
+
+            List<EmployeeHasCompanyHasDepartmentType>
+                employeeHasCompanyHasDepartmentTypes =
+                blEmployeeHasCompanyHasDepartmentType
+                    .EmployeeHasCompanyHasDepartmentTypeList();
+
+            employees = employees
+                .Where(x =>
+                {
+                    User user =
+                        blUser.UserGetById(x.UserId);
+
+                    return user != null &&
+                           user.IsActive;
+                })
+                .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
                 employees = employees
                     .Where(x =>
-                        x.EmployeeIdentityNumber.ToLower()
-                            .Contains(searchText) ||
+                    {
+                        EmployeeHasCompanyHasDepartmentType
+                            employeeHasCompanyHasDepartmentType =
+                                employeeHasCompanyHasDepartmentTypes
+                                    .FirstOrDefault(y =>
+                                        y.EmployeeId == x.EmployeeId);
 
-                        x.EmployeeName.ToLower()
-                            .Contains(searchText) ||
+                        string companyName = "";
+                        string departmentName = "";
 
-                        x.EmployeeSurname.ToLower()
-                            .Contains(searchText) ||
+                        if (employeeHasCompanyHasDepartmentType != null &&
+                            employeeHasCompanyHasDepartmentType
+                                .CompanyHasDepartmentType != null)
+                        {
+                            CompanyHasDepartmentType
+                                companyHasDepartmentType =
+                                    employeeHasCompanyHasDepartmentType
+                                        .CompanyHasDepartmentType;
 
-                        x.EmployeeTelephoneNumber.ToLower()
-                            .Contains(searchText) ||
+                            Company company =
+                                blCompany.CompanyGetById(
+                                    companyHasDepartmentType.CompanyId);
 
-                        x.EmployeeEmail.ToLower()
-                            .Contains(searchText) ||
+                            DepartmentType departmentType =
+                                blDepartmentType.DepartmentTypeGetById(
+                                    companyHasDepartmentType.DepartmentTypeId);
 
-                        (x.ProfessionType != null &&
-                         x.ProfessionType.ProfessionName.ToLower()
-                            .Contains(searchText))
-                    )
+                            companyName =
+                                company != null
+                                    ? company.CompanyName
+                                    : "";
+
+                            departmentName =
+                                departmentType != null
+                                    ? departmentType.DepartmentName
+                                    : "";
+                        }
+
+                        return
+                            x.EmployeeIdentityNumber.ToLower()
+                                .Contains(searchText) ||
+
+                            x.EmployeeName.ToLower()
+                                .Contains(searchText) ||
+
+                            x.EmployeeSurname.ToLower()
+                                .Contains(searchText) ||
+
+                            x.EmployeeTelephoneNumber.ToLower()
+                                .Contains(searchText) ||
+
+                            x.EmployeeEmail.ToLower()
+                                .Contains(searchText) ||
+
+                            (x.ProfessionType != null &&
+                             x.ProfessionType.ProfessionName
+                                .ToLower()
+                                .Contains(searchText)) ||
+
+                            companyName.ToLower()
+                                .Contains(searchText) ||
+
+                            departmentName.ToLower()
+                                .Contains(searchText);
+                    })
                     .ToList();
             }
 
-            var employeeList = employees.Select(x => new
+            var employeeList = employees.Select(x =>
             {
-                x.EmployeeId,
-                x.EmployeeIdentityNumber,
-                x.EmployeeName,
-                x.EmployeeSurname,
-                x.EmployeeBirthday,
-                x.EmployeeHireDate,
-                x.EmployeeTelephoneNumber,
-                x.EmployeeEmail,
-                x.EmployeeSalary,
-                ProfessionTypeName = x.ProfessionType != null
-                    ? x.ProfessionType.ProfessionName
-                    : ""
+                EmployeeHasCompanyHasDepartmentType
+                    employeeHasCompanyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentTypes
+                            .FirstOrDefault(y =>
+                                y.EmployeeId == x.EmployeeId);
+
+                string companyName = "";
+                string departmentName = "";
+
+                if (employeeHasCompanyHasDepartmentType != null &&
+                    employeeHasCompanyHasDepartmentType
+                        .CompanyHasDepartmentType != null)
+                {
+                    CompanyHasDepartmentType
+                        companyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentType
+                            .CompanyHasDepartmentType;
+
+                    Company company =
+                        blCompany.CompanyGetById(
+                            companyHasDepartmentType.CompanyId);
+
+                    DepartmentType departmentType =
+                        blDepartmentType.DepartmentTypeGetById(
+                            companyHasDepartmentType.DepartmentTypeId);
+
+                    companyName =
+                        company != null
+                            ? company.CompanyName
+                            : "";
+
+                    departmentName =
+                        departmentType != null
+                            ? departmentType.DepartmentName
+                            : "";
+                }
+
+                return new
+                {
+                    x.EmployeeId,
+                    x.EmployeeIdentityNumber,
+                    x.EmployeeName,
+                    x.EmployeeSurname,
+                    x.EmployeeBirthday,
+                    x.EmployeeHireDate,
+                    x.EmployeeTelephoneNumber,
+                    x.EmployeeEmail,
+                    x.EmployeeSalary,
+
+                    ProfessionTypeName =
+                        x.ProfessionType != null
+                            ? x.ProfessionType.ProfessionName
+                            : "",
+
+                    CompanyName =
+                        companyName,
+
+                    DepartmentName =
+                        departmentName
+                };
             }).ToList();
 
             DgvEmployees.DataSource =
                 employeeList;
 
             LblRecordCount.Text =
-                employees.Count + " employees";
+                employees.Count +
+                " employees";
         }
-
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchEmployees();
