@@ -31,5 +31,10 @@ namespace CompanyManagement.Entity
         public virtual ICollection<CustomerBuysCompanyHasProductOrService>
             CustomerBuysCompanyHasProductOrServices
         { get; set; }
+
+        [Required]
+        public int CompanyId { get; set; }
+
+        public virtual Company Company { get; set; }
     }
 }

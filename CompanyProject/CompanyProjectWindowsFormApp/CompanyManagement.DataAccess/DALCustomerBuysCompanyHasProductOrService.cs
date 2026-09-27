@@ -17,6 +17,7 @@ namespace CompanyManagement.DataAccess
             {
                 return context.CustomerBuysCompanyHasProductOrServices
                     .Include(x => x.Customer)
+                        .ThenInclude(x => x.Company)
                     .Include(x => x.CompanyHasProductOrService)
                         .ThenInclude(x => x.ProductOrService)
                     .Include(x => x.CompanyHasProductOrService)
@@ -34,6 +35,7 @@ namespace CompanyManagement.DataAccess
             {
                 return context.CustomerBuysCompanyHasProductOrServices
                     .Include(x => x.Customer)
+                        .ThenInclude(x => x.Company)
                     .Include(x => x.CompanyHasProductOrService)
                         .ThenInclude(x => x.ProductOrService)
                     .Include(x => x.CompanyHasProductOrService)

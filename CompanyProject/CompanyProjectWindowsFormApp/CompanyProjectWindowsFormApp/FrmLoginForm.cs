@@ -116,11 +116,59 @@ namespace CompanyProjectWindowsFormApp
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                FrmMainForm frmMainForm = new FrmMainForm(user);
+                if (user.UserRoleId == 1 || user.UserRoleId == 2)
+                {
+                    FrmCompanySelectionForm frmCompanySelectionForm =
+                        new FrmCompanySelectionForm(user);
 
-                Hide();
+                    if (frmCompanySelectionForm.ShowDialog() == DialogResult.OK)
+                    {
+                        FrmMainForm frmMainForm =
+                            new FrmMainForm(
+                                user,
+                                frmCompanySelectionForm.SelectedCompanyIds);
 
-                frmMainForm.Show();
+                        Hide();
+                        frmMainForm.Show();
+                    }
+                }
+                else
+                {
+                    BLEmployeeHasCompanyHasDepartmentType blEmployeeCompany =
+                        new BLEmployeeHasCompanyHasDepartmentType();
+
+                    var employeeCompany =
+                        blEmployeeCompany
+                            .EmployeeHasCompanyHasDepartmentTypeList()
+                            .FirstOrDefault(x =>
+                                x.Employee.UserId == user.UserId);
+
+                    if (employeeCompany == null)
+                    {
+                        MessageBox.Show(
+                            "No company is assigned to this employee.",
+                            "Warning",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
+                    List<int> selectedCompanyIds =
+                        new List<int>
+                        {
+            employeeCompany
+                .CompanyHasDepartmentType.CompanyId
+                        };
+
+                    FrmMainForm frmMainForm =
+                        new FrmMainForm(
+                            user,
+                            selectedCompanyIds);
+
+                    Hide();
+                    frmMainForm.Show();
+                }
             }
             catch (Exception ex)
             {

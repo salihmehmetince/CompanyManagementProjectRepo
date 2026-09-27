@@ -219,6 +219,13 @@ namespace CompanyManagement.Entity
                 .HasForeignKey(x => x.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Company 1 - N Customer
+            modelBuilder.Entity<Customer>()
+                .HasOne(x => x.Company)
+                .WithMany(x => x.Customers)
+                .HasForeignKey(x => x.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // CompanyHasProductOrService 1 - N CustomerBuysCompanyHasProductOrService
             modelBuilder.Entity<CustomerBuysCompanyHasProductOrService>()
                 .HasOne(x => x.CompanyHasProductOrService)

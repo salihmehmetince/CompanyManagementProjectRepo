@@ -43,6 +43,8 @@
             this.PnlHeader = new System.Windows.Forms.Panel();
             this.LblDescription = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
+            this.CmbCompany = new System.Windows.Forms.ComboBox();
+            this.LblCompany = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlContent.SuspendLayout();
             this.PnlHeader.SuspendLayout();
@@ -55,12 +57,14 @@
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
-            this.PnlMain.Size = new System.Drawing.Size(682, 503);
+            this.PnlMain.Size = new System.Drawing.Size(682, 603);
             this.PnlMain.TabIndex = 3;
             // 
             // PnlContent
             // 
             this.PnlContent.AutoScroll = true;
+            this.PnlContent.Controls.Add(this.CmbCompany);
+            this.PnlContent.Controls.Add(this.LblCompany);
             this.PnlContent.Controls.Add(this.TxtEmail);
             this.PnlContent.Controls.Add(this.LblEmail);
             this.PnlContent.Controls.Add(this.MTBTelephoneNumber);
@@ -75,7 +79,7 @@
             this.PnlContent.Location = new System.Drawing.Point(0, 80);
             this.PnlContent.Name = "PnlContent";
             this.PnlContent.Padding = new System.Windows.Forms.Padding(30, 25, 30, 20);
-            this.PnlContent.Size = new System.Drawing.Size(682, 423);
+            this.PnlContent.Size = new System.Drawing.Size(682, 523);
             this.PnlContent.TabIndex = 1;
             // 
             // TxtEmail
@@ -129,7 +133,7 @@
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnCancel.ForeColor = System.Drawing.Color.White;
-            this.BtnCancel.Location = new System.Drawing.Point(452, 350);
+            this.BtnCancel.Location = new System.Drawing.Point(452, 450);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(110, 35);
             this.BtnCancel.TabIndex = 11;
@@ -144,7 +148,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(332, 350);
+            this.BtnSave.Location = new System.Drawing.Point(332, 450);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(110, 35);
             this.BtnSave.TabIndex = 10;
@@ -231,12 +235,35 @@
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "New Customers";
             // 
+            // CmbCompany
+            // 
+            this.CmbCompany.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.CmbCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbCompany.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.CmbCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.CmbCompany.FormattingEnabled = true;
+            this.CmbCompany.Location = new System.Drawing.Point(30, 350);
+            this.CmbCompany.Name = "CmbCompany";
+            this.CmbCompany.Size = new System.Drawing.Size(275, 31);
+            this.CmbCompany.TabIndex = 18;
+            // 
+            // LblCompany
+            // 
+            this.LblCompany.AutoSize = true;
+            this.LblCompany.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LblCompany.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.LblCompany.Location = new System.Drawing.Point(30, 325);
+            this.LblCompany.Name = "LblCompany";
+            this.LblCompany.Size = new System.Drawing.Size(72, 20);
+            this.LblCompany.TabIndex = 17;
+            this.LblCompany.Text = "Company";
+            // 
             // FrmCustomerAddEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(682, 503);
+            this.ClientSize = new System.Drawing.Size(682, 603);
             this.Controls.Add(this.PnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -270,5 +297,7 @@
         private System.Windows.Forms.Panel PnlHeader;
         private System.Windows.Forms.Label LblDescription;
         private System.Windows.Forms.Label LblTitle;
+        private System.Windows.Forms.ComboBox CmbCompany;
+        private System.Windows.Forms.Label LblCompany;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmMainForm : Form
     {
         private User user;
+        private List<int> selectedCompanyIds;
         private bool menuVisible = true;
         private bool definitionsCreated = false;
         private bool definitionsVisible = false;
@@ -33,9 +35,15 @@ namespace CompanyProjectWindowsFormApp
             blCustomerBuysCompanyHasProductOrService =
             new BLCustomerBuysCompanyHasProductOrService();
 
-        public FrmMainForm(User user)
+        private BLEmployeeHasCompanyHasDepartmentType blEmployeeHasCompanyHasDepartmentType = new BLEmployeeHasCompanyHasDepartmentType();
+
+        BLCompanyHasProductOrService blCompanyHasProductOrService =
+    new BLCompanyHasProductOrService();
+        public FrmMainForm(User user, List<int> selectedCompanyIds)
         {
             this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             SetUserInformation(user);
             CreateDashBoardButton();
@@ -449,7 +457,11 @@ namespace CompanyProjectWindowsFormApp
         }
         private void BtnCompanyDepartments_Click(object sender, EventArgs e)
         {
-            FrmCompanyDepartmentsForm frmCompanyDepartmentsForm = new FrmCompanyDepartmentsForm();
+            FrmCompanyDepartmentsForm frmCompanyDepartmentsForm =
+                new FrmCompanyDepartmentsForm(
+                    user,
+                    selectedCompanyIds);
+
             frmCompanyDepartmentsForm.ShowDialog();
         }
         private void btnEmployeeBonuses_Click(object sender, EventArgs e)
@@ -787,29 +799,42 @@ namespace CompanyProjectWindowsFormApp
                 FlowDirection.LeftToRight;
 
 
-            int companyCount =
-    blCompany
-        .CompanyList()
-        .Count;
+            int companyCount = blCompany
+    .CompanyList()
+    .Count(x => selectedCompanyIds.Contains(x.CompanyId));
 
-            int employeeCount =
-                blEmployee
-                    .EmployeeList()
-                    .Count;
+            List<EmployeeHasCompanyHasDepartmentType>
+    employeeCompanyDepartments =
+    blEmployeeHasCompanyHasDepartmentType
+        .EmployeeHasCompanyHasDepartmentTypeList();
+
+            int employeeCount = employeeCompanyDepartments
+                .Count(x =>
+                    x.CompanyHasDepartmentType != null &&
+                    x.CompanyHasDepartmentType.Company != null &&
+                    selectedCompanyIds.Contains(
+                        x.CompanyHasDepartmentType.CompanyId));
 
             int customerCount =
                 blCustomer
                     .CustomerList()
-                    .Count;
+                    .Count(x =>
+                        selectedCompanyIds.Contains(x.CompanyId));
 
             int productOrServiceCount =
-                blProductOrService
-                    .ProductOrServiceList()
-                    .Count;
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceList()
+                    .Count(x =>
+                        selectedCompanyIds.Contains(x.CompanyId));
 
             List<CustomerBuysCompanyHasProductOrService> payments =
                 blCustomerBuysCompanyHasProductOrService
-                    .CustomerBuysCompanyHasProductOrServiceList();
+                    .CustomerBuysCompanyHasProductOrServiceList()
+                    .Where(x =>
+                        x.CompanyHasProductOrService != null &&
+                        selectedCompanyIds.Contains(
+                            x.CompanyHasProductOrService.CompanyId))
+                    .ToList();
 
             int salesCount = payments.Count;
 
@@ -1664,6 +1689,7 @@ namespace CompanyProjectWindowsFormApp
             var lowStock =
                 companyProducts
                     .Where(x =>
+                        selectedCompanyIds.Contains(x.CompanyId) &&
                         x.CompanyHasProductOrServiceQuantity <= 10)
                     .OrderBy(x =>
                         x.CompanyHasProductOrServiceQuantity)

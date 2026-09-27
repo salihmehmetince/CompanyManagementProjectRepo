@@ -51,6 +51,12 @@ namespace CompanyProjectWindowsFormApp
                         ? x.Customer.CustomerName
                         : "",
 
+                CompanyName =
+                    x.Customer != null &&
+                    x.Customer.Company != null
+                        ? x.Customer.Company.CompanyName
+                        : "",
+
                 ProductOrServiceName =
                     x.CompanyHasProductOrService != null &&
                     x.CompanyHasProductOrService.ProductOrService != null
@@ -85,6 +91,10 @@ namespace CompanyProjectWindowsFormApp
             DgvPayments.Columns[
                 "CustomerName"
             ].HeaderText = "Customer";
+
+            DgvPayments.Columns[
+                "CompanyName"
+            ].HeaderText = "Company";
 
             DgvPayments.Columns[
                 "ProductOrServiceName"
@@ -136,32 +146,45 @@ namespace CompanyProjectWindowsFormApp
             {
                 payments = payments
                     .Where(x =>
-                        x.Customer.CustomerName
+                        (x.Customer != null &&
+                         x.Customer.CustomerName
                             .ToLower()
-                            .Contains(searchText) ||
+                            .Contains(searchText)) ||
 
-                        x.CompanyHasProductOrService
+                        (x.Customer != null &&
+                         x.Customer.Company != null &&
+                         x.Customer.Company.CompanyName
+                            .ToLower()
+                            .Contains(searchText)) ||
+
+                        (x.CompanyHasProductOrService != null &&
+                         x.CompanyHasProductOrService.ProductOrService != null &&
+                         x.CompanyHasProductOrService
                             .ProductOrService.ProductOrServiceName
                             .ToLower()
-                            .Contains(searchText) ||
+                            .Contains(searchText)) ||
 
-                        x.PaymentType.PaymentTypeName
+                        (x.PaymentType != null &&
+                         x.PaymentType.PaymentTypeName
                             .ToLower()
-                            .Contains(searchText) ||
+                            .Contains(searchText)) ||
 
                         x.CustomerBuysCompanyHasProductOrServiceQuantity
                             .ToString()
                             .Contains(searchText) ||
 
-                        x.CompanyHasProductOrService
+                        (x.CompanyHasProductOrService != null &&
+                         x.CompanyHasProductOrService
                             .CompanyHasProductOrServicePrice
                             .ToString()
-                            .Contains(searchText) ||
+                            .Contains(searchText)) ||
 
                         (
-                            x.CompanyHasProductOrService
-                                .CompanyHasProductOrServicePrice *
-                            x.CustomerBuysCompanyHasProductOrServiceQuantity
+                            x.CompanyHasProductOrService != null
+                                ? x.CompanyHasProductOrService
+                                    .CompanyHasProductOrServicePrice *
+                                  x.CustomerBuysCompanyHasProductOrServiceQuantity
+                                : 0
                         )
                         .ToString()
                         .Contains(searchText) ||
@@ -186,22 +209,36 @@ namespace CompanyProjectWindowsFormApp
                 x.CustomerBuysCompanyHasProductOrServiceId,
 
                 CustomerName =
-                    x.Customer.CustomerName,
+                    x.Customer != null
+                        ? x.Customer.CustomerName
+                        : "",
+
+                CompanyName =
+                    x.Customer != null &&
+                    x.Customer.Company != null
+                        ? x.Customer.Company.CompanyName
+                        : "",
 
                 ProductOrServiceName =
-                    x.CompanyHasProductOrService
-                        .ProductOrService
-                        .ProductOrServiceName,
+                    x.CompanyHasProductOrService != null &&
+                    x.CompanyHasProductOrService.ProductOrService != null
+                        ? x.CompanyHasProductOrService
+                            .ProductOrService.ProductOrServiceName
+                        : "",
 
                 PaymentTypeName =
-                    x.PaymentType.PaymentTypeName,
+                    x.PaymentType != null
+                        ? x.PaymentType.PaymentTypeName
+                        : "",
 
                 x.CustomerBuysCompanyHasProductOrServiceQuantity,
 
                 TotalPrice =
-                    x.CompanyHasProductOrService
-                        .CompanyHasProductOrServicePrice *
-                    x.CustomerBuysCompanyHasProductOrServiceQuantity,
+                    x.CompanyHasProductOrService != null
+                        ? x.CompanyHasProductOrService
+                            .CompanyHasProductOrServicePrice *
+                          x.CustomerBuysCompanyHasProductOrServiceQuantity
+                        : 0,
 
                 x.CustomerBuysCompanyHasProductOrServiceDate
 
@@ -216,6 +253,10 @@ namespace CompanyProjectWindowsFormApp
             DgvPayments.Columns[
                 "CustomerName"
             ].HeaderText = "Customer";
+
+            DgvPayments.Columns[
+                "CompanyName"
+            ].HeaderText = "Company";
 
             DgvPayments.Columns[
                 "ProductOrServiceName"

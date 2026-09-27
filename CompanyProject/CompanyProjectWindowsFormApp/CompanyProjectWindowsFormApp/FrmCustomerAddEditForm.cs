@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,27 @@ namespace CompanyProjectWindowsFormApp
 
         private BLCustomer blCustomer = new BLCustomer();
         private Customer customer;
+        private BLCompany blCompany = new BLCompany();
+
         public FrmCustomerAddEditForm(Customer customer=null)
         {
             InitializeComponent();
             this.customer = customer;
+            LoadCompanies();
             if (customer != null) 
             {
                 LoadCustomer();
             }
+        }
+
+        private void LoadCompanies()
+        {
+            List<Company> companies =
+                blCompany.CompanyList();
+
+            CmbCompany.DataSource = companies;
+            CmbCompany.DisplayMember = "CompanyName";
+            CmbCompany.ValueMember = "CompanyId";
         }
 
         private void LoadCustomer()
@@ -36,6 +50,8 @@ namespace CompanyProjectWindowsFormApp
             TxtSurname.Text = customer.CustomerSurname;
             MTBTelephoneNumber.Text = customer.CustomerTelephoneNumber;
             TxtEmail.Text = customer.CustomerEmail;
+            CmbCompany.SelectedValue = customer.CompanyId;
+
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -53,11 +69,20 @@ namespace CompanyProjectWindowsFormApp
                 customerToSave = customer;
             }
 
-            customerToSave.CustomerName = TxtEmployeeName.Text.Trim();
-            customerToSave.CustomerSurname = TxtSurname.Text.Trim();
+            customerToSave.CustomerName =
+                TxtEmployeeName.Text.Trim();
+
+            customerToSave.CustomerSurname =
+                TxtSurname.Text.Trim();
+
             customerToSave.CustomerTelephoneNumber =
                 MTBTelephoneNumber.Text.Trim();
-            customerToSave.CustomerEmail = TxtEmail.Text.Trim();
+
+            customerToSave.CustomerEmail =
+                TxtEmail.Text.Trim();
+
+            customerToSave.CompanyId =
+                Convert.ToInt32(CmbCompany.SelectedValue);
 
             bool result;
 
@@ -94,7 +119,6 @@ namespace CompanyProjectWindowsFormApp
                 );
             }
         }
-
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

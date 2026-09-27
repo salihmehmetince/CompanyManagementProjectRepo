@@ -57,6 +57,12 @@ namespace CompanyManagement.BusinessLogic
                 true))
                 return false;
 
+            if (!Validation.IntControl(
+                customer.CompanyId,
+                1,
+                int.MaxValue))
+                return false;
+
             return dalCustomer
                 .CustomerAdd(customer);
         }
@@ -95,9 +101,16 @@ namespace CompanyManagement.BusinessLogic
                 true))
                 return false;
 
+            if (!Validation.IntControl(
+                customer.CompanyId,
+                1,
+                int.MaxValue))
+                return false;
+
             var existingCustomer =
                 dalCustomer
-                    .CustomerGetById(customer.CustomerId);
+                    .CustomerGetById(
+                        customer.CustomerId);
 
             if (existingCustomer == null)
                 return false;

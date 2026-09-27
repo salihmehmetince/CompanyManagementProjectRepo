@@ -38,7 +38,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void ListCustomers()
         {
-            List<Customer> customers = blCustomer.CustomerList();
+            List<Customer> customers =
+                blCustomer.CustomerList();
 
             var customerList = customers.Select(x => new
             {
@@ -46,14 +47,15 @@ namespace CompanyProjectWindowsFormApp
                 x.CustomerName,
                 x.CustomerSurname,
                 x.CustomerTelephoneNumber,
-                x.CustomerEmail
+                x.CustomerEmail,
+                CompanyName = x.Company.CompanyName
             }).ToList();
 
             DgvCustomers.DataSource = customerList;
 
-            LblRecordCount.Text = customers.Count + " customers";
+            LblRecordCount.Text =
+                customers.Count + " customers";
         }
-
         private Customer GetSelectedCustomer()
         {
             if (DgvCustomers.CurrentRow == null)
@@ -68,7 +70,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchCustomers()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
             List<Customer> customers =
                 blCustomer.CustomerList();
@@ -77,11 +80,19 @@ namespace CompanyProjectWindowsFormApp
             {
                 customers = customers
                     .Where(x =>
-                        x.CustomerName.ToLower().Contains(searchText) ||
-                        x.CustomerSurname.ToLower().Contains(searchText) ||
-                        x.CustomerTelephoneNumber.ToLower().Contains(searchText) ||
+                        x.CustomerName.ToLower()
+                            .Contains(searchText) ||
+                        x.CustomerSurname.ToLower()
+                            .Contains(searchText) ||
+                        x.CustomerTelephoneNumber.ToLower()
+                            .Contains(searchText) ||
                         (x.CustomerEmail != null &&
-                         x.CustomerEmail.ToLower().Contains(searchText))
+                         x.CustomerEmail.ToLower()
+                            .Contains(searchText)) ||
+                        (x.Company != null &&
+                         x.Company.CompanyName
+                            .ToLower()
+                            .Contains(searchText))
                     )
                     .ToList();
             }
@@ -92,7 +103,11 @@ namespace CompanyProjectWindowsFormApp
                 x.CustomerName,
                 x.CustomerSurname,
                 x.CustomerTelephoneNumber,
-                x.CustomerEmail
+                x.CustomerEmail,
+                CompanyName =
+                    x.Company != null
+                        ? x.Company.CompanyName
+                        : ""
             }).ToList();
 
             DgvCustomers.DataSource = customerList;
@@ -100,7 +115,6 @@ namespace CompanyProjectWindowsFormApp
             LblRecordCount.Text =
                 customers.Count + " customers";
         }
-
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchCustomers();

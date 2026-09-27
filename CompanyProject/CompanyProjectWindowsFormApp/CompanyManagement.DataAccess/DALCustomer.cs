@@ -16,6 +16,8 @@ namespace CompanyManagement.DataAccess
             {
                 return context.Customers
                     .Include(x => x.CustomerBuysCompanyHasProductOrServices)
+                                .Include(x => x.Company)
+
                     .ToList();
             }
         }
@@ -26,6 +28,7 @@ namespace CompanyManagement.DataAccess
             {
                 return context.Customers
                     .Include(x => x.CustomerBuysCompanyHasProductOrServices)
+                    .Include(x => x.Company)
                     .FirstOrDefault(x => x.CustomerId == customerId);
             }
         }
@@ -44,7 +47,28 @@ namespace CompanyManagement.DataAccess
         {
             using (var context = new AppDbContext())
             {
-                context.Customers.Update(customer);
+                var existingCustomer =
+                    context.Customers
+                        .FirstOrDefault(x =>
+                            x.CustomerId == customer.CustomerId);
+
+                if (existingCustomer == null)
+                    return false;
+
+                existingCustomer.CustomerName =
+                    customer.CustomerName;
+
+                existingCustomer.CustomerSurname =
+                    customer.CustomerSurname;
+
+                existingCustomer.CustomerTelephoneNumber =
+                    customer.CustomerTelephoneNumber;
+
+                existingCustomer.CustomerEmail =
+                    customer.CustomerEmail;
+
+                existingCustomer.CompanyId =
+                    customer.CompanyId;
 
                 return context.SaveChanges() > 0;
             }

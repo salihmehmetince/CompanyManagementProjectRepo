@@ -14,11 +14,21 @@ namespace CompanyProjectWindowsFormApp
 {
     public partial class FrmCompanyDepartmentsForm : Form
     {
+        private User user;
+
+        private List<int> selectedCompanyIds;
+
         private BLDepartmentType blDepartmentType = new BLDepartmentType();
         private BLCompany blCompany=new BLCompany();
         private BLCompanyHasDepartmentType blCompanyHasDepartmentType=new BLCompanyHasDepartmentType();
-        public FrmCompanyDepartmentsForm()
+        public FrmCompanyDepartmentsForm(User user,
+    List<int> selectedCompanyIds)
         {
+            this.user =user;
+
+            this.selectedCompanyIds =
+                selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
@@ -42,7 +52,10 @@ namespace CompanyProjectWindowsFormApp
         {
             List<CompanyHasDepartmentType> companyHasDepartmentTypes =
                 blCompanyHasDepartmentType
-                    .CompanyHasDepartmentTypeList();
+                    .CompanyHasDepartmentTypeList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(x.CompanyId))
+                    .ToList();
 
             var companyHasDepartmentTypeList =
                 companyHasDepartmentTypes.Select(x => new
@@ -61,7 +74,6 @@ namespace CompanyProjectWindowsFormApp
                 companyHasDepartmentTypes.Count +
                 " company department records";
         }
-
         private CompanyHasDepartmentType
     GetSelectedCompanyHasDepartmentType()
         {
@@ -89,7 +101,10 @@ namespace CompanyProjectWindowsFormApp
             List<CompanyHasDepartmentType>
                 companyHasDepartmentTypes =
                 blCompanyHasDepartmentType
-                    .CompanyHasDepartmentTypeList();
+                    .CompanyHasDepartmentTypeList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(x.CompanyId))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
