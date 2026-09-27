@@ -1,6 +1,6 @@
 ﻿namespace CompanyProjectWindowsFormApp
 {
-    partial class FrmEmployeesForm
+    partial class FrmEmployeeBonusesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PnlMain = new System.Windows.Forms.Panel();
             this.PnlFooter = new System.Windows.Forms.Panel();
             this.LblRecordCount = new System.Windows.Forms.Label();
-            this.DgvEmployees = new System.Windows.Forms.DataGridView();
+            this.DgvEmployeeBonuses = new System.Windows.Forms.DataGridView();
             this.PnlToolbar = new System.Windows.Forms.Panel();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployeeBonuses)).BeginInit();
             this.PnlToolbar.SuspendLayout();
             this.PnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -54,14 +54,14 @@
             // PnlMain
             // 
             this.PnlMain.Controls.Add(this.PnlFooter);
-            this.PnlMain.Controls.Add(this.DgvEmployees);
+            this.PnlMain.Controls.Add(this.DgvEmployeeBonuses);
             this.PnlMain.Controls.Add(this.PnlToolbar);
             this.PnlMain.Controls.Add(this.PnlHeader);
             this.PnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlMain.Location = new System.Drawing.Point(0, 0);
             this.PnlMain.Name = "PnlMain";
             this.PnlMain.Size = new System.Drawing.Size(1082, 603);
-            this.PnlMain.TabIndex = 2;
+            this.PnlMain.TabIndex = 3;
             // 
             // PnlFooter
             // 
@@ -82,54 +82,54 @@
             this.LblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.LblRecordCount.Location = new System.Drawing.Point(20, 14);
             this.LblRecordCount.Name = "LblRecordCount";
-            this.LblRecordCount.Size = new System.Drawing.Size(93, 20);
+            this.LblRecordCount.Size = new System.Drawing.Size(145, 20);
             this.LblRecordCount.TabIndex = 0;
-            this.LblRecordCount.Text = "0 Employees";
+            this.LblRecordCount.Text = "0 Employee Bonuses";
             // 
-            // DgvEmployees
+            // DgvEmployeeBonuses
             // 
-            this.DgvEmployees.AllowUserToAddRows = false;
-            this.DgvEmployees.AllowUserToDeleteRows = false;
-            this.DgvEmployees.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.DgvEmployees.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvEmployees.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvEmployees.BackgroundColor = System.Drawing.Color.White;
-            this.DgvEmployees.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvEmployees.ColumnHeadersHeight = 40;
-            this.DgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvEmployees.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvEmployees.EnableHeadersVisualStyles = false;
-            this.DgvEmployees.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.DgvEmployees.Location = new System.Drawing.Point(0, 150);
-            this.DgvEmployees.MultiSelect = false;
-            this.DgvEmployees.Name = "DgvEmployees";
-            this.DgvEmployees.ReadOnly = true;
-            this.DgvEmployees.RowHeadersVisible = false;
-            this.DgvEmployees.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.DgvEmployees.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DgvEmployees.RowTemplate.Height = 35;
-            this.DgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvEmployees.Size = new System.Drawing.Size(1082, 453);
-            this.DgvEmployees.TabIndex = 2;
+            this.DgvEmployeeBonuses.AllowUserToAddRows = false;
+            this.DgvEmployeeBonuses.AllowUserToDeleteRows = false;
+            this.DgvEmployeeBonuses.AllowUserToResizeRows = false;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.DgvEmployeeBonuses.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.DgvEmployeeBonuses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvEmployeeBonuses.BackgroundColor = System.Drawing.Color.White;
+            this.DgvEmployeeBonuses.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvEmployeeBonuses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.DgvEmployeeBonuses.ColumnHeadersHeight = 40;
+            this.DgvEmployeeBonuses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvEmployeeBonuses.DefaultCellStyle = dataGridViewCellStyle15;
+            this.DgvEmployeeBonuses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvEmployeeBonuses.EnableHeadersVisualStyles = false;
+            this.DgvEmployeeBonuses.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.DgvEmployeeBonuses.Location = new System.Drawing.Point(0, 150);
+            this.DgvEmployeeBonuses.MultiSelect = false;
+            this.DgvEmployeeBonuses.Name = "DgvEmployeeBonuses";
+            this.DgvEmployeeBonuses.ReadOnly = true;
+            this.DgvEmployeeBonuses.RowHeadersVisible = false;
+            this.DgvEmployeeBonuses.RowHeadersWidth = 51;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
+            this.DgvEmployeeBonuses.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            this.DgvEmployeeBonuses.RowTemplate.Height = 35;
+            this.DgvEmployeeBonuses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvEmployeeBonuses.Size = new System.Drawing.Size(1082, 453);
+            this.DgvEmployeeBonuses.TabIndex = 2;
             // 
             // PnlToolbar
             // 
@@ -151,7 +151,7 @@
             this.BtnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnDelete.ForeColor = System.Drawing.Color.White;
-            this.BtnDelete.Location = new System.Drawing.Point(630, 17);
+            this.BtnDelete.Location = new System.Drawing.Point(680, 17);
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(90, 35);
             this.BtnDelete.TabIndex = 3;
@@ -166,7 +166,7 @@
             this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnEdit.ForeColor = System.Drawing.Color.White;
-            this.BtnEdit.Location = new System.Drawing.Point(530, 17);
+            this.BtnEdit.Location = new System.Drawing.Point(580, 17);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(90, 35);
             this.BtnEdit.TabIndex = 2;
@@ -183,9 +183,9 @@
             this.BtnAdd.ForeColor = System.Drawing.Color.White;
             this.BtnAdd.Location = new System.Drawing.Point(390, 17);
             this.BtnAdd.Name = "BtnAdd";
-            this.BtnAdd.Size = new System.Drawing.Size(130, 35);
+            this.BtnAdd.Size = new System.Drawing.Size(184, 35);
             this.BtnAdd.TabIndex = 1;
-            this.BtnAdd.Text = "New Employee";
+            this.BtnAdd.Text = "New Employee Bonus";
             this.BtnAdd.UseVisualStyleBackColor = false;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -220,9 +220,9 @@
             this.LblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.LblDescription.Location = new System.Drawing.Point(27, 48);
             this.LblDescription.Name = "LblDescription";
-            this.LblDescription.Size = new System.Drawing.Size(221, 20);
+            this.LblDescription.Size = new System.Drawing.Size(273, 20);
             this.LblDescription.TabIndex = 1;
-            this.LblDescription.Text = "Manage employees information";
+            this.LblDescription.Text = "Manage employee bonuses information";
             // 
             // LblTitle
             // 
@@ -230,13 +230,13 @@
             this.LblTitle.BackColor = System.Drawing.Color.Transparent;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblTitle.ForeColor = System.Drawing.Color.White;
-            this.LblTitle.Location = new System.Drawing.Point(25, 15);
+            this.LblTitle.Location = new System.Drawing.Point(25, 9);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(162, 41);
+            this.LblTitle.Size = new System.Drawing.Size(268, 41);
             this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "Employees";
+            this.LblTitle.Text = "Employee Bonuses";
             // 
-            // FrmEmployeesForm
+            // FrmEmployeeBonusesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -246,13 +246,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmEmployeesForm";
+            this.Name = "FrmEmployeeBonusesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Employees";
+            this.Text = "Employee Bonuses";
             this.PnlMain.ResumeLayout(false);
             this.PnlFooter.ResumeLayout(false);
             this.PnlFooter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvEmployeeBonuses)).EndInit();
             this.PnlToolbar.ResumeLayout(false);
             this.PnlToolbar.PerformLayout();
             this.PnlHeader.ResumeLayout(false);
@@ -266,7 +266,7 @@
         private System.Windows.Forms.Panel PnlMain;
         private System.Windows.Forms.Panel PnlFooter;
         private System.Windows.Forms.Label LblRecordCount;
-        private System.Windows.Forms.DataGridView DgvEmployees;
+        private System.Windows.Forms.DataGridView DgvEmployeeBonuses;
         private System.Windows.Forms.Panel PnlToolbar;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnEdit;

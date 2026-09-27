@@ -240,5 +240,6 @@ namespace CompanyProjectWindowsFormApp
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
     }
 }

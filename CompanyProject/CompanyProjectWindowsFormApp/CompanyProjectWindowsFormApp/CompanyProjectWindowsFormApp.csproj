@@ -257,6 +257,18 @@
     <Compile Include="FrmEmployeeAddEditForm.Designer.cs">
       <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmEmployeeBonusAddEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeeBonusAddEditForm.Designer.cs">
+      <DependentUpon>FrmEmployeeBonusAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEmployeeBonusesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeeBonusesForm.Designer.cs">
+      <DependentUpon>FrmEmployeeBonusesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmEmployeesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -426,6 +438,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmployeeAddEditForm.resx">
       <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmployeeBonusAddEditForm.resx">
+      <DependentUpon>FrmEmployeeBonusAddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmployeeBonusesForm.resx">
+      <DependentUpon>FrmEmployeeBonusesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmployeesForm.resx">
       <DependentUpon>FrmEmployeesForm.cs</DependentUpon>

@@ -30,5 +30,11 @@ namespace CompanyManagement.Entity
         [Range(0, double.MaxValue)]
         [Column(TypeName = "decimal(18,2)")]
         public decimal CompanyGivesBonusToEmployeeQuantity { get; set; }
+
+        [Required]
+        public bool AffectSalary {  get; set; }
+
+        [Required]
+        public bool IsPercentage { get; set; }
     }
 }

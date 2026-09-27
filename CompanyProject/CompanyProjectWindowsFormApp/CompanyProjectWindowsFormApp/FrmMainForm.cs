@@ -117,6 +117,7 @@ namespace CompanyProjectWindowsFormApp
             CreateCompanyOwnersButton();
             CreateCompanyDeparmentsButton();
             CreateEmployeesButton();
+            CreateEmployeeBonusButton();
             CreateMeetingsButton();
             CreateTasksButton();
             CreateProductsOrServicesButton();
@@ -203,6 +204,27 @@ namespace CompanyProjectWindowsFormApp
             btnCompanyDepartments.Click += BtnCompanyDepartments_Click;
         }
 
+        private void CreateEmployeeBonusButton()
+        {
+            Button btnEmployeeBonuses = new Button();
+
+            btnEmployeeBonuses.Name = "btnEmployeeBonuses";
+            btnEmployeeBonuses.Text = "Employee Bonuses";
+            btnEmployeeBonuses.Dock = DockStyle.Top;
+            btnEmployeeBonuses.Height = 50;
+            btnEmployeeBonuses.FlatStyle = FlatStyle.Flat;
+            btnEmployeeBonuses.BackColor = Color.FromArgb(15, 23, 42);
+            btnEmployeeBonuses.ForeColor = Color.White;
+            btnEmployeeBonuses.Font = new Font("Segoe UI", 10F);
+            btnEmployeeBonuses.TextAlign = ContentAlignment.MiddleLeft;
+            btnEmployeeBonuses.Padding = new Padding(20, 0, 0, 0);
+            btnEmployeeBonuses.Cursor = Cursors.Hand;
+            btnEmployeeBonuses.FlatAppearance.BorderSize = 0;
+
+            PnlMenuButtons.Controls.Add(btnEmployeeBonuses);
+            btnEmployeeBonuses.BringToFront();
+            btnEmployeeBonuses.Click += btnEmployeeBonuses_Click;
+        }
         private void CreateEmployeesButton()
         {
             Button btnEmployees = new Button();
@@ -429,6 +451,11 @@ namespace CompanyProjectWindowsFormApp
         {
             FrmCompanyDepartmentsForm frmCompanyDepartmentsForm = new FrmCompanyDepartmentsForm();
             frmCompanyDepartmentsForm.ShowDialog();
+        }
+        private void btnEmployeeBonuses_Click(object sender, EventArgs e)
+        {
+            FrmEmployeeBonusesForm frmEmployeeBonusesForm = new FrmEmployeeBonusesForm();
+            frmEmployeeBonusesForm.ShowDialog();
         }
         private void BtnEmployees_Click(object sender, EventArgs e)
         {
