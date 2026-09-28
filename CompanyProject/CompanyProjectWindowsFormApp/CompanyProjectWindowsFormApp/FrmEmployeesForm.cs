@@ -21,9 +21,18 @@ namespace CompanyProjectWindowsFormApp
         private BLCompany blCompany = new BLCompany();
         private BLDepartmentType blDepartmentType = new BLDepartmentType();
         private BLUser blUser = new BLUser();
-        
-        public FrmEmployeesForm()
+
+        private User user;
+
+        private List<int> selectedCompanyIds;
+
+        public FrmEmployeesForm(
+    User user,
+    List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             SetButtonsBorder();
             setIcon();
@@ -89,8 +98,20 @@ namespace CompanyProjectWindowsFormApp
                     User user =
                         blUser.UserGetById(x.UserId);
 
+                    EmployeeHasCompanyHasDepartmentType
+                        employeeHasCompanyHasDepartmentType =
+                        employeeHasCompanyHasDepartmentTypes
+                            .FirstOrDefault(y =>
+                                y.EmployeeId == x.EmployeeId);
+
                     return user != null &&
-                           user.IsActive;
+                           user.IsActive &&
+                           employeeHasCompanyHasDepartmentType != null &&
+                           employeeHasCompanyHasDepartmentType
+                               .CompanyHasDepartmentType != null &&
+                           selectedCompanyIds.Contains(
+                               employeeHasCompanyHasDepartmentType
+                                   .CompanyHasDepartmentType.CompanyId);
                 })
                 .ToList();
 
@@ -98,9 +119,9 @@ namespace CompanyProjectWindowsFormApp
             {
                 EmployeeHasCompanyHasDepartmentType
                     employeeHasCompanyHasDepartmentType =
-                        employeeHasCompanyHasDepartmentTypes
-                            .FirstOrDefault(y =>
-                                y.EmployeeId == x.EmployeeId);
+                    employeeHasCompanyHasDepartmentTypes
+                        .FirstOrDefault(y =>
+                            y.EmployeeId == x.EmployeeId);
 
                 string companyName = "";
                 string departmentName = "";
@@ -168,13 +189,15 @@ namespace CompanyProjectWindowsFormApp
         }
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            using (var form = new FrmEmployeeAddEditForm())
+            using (var form =
+                new FrmEmployeeAddEditForm(
+                    user,
+                    selectedCompanyIds))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     ListEmployees();
             }
         }
-
         private void BtnEdit_Click(object sender, EventArgs e)
         {
             var selectedEmployee =
@@ -196,6 +219,8 @@ namespace CompanyProjectWindowsFormApp
 
             using (var form =
                 new FrmEmployeeAddEditForm(
+                    user,
+                    selectedCompanyIds,
                     employee,
                     employeeHasCompanyHasDepartmentType))
             {
@@ -203,7 +228,6 @@ namespace CompanyProjectWindowsFormApp
                     ListEmployees();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             var selectedEmployee =
@@ -280,15 +304,27 @@ namespace CompanyProjectWindowsFormApp
                     .EmployeeHasCompanyHasDepartmentTypeList();
 
             employees = employees
-                .Where(x =>
-                {
-                    User user =
-                        blUser.UserGetById(x.UserId);
+    .Where(x =>
+    {
+        User user =
+            blUser.UserGetById(x.UserId);
 
-                    return user != null &&
-                           user.IsActive;
-                })
-                .ToList();
+        EmployeeHasCompanyHasDepartmentType
+            employeeHasCompanyHasDepartmentType =
+            employeeHasCompanyHasDepartmentTypes
+                .FirstOrDefault(y =>
+                    y.EmployeeId == x.EmployeeId);
+
+        return user != null &&
+               user.IsActive &&
+               employeeHasCompanyHasDepartmentType != null &&
+               employeeHasCompanyHasDepartmentType
+                   .CompanyHasDepartmentType != null &&
+               selectedCompanyIds.Contains(
+                   employeeHasCompanyHasDepartmentType
+                       .CompanyHasDepartmentType.CompanyId);
+    })
+    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {

@@ -18,8 +18,16 @@ namespace CompanyProjectWindowsFormApp
 
         private BLMeeting blMeeting = new BLMeeting();
 
-        public FrmMeetingsForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmMeetingsForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
@@ -41,19 +49,34 @@ namespace CompanyProjectWindowsFormApp
 
         private void ListMeetings()
         {
-            List<Meeting> meetings = blMeeting.MeetingList();
+            List<Meeting> meetings =
+                blMeeting
+                    .MeetingList()
+                    .Where(x =>
+                        x.MeetingHasCompanyOwners != null &&
+                        x.MeetingHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(
+                                    z.CompanyId))))
+                    .ToList();
 
-            var meetingList = meetings.Select(x => new
-            {
-                x.MeetingId,
-                x.MeetingPlot,
-                x.MeetingPlace,
-                x.MeetingDate
-            }).ToList();
+            var meetingList =
+                meetings.Select(x => new
+                {
+                    x.MeetingId,
+                    x.MeetingPlot,
+                    x.MeetingPlace,
+                    x.MeetingDate
+                }).ToList();
 
-            DgvMeetings.DataSource = meetingList;
+            DgvMeetings.DataSource =
+                meetingList;
 
-            LblRecordCount.Text = meetings.Count + " meetings";
+            LblRecordCount.Text =
+                meetings.Count +
+                " meetings";
         }
 
         private Meeting GetSelectedMeeting()
@@ -70,9 +93,21 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchMeetings()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
-            List<Meeting> meetings = blMeeting.MeetingList();
+            List<Meeting> meetings =
+                blMeeting
+                    .MeetingList()
+                    .Where(x =>
+                        x.MeetingHasCompanyOwners != null &&
+                        x.MeetingHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(
+                                    z.CompanyId))))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -89,17 +124,21 @@ namespace CompanyProjectWindowsFormApp
                     .ToList();
             }
 
-            var meetingList = meetings.Select(x => new
-            {
-                x.MeetingId,
-                x.MeetingPlot,
-                x.MeetingPlace,
-                x.MeetingDate
-            }).ToList();
+            var meetingList =
+                meetings.Select(x => new
+                {
+                    x.MeetingId,
+                    x.MeetingPlot,
+                    x.MeetingPlace,
+                    x.MeetingDate
+                }).ToList();
 
-            DgvMeetings.DataSource = meetingList;
+            DgvMeetings.DataSource =
+                meetingList;
 
-            LblRecordCount.Text = meetings.Count + " meetings";
+            LblRecordCount.Text =
+                meetings.Count +
+                " meetings";
         }
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -109,7 +148,9 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
                     FrmMeetingAddEditForm frm =
-            new FrmMeetingAddEditForm();
+            new FrmMeetingAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -133,7 +174,10 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmMeetingAddEditForm frm =
-                new FrmMeetingAddEditForm(meeting);
+                new FrmMeetingAddEditForm(
+                    user,
+                    selectedCompanyIds
+                    ,meeting);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {

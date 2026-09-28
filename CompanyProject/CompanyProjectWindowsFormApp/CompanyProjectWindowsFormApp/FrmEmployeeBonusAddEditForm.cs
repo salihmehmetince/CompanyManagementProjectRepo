@@ -24,19 +24,30 @@ namespace CompanyManagement.BusinessLogic
         
         private BLCompanyGivesBonusToEmployee blCompanyGivesBonusToEmployee = new BLCompanyGivesBonusToEmployee();
         private BLUser blUser = new BLUser();
-        public FrmEmployeeBonusAddEditForm(CompanyGivesBonusToEmployee employeeBonus = null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmEmployeeBonusAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            CompanyGivesBonusToEmployee employeeBonus = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             LoadCompanies();
             LoadEmployees();
+
             this.employeeBonus = employeeBonus;
-            if (employeeBonus != null) 
+
+            if (employeeBonus != null)
             {
                 LoadEmployeeBonus();
             }
+
             SetButtonsBorder();
         }
-
         private void SetButtonsBorder()
         {
             BtnSave.FlatAppearance.BorderSize = 0;
@@ -46,13 +57,22 @@ namespace CompanyManagement.BusinessLogic
         private void LoadCompanies()
         {
             List<Company> companies =
-                blCompany.CompanyList();
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            CmbCompany.DataSource = companies;
-            CmbCompany.DisplayMember = "CompanyName";
-            CmbCompany.ValueMember = "CompanyId";
+            CmbCompany.DataSource =
+                companies;
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
         }
-
         private void LoadEmployees()
         {
             if (CmbCompany.SelectedValue == null)

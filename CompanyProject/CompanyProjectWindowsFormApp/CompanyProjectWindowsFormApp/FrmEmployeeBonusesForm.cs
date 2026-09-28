@@ -16,14 +16,21 @@ namespace CompanyProjectWindowsFormApp
     {
 
         private BLCompanyGivesBonusToEmployee blCompanyGivesBonusToEmployee = new BLCompanyGivesBonusToEmployee();
-        public FrmEmployeeBonusesForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmEmployeeBonusesForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             SetButtonsBorder();
             setIcon();
             ListEmployeeBonuses();
         }
-
         private void SetButtonsBorder()
         {
             BtnAdd.FlatAppearance.BorderSize = 0;
@@ -41,7 +48,12 @@ namespace CompanyProjectWindowsFormApp
             List<CompanyGivesBonusToEmployee>
                 employeeBonuses =
                 blCompanyGivesBonusToEmployee
-                    .CompanyGivesBonusToEmployeeList();
+                    .CompanyGivesBonusToEmployeeList()
+                    .Where(x =>
+                        x.Company != null &&
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
             var employeeBonusList =
                 employeeBonuses.Select(x => new
@@ -96,7 +108,12 @@ namespace CompanyProjectWindowsFormApp
             List<CompanyGivesBonusToEmployee>
                 employeeBonuses =
                 blCompanyGivesBonusToEmployee
-                    .CompanyGivesBonusToEmployeeList();
+                    .CompanyGivesBonusToEmployeeList()
+                    .Where(x =>
+                        x.Company != null &&
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -177,14 +194,15 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmEmployeeBonusAddEditForm frm =
-    new FrmEmployeeBonusAddEditForm();
+                new FrmEmployeeBonusAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListEmployeeBonuses();
             }
         }
-
         private void BtnEdit_Click(object sender, EventArgs e)
         {
             CompanyGivesBonusToEmployee employeeBonus =
@@ -213,14 +231,16 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmEmployeeBonusAddEditForm frm =
-                new FrmEmployeeBonusAddEditForm(employeeBonus);
+                new FrmEmployeeBonusAddEditForm(
+                    user,
+                    selectedCompanyIds,
+                    employeeBonus);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListEmployeeBonuses();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CompanyGivesBonusToEmployee employeeBonus =

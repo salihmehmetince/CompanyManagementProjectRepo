@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -28,14 +29,26 @@ namespace CompanyProjectWindowsFormApp
             new BLEmployee();
 
         private BLUser blUser =new BLUser();
-        public FrmMeetingAddEditForm(Meeting meeting=null)
+        private User user;
+        private List<int> selectedCompanyIds;
+        private BLEmployeeHasCompanyHasDepartmentType blEmployeeHasCompanyHasDepartmentType = new BLEmployeeHasCompanyHasDepartmentType();
+        public FrmMeetingAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            Meeting meeting = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
-            this.meeting=meeting;
+            this.meeting = meeting;
+
             LoadCompanyOwners();
             LoadEmployees();
+
             SetButtonsBorder();
-            if (meeting != null) 
+
+            if (meeting != null)
             {
                 LoadMeeting();
             }
@@ -66,7 +79,8 @@ namespace CompanyProjectWindowsFormApp
 
             for (int i = 0; i < CLBCompanyOwners.Items.Count; i++)
             {
-                dynamic companyOwner = CLBCompanyOwners.Items[i];
+                dynamic companyOwner =
+                    CLBCompanyOwners.Items[i];
 
                 if (meetingCompanyOwners.Contains(
                     (int)companyOwner.CompanyOwnerId))
@@ -84,7 +98,8 @@ namespace CompanyProjectWindowsFormApp
 
             for (int i = 0; i < CLBEmployees.Items.Count; i++)
             {
-                dynamic employee = CLBEmployees.Items[i];
+                dynamic employee =
+                    CLBEmployees.Items[i];
 
                 if (meetingEmployees.Contains(
                     (int)employee.EmployeeId))
@@ -104,7 +119,11 @@ namespace CompanyProjectWindowsFormApp
                             blUser.UserGetById(x.UserId);
 
                         return user != null &&
-                               user.IsActive;
+                               user.IsActive &&
+                               x.CompanyOwnerHasCompanies != null &&
+                               x.CompanyOwnerHasCompanies.Any(y =>
+                                   selectedCompanyIds.Contains(
+                                       y.CompanyId));
                     })
                     .Select(x => new
                     {
@@ -134,8 +153,22 @@ namespace CompanyProjectWindowsFormApp
                         User user =
                             blUser.UserGetById(x.UserId);
 
+                        EmployeeHasCompanyHasDepartmentType
+                            employeeCompanyDepartment =
+                            blEmployeeHasCompanyHasDepartmentType
+                                .EmployeeHasCompanyHasDepartmentTypeList()
+                                .FirstOrDefault(y =>
+                                    y.EmployeeId == x.EmployeeId);
+
                         return user != null &&
-                               user.IsActive;
+                               user.IsActive &&
+                               employeeCompanyDepartment != null &&
+                               employeeCompanyDepartment
+                                   .CompanyHasDepartmentType != null &&
+                               selectedCompanyIds.Contains(
+                                   employeeCompanyDepartment
+                                       .CompanyHasDepartmentType
+                                       .CompanyId);
                     })
                     .Select(x => new
                     {

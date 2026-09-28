@@ -55,10 +55,25 @@ namespace CompanyManagement.DataAccess
         {
             using (var context = new AppDbContext())
             {
-                context.EmployeeHasCompanyHasDepartmentTypes
-                    .Update(employeeHasCompanyHasDepartmentType);
+                var existingEmployeeHasCompanyHasDepartmentType =
+                    context.EmployeeHasCompanyHasDepartmentTypes
+                        .FirstOrDefault(x =>
+                            x.EmployeeHasCompanyId ==
+                            employeeHasCompanyHasDepartmentType
+                                .EmployeeHasCompanyId);
 
-                return context.SaveChanges() > 0;
+                if (existingEmployeeHasCompanyHasDepartmentType == null)
+                    return false;
+
+                existingEmployeeHasCompanyHasDepartmentType.EmployeeId =
+                    employeeHasCompanyHasDepartmentType.EmployeeId;
+
+                existingEmployeeHasCompanyHasDepartmentType
+                    .CompanyHasDepartmentTypeId =
+                        employeeHasCompanyHasDepartmentType
+                            .CompanyHasDepartmentTypeId;
+
+                return context.SaveChanges() >= 0;
             }
         }
 

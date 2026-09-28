@@ -15,8 +15,16 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmCompanyInventoryForm : Form
     {
         private BLCompanyHasProductOrService blCompanyHasProductOrService = new BLCompanyHasProductOrService();
-        public FrmCompanyInventoryForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmCompanyInventoryForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
@@ -38,9 +46,14 @@ namespace CompanyProjectWindowsFormApp
 
         private void ListItems()
         {
-            List<CompanyHasProductOrService> companyHasProductOrServices =
+            List<CompanyHasProductOrService>
+                companyHasProductOrServices =
                 blCompanyHasProductOrService
-                    .CompanyHasProductOrServiceList();
+                    .CompanyHasProductOrServiceList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
             var companyHasProductOrServiceList =
                 companyHasProductOrServices.Select(x => new
@@ -59,7 +72,6 @@ namespace CompanyProjectWindowsFormApp
                 companyHasProductOrServices.Count +
                 " company products/services";
         }
-
         private CompanyHasProductOrService GetSelectedItem()
         {
             if (DgvItems.CurrentRow == null)
@@ -78,11 +90,17 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchItems()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
-            List<CompanyHasProductOrService> companyHasProductOrServices =
+            List<CompanyHasProductOrService>
+                companyHasProductOrServices =
                 blCompanyHasProductOrService
-                    .CompanyHasProductOrServiceList();
+                    .CompanyHasProductOrServiceList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -92,7 +110,8 @@ namespace CompanyProjectWindowsFormApp
                             x.Company.CompanyName
                                 .ToLower()
                                 .Contains(searchText) ||
-                            x.ProductOrService.ProductOrServiceName
+                            x.ProductOrService
+                                .ProductOrServiceName
                                 .ToLower()
                                 .Contains(searchText) ||
                             x.CompanyHasProductOrServiceQuantity
@@ -122,7 +141,6 @@ namespace CompanyProjectWindowsFormApp
                 companyHasProductOrServices.Count +
                 " company products/services";
         }
-
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchItems();
@@ -131,7 +149,9 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmCompanyHasItemsAddEditForm frm =
-    new FrmCompanyHasItemsAddEditForm();
+                new FrmCompanyHasItemsAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -141,7 +161,8 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            CompanyHasProductOrService item = GetSelectedItem();
+            CompanyHasProductOrService item =
+                GetSelectedItem();
 
             if (item == null)
             {
@@ -155,14 +176,16 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmCompanyHasItemsAddEditForm frm =
-                new FrmCompanyHasItemsAddEditForm(item);
+                new FrmCompanyHasItemsAddEditForm(
+                    user,
+                    selectedCompanyIds,
+                    item);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListItems();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CompanyHasProductOrService item = GetSelectedItem();

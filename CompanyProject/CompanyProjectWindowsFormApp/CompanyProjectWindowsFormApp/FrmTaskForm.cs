@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,8 +15,16 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmTaskForm : Form
     {
         private BLTask blTask=new BLTask();
-        public FrmTaskForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmTaskForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
@@ -36,22 +45,36 @@ namespace CompanyProjectWindowsFormApp
 
         private void ListTasks()
         {
-            List<CompanyManagement.Entity.Task> tasks = blTask.TaskList();
+            List<CompanyManagement.Entity.Task> tasks =
+                blTask
+                    .TaskList()
+                    .Where(x =>
+                        x.TaskHasCompanyOwners != null &&
+                        x.TaskHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(
+                                    z.CompanyId))))
+                    .ToList();
 
-            var taskList = tasks.Select(x => new
-            {
-                x.TaskId,
-                x.TaskName,
-                x.TaskBeginningDate,
-                x.IsCompleted,
-                x.TaskFinishDate
-            }).ToList();
+            var taskList =
+                tasks.Select(x => new
+                {
+                    x.TaskId,
+                    x.TaskName,
+                    x.TaskBeginningDate,
+                    x.IsCompleted,
+                    x.TaskFinishDate
+                }).ToList();
 
-            DgvTasks.DataSource = taskList;
+            DgvTasks.DataSource =
+                taskList;
 
-            LblRecordCount.Text = tasks.Count + " tasks";
+            LblRecordCount.Text =
+                tasks.Count +
+                " tasks";
         }
-
         private CompanyManagement.Entity.Task GetSelectedTask()
         {
             if (DgvTasks.CurrentRow == null)
@@ -66,9 +89,21 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchTasks()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
-            List<CompanyManagement.Entity.Task> tasks = blTask.TaskList();
+            List<CompanyManagement.Entity.Task> tasks =
+                blTask
+                    .TaskList()
+                    .Where(x =>
+                        x.TaskHasCompanyOwners != null &&
+                        x.TaskHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies != null &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(
+                                    z.CompanyId))))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -88,20 +123,23 @@ namespace CompanyProjectWindowsFormApp
                     .ToList();
             }
 
-            var taskList = tasks.Select(x => new
-            {
-                x.TaskId,
-                x.TaskName,
-                x.TaskBeginningDate,
-                x.IsCompleted,
-                x.TaskFinishDate
-            }).ToList();
+            var taskList =
+                tasks.Select(x => new
+                {
+                    x.TaskId,
+                    x.TaskName,
+                    x.TaskBeginningDate,
+                    x.IsCompleted,
+                    x.TaskFinishDate
+                }).ToList();
 
-            DgvTasks.DataSource = taskList;
+            DgvTasks.DataSource =
+                taskList;
 
-            LblRecordCount.Text = tasks.Count + " tasks";
+            LblRecordCount.Text =
+                tasks.Count +
+                " tasks";
         }
-
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             SearchTasks();
@@ -110,17 +148,19 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmTaskAddEditForm frm =
-    new FrmTaskAddEditForm();
+                new FrmTaskAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListTasks();
             }
         }
-
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            CompanyManagement.Entity.Task task = GetSelectedTask();
+            CompanyManagement.Entity.Task task =
+                GetSelectedTask();
 
             if (task == null)
             {
@@ -134,14 +174,16 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmTaskAddEditForm frm =
-                new FrmTaskAddEditForm(task);
+                new FrmTaskAddEditForm(
+                    user,
+                    selectedCompanyIds,
+                    task);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListTasks();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CompanyManagement.Entity.Task task = GetSelectedTask();

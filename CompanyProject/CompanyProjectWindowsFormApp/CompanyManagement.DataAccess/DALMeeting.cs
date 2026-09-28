@@ -16,7 +16,12 @@ namespace CompanyManagement.DataAccess
             {
                 return context.Meetings
                     .Include(x => x.MeetingHasCompanyOwners)
+                        .ThenInclude(x => x.CompanyOwner)
+                            .ThenInclude(x => x.CompanyOwnerHasCompanies)
+
                     .Include(x => x.MeetingHasEmployees)
+                        .ThenInclude(x => x.Employee)
+
                     .ToList();
             }
         }

@@ -19,14 +19,27 @@ namespace CompanyProjectWindowsFormApp
         private BLCompany blCompany=new BLCompany();
         private BLDepartmentType blDepartmentType=new BLDepartmentType();
         private CompanyHasDepartmentType companyHasDepartmentType;
-        public FrmCompanyHasDepartmentTypeAddEditForm(CompanyHasDepartmentType companyHasDepartmentType=null)
+        private User user;
+
+        private List<int> selectedCompanyIds;
+
+        public FrmCompanyHasDepartmentTypeAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            CompanyHasDepartmentType companyHasDepartmentType = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             SetButtonsBorder();
             LoadCompanies();
             LoadDepartments();
-            this.companyHasDepartmentType = companyHasDepartmentType;
-            if (companyHasDepartmentType != null) 
+
+            this.companyHasDepartmentType =
+                companyHasDepartmentType;
+
+            if (companyHasDepartmentType != null)
             {
                 LoadCompanyHasDepartment();
             }
@@ -41,11 +54,20 @@ namespace CompanyProjectWindowsFormApp
         private void LoadCompanies()
         {
             List<Company> companies =
-                blCompany.CompanyList();
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(x.CompanyId))
+                    .ToList();
 
-            CmbCompany.DataSource = companies;
-            CmbCompany.DisplayMember = "CompanyName";
-            CmbCompany.ValueMember = "CompanyId";
+            CmbCompany.DataSource =
+                companies;
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
         }
 
         private void LoadDepartments()

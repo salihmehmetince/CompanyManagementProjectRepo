@@ -17,11 +17,15 @@ namespace CompanyManagement.DataAccess
             {
                 return context.Tasks
                     .Include(x => x.TaskHasCompanyOwners)
+                        .ThenInclude(x => x.CompanyOwner)
+                            .ThenInclude(x => x.CompanyOwnerHasCompanies)
+
                     .Include(x => x.TaskHasEmployees)
+                        .ThenInclude(x => x.Employee)
+
                     .ToList();
             }
         }
-
         public Task TaskGetById(int taskId)
         {
             using (var context = new AppDbContext())

@@ -20,12 +20,23 @@ namespace CompanyProjectWindowsFormApp
         private Customer customer;
         private BLCompany blCompany = new BLCompany();
 
-        public FrmCustomerAddEditForm(Customer customer=null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmCustomerAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            Customer customer = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             this.customer = customer;
+
             LoadCompanies();
-            if (customer != null) 
+
+            if (customer != null)
             {
                 LoadCustomer();
             }
@@ -34,11 +45,21 @@ namespace CompanyProjectWindowsFormApp
         private void LoadCompanies()
         {
             List<Company> companies =
-                blCompany.CompanyList();
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            CmbCompany.DataSource = companies;
-            CmbCompany.DisplayMember = "CompanyName";
-            CmbCompany.ValueMember = "CompanyId";
+            CmbCompany.DataSource =
+                companies;
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
         }
 
         private void LoadCustomer()

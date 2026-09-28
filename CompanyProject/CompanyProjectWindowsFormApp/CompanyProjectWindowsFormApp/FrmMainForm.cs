@@ -466,24 +466,32 @@ namespace CompanyProjectWindowsFormApp
         }
         private void btnEmployeeBonuses_Click(object sender, EventArgs e)
         {
-            FrmEmployeeBonusesForm frmEmployeeBonusesForm = new FrmEmployeeBonusesForm();
+            FrmEmployeeBonusesForm frmEmployeeBonusesForm = new FrmEmployeeBonusesForm(
+                    user,
+                    selectedCompanyIds);
             frmEmployeeBonusesForm.ShowDialog();
         }
         private void BtnEmployees_Click(object sender, EventArgs e)
         {
-            FrmEmployeesForm frmEmployeesForm = new FrmEmployeesForm();
+            FrmEmployeesForm frmEmployeesForm = new FrmEmployeesForm(
+                    user,
+                    selectedCompanyIds);
             frmEmployeesForm.ShowDialog();
         }
 
         private void BtnMeetings_Click(object sender, EventArgs e)
         {
-            FrmMeetingsForm frmMeetingsForm = new FrmMeetingsForm();
+            FrmMeetingsForm frmMeetingsForm = new FrmMeetingsForm(
+                    user,
+                    selectedCompanyIds);
             frmMeetingsForm.ShowDialog();
         }
 
         private void BtnTasks_Click(object sender, EventArgs e)
         {
-            FrmTaskForm frmTaskForm = new FrmTaskForm();
+            FrmTaskForm frmTaskForm = new FrmTaskForm(
+                    user,
+                    selectedCompanyIds);
             frmTaskForm.ShowDialog();
         }
 
@@ -495,19 +503,25 @@ namespace CompanyProjectWindowsFormApp
 
         private void BtnCustomers_Click(object sender, EventArgs e)
         {
-            FrmCustomerForm frmCustomerForm = new FrmCustomerForm();
+            FrmCustomerForm frmCustomerForm = new FrmCustomerForm(
+                    user,
+                    selectedCompanyIds);
             frmCustomerForm.ShowDialog();
         }
 
         private void BtnCompanyInventories_Click(object sender, EventArgs e)
         {
-            FrmCompanyInventoryForm frmCompanyInventoryForm = new FrmCompanyInventoryForm();
+            FrmCompanyInventoryForm frmCompanyInventoryForm = new FrmCompanyInventoryForm(
+                    user,
+                    selectedCompanyIds);
             frmCompanyInventoryForm.ShowDialog();
         }
 
         private void BtnPayments_Click(object sender, EventArgs e)
         {
-            FrmPaymentForm frmPaymentForm = new FrmPaymentForm();
+            FrmPaymentForm frmPaymentForm = new FrmPaymentForm(
+                    user,
+                    selectedCompanyIds);
             frmPaymentForm.ShowDialog();
         }
 

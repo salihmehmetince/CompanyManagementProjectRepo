@@ -19,19 +19,29 @@ namespace CompanyProjectWindowsFormApp
         private CompanyHasProductOrService companyHasItem;
         private BLCompany blCompany=new BLCompany();
         private BLProductOrService blProductOrService=new BLProductOrService();
-        public FrmCompanyHasItemsAddEditForm(CompanyHasProductOrService companyHasItem=null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmCompanyHasItemsAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            CompanyHasProductOrService companyHasItem = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             this.companyHasItem = companyHasItem;
+
             SetButtonsBorder();
             LoadCompanies();
             LoadProductOrServices();
-            if(companyHasItem!=null)
+
+            if (companyHasItem != null)
             {
                 LoadCompanyHasItem();
             }
         }
-
         private void SetButtonsBorder()
         {
             BtnSave.FlatAppearance.BorderSize = 0;
@@ -41,13 +51,22 @@ namespace CompanyProjectWindowsFormApp
         private void LoadCompanies()
         {
             List<Company> companies =
-                blCompany.CompanyList();
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            CmbCompany.DataSource = companies;
-            CmbCompany.DisplayMember = "CompanyName";
-            CmbCompany.ValueMember = "CompanyId";
+            CmbCompany.DataSource =
+                companies;
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
         }
-
         private void LoadProductOrServices()
         {
             List<ProductOrService> productOrServices =

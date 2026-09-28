@@ -24,21 +24,34 @@ namespace CompanyProjectWindowsFormApp
         private BLPaymentType blPaymentType = new BLPaymentType();
 
         private BLCompany blCompany =new BLCompany();
-        public FrmPaymentAddEditForm(CustomerBuysCompanyHasProductOrService customerBuysCompanyHasProductOrService = null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmPaymentAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            CustomerBuysCompanyHasProductOrService
+                customerBuysCompanyHasProductOrService = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
-            this.customerBuysCompanyHasProductOrService = customerBuysCompanyHasProductOrService;
+
+            this.customerBuysCompanyHasProductOrService =
+                customerBuysCompanyHasProductOrService;
+
             LoadCustomers();
             LoadPaymentTypes();
             LoadProducts();
             LoadCompanies();
             SetButtonsBorder();
-            if(customerBuysCompanyHasProductOrService!=null)
+
+            if (customerBuysCompanyHasProductOrService != null)
             {
                 LoadPayment();
             }
         }
-
         private void LoadPayment()
         {
             LblTitle.Text = "Edit Payment";
@@ -66,13 +79,22 @@ namespace CompanyProjectWindowsFormApp
         private void LoadCustomers()
         {
             List<Customer> customers =
-                blCustomer.CustomerList();
+                blCustomer
+                    .CustomerList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            CmbCustomer.DataSource = customers;
-            CmbCustomer.DisplayMember = "CustomerName";
-            CmbCustomer.ValueMember = "CustomerId";
+            CmbCustomer.DataSource =
+                customers;
+
+            CmbCustomer.DisplayMember =
+                "CustomerName";
+
+            CmbCustomer.ValueMember =
+                "CustomerId";
         }
-
         private void LoadProducts()
         {
             if (CmbCompany.SelectedItem == null)
@@ -115,13 +137,22 @@ namespace CompanyProjectWindowsFormApp
         private void LoadCompanies()
         {
             List<Company> companies =
-                blCompany.CompanyList();
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            CmbCompany.DataSource = companies;
-            CmbCompany.DisplayMember = "CompanyName";
-            CmbCompany.ValueMember = "CompanyId";
+            CmbCompany.DataSource =
+                companies;
+
+            CmbCompany.DisplayMember =
+                "CompanyName";
+
+            CmbCompany.ValueMember =
+                "CompanyId";
         }
-
         private void SetButtonsBorder()
         {
             BtnSave.FlatAppearance.BorderSize = 0;

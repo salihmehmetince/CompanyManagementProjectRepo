@@ -151,7 +151,9 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmCompanyHasDepartmentTypeAddEditForm frm =
-    new FrmCompanyHasDepartmentTypeAddEditForm();
+                new FrmCompanyHasDepartmentTypeAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -162,7 +164,7 @@ namespace CompanyProjectWindowsFormApp
         private void BtnEdit_Click(object sender, EventArgs e)
         {
             CompanyHasDepartmentType companyHasDepartmentType =
-    GetSelectedCompanyHasDepartmentType();
+                GetSelectedCompanyHasDepartmentType();
 
             if (companyHasDepartmentType == null)
             {
@@ -177,6 +179,8 @@ namespace CompanyProjectWindowsFormApp
 
             FrmCompanyHasDepartmentTypeAddEditForm frm =
                 new FrmCompanyHasDepartmentTypeAddEditForm(
+                    user,
+                    selectedCompanyIds,
                     companyHasDepartmentType);
 
             if (frm.ShowDialog() == DialogResult.OK)

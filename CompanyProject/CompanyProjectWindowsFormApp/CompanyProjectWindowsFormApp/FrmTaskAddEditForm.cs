@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -28,20 +29,31 @@ namespace CompanyProjectWindowsFormApp
 
         private BLEmployee blEmployee =
             new BLEmployee();
-        public FrmTaskAddEditForm(CompanyManagement.Entity.Task task=null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        private BLEmployeeHasCompanyHasDepartmentType blEmployeeHasCompanyHasDepartmentType=new BLEmployeeHasCompanyHasDepartmentType();
+
+        public FrmTaskAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            CompanyManagement.Entity.Task task = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             SetButtonsBorder();
             LoadCompanyOwners();
             LoadEmployees();
+
             this.task = task;
 
-            if(task != null )
+            if (task != null)
             {
                 LoadTask();
             }
         }
-
         private void SetButtonsBorder()
         {
             BtnSave.FlatAppearance.BorderSize = 0;
@@ -59,7 +71,11 @@ namespace CompanyProjectWindowsFormApp
                             blUser.UserGetById(x.UserId);
 
                         return user != null &&
-                               user.IsActive;
+                               user.IsActive &&
+                               x.CompanyOwnerHasCompanies != null &&
+                               x.CompanyOwnerHasCompanies.Any(y =>
+                                   selectedCompanyIds.Contains(
+                                       y.CompanyId));
                     })
                     .Select(x => new
                     {
@@ -79,7 +95,6 @@ namespace CompanyProjectWindowsFormApp
             CLBCompanyOwners.ValueMember =
                 "CompanyOwnerId";
         }
-
         private void LoadEmployees()
         {
             var employees =
@@ -90,8 +105,22 @@ namespace CompanyProjectWindowsFormApp
                         User user =
                             blUser.UserGetById(x.UserId);
 
+                        EmployeeHasCompanyHasDepartmentType
+                            employeeCompanyDepartment =
+                            blEmployeeHasCompanyHasDepartmentType
+                                .EmployeeHasCompanyHasDepartmentTypeList()
+                                .FirstOrDefault(y =>
+                                    y.EmployeeId == x.EmployeeId);
+
                         return user != null &&
-                               user.IsActive;
+                               user.IsActive &&
+                               employeeCompanyDepartment != null &&
+                               employeeCompanyDepartment
+                                   .CompanyHasDepartmentType != null &&
+                               selectedCompanyIds.Contains(
+                                   employeeCompanyDepartment
+                                       .CompanyHasDepartmentType
+                                       .CompanyId);
                     })
                     .Select(x => new
                     {
@@ -111,7 +140,6 @@ namespace CompanyProjectWindowsFormApp
             CLBEmployees.ValueMember =
                 "EmployeeId";
         }
-
         private void LoadTask()
         {
             LblTitle.Text = "Edit Task";

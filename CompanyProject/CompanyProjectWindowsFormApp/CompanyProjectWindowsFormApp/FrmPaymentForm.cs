@@ -15,14 +15,21 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmPaymentForm : Form
     {
         private BLCustomerBuysCompanyHasProductOrService blCustomerBuysCompanyHasProductOrService = new BLCustomerBuysCompanyHasProductOrService();
-        public FrmPaymentForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmPaymentForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
             ListPayments();
         }
-
         private void setIcon()
         {
             this.Icon = Properties.Resources.icon_company;
@@ -40,7 +47,12 @@ namespace CompanyProjectWindowsFormApp
         {
             List<CustomerBuysCompanyHasProductOrService> payments =
                 blCustomerBuysCompanyHasProductOrService
-                    .CustomerBuysCompanyHasProductOrServiceList();
+                    .CustomerBuysCompanyHasProductOrServiceList()
+                    .Where(x =>
+                        x.Customer != null &&
+                        selectedCompanyIds.Contains(
+                            x.Customer.CompanyId))
+                    .ToList();
 
             var paymentList = payments.Select(x => new
             {
@@ -136,11 +148,17 @@ namespace CompanyProjectWindowsFormApp
 
         private void SearchPayments()
         {
-            string searchText = TxtSearch.Text.Trim().ToLower();
+            string searchText =
+                TxtSearch.Text.Trim().ToLower();
 
             List<CustomerBuysCompanyHasProductOrService> payments =
                 blCustomerBuysCompanyHasProductOrService
-                    .CustomerBuysCompanyHasProductOrServiceList();
+                    .CustomerBuysCompanyHasProductOrServiceList()
+                    .Where(x =>
+                        x.Customer != null &&
+                        selectedCompanyIds.Contains(
+                            x.Customer.CompanyId))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -289,18 +307,19 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmPaymentAddEditForm frm =
-    new FrmPaymentAddEditForm();
+                new FrmPaymentAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListPayments();
             }
         }
-
         private void BtnEdit_Click(object sender, EventArgs e)
         {
             CustomerBuysCompanyHasProductOrService payment =
-    GetSelectedPayment();
+                GetSelectedPayment();
 
             if (payment == null)
             {
@@ -314,14 +333,16 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmPaymentAddEditForm frm =
-                new FrmPaymentAddEditForm(payment);
+                new FrmPaymentAddEditForm(
+                    user,
+                    selectedCompanyIds,
+                    payment);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListPayments();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CustomerBuysCompanyHasProductOrService payment =

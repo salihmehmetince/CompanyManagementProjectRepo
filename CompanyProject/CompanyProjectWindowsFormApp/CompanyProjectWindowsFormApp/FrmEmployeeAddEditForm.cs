@@ -22,20 +22,32 @@ namespace CompanyProjectWindowsFormApp
         private EmployeeHasCompanyHasDepartmentType employeeHasCompanyHasDepartmentType;
         private BLCompany blCompany=new BLCompany();
         private BLCompanyHasDepartmentType blCompanyHasDepartmentType = new BLCompanyHasDepartmentType();
-        public FrmEmployeeAddEditForm(Employee employee=null, EmployeeHasCompanyHasDepartmentType employeeHasCompanyHasDepartmentType=null)
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmEmployeeAddEditForm(
+            User user,
+            List<int> selectedCompanyIds,
+            Employee employee = null,
+            EmployeeHasCompanyHasDepartmentType employeeHasCompanyHasDepartmentType = null)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             this.employee = employee;
-            this.employeeHasCompanyHasDepartmentType = employeeHasCompanyHasDepartmentType;
+            this.employeeHasCompanyHasDepartmentType =
+                employeeHasCompanyHasDepartmentType;
+
             LoadProfessionTypes();
             LoadCompanies();
             LoadDepartments();
-            if (employee != null) 
+
+            if (employee != null)
             {
                 LoadEmployee();
             }
         }
-
         private void LoadEmployee()
         {
             LblTitle.Text =
@@ -157,8 +169,15 @@ namespace CompanyProjectWindowsFormApp
         }
         private void LoadCompanies()
         {
+            List<Company> companies =
+                blCompany
+                    .CompanyList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(x.CompanyId))
+                    .ToList();
+
             CmbCompany.DataSource =
-                blCompany.CompanyList();
+                companies;
 
             CmbCompany.DisplayMember =
                 "CompanyName";
@@ -168,7 +187,6 @@ namespace CompanyProjectWindowsFormApp
 
             CmbCompany.SelectedIndex = -1;
         }
-
         private void BtnSave_Click(object sender, EventArgs e)
         {
             try

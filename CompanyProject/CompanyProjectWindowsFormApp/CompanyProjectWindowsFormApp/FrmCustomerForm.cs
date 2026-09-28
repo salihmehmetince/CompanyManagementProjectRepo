@@ -15,8 +15,16 @@ namespace CompanyProjectWindowsFormApp
     public partial class FrmCustomerForm : Form
     {
         private BLCustomer blCustomer = new BLCustomer();
-        public FrmCustomerForm()
+        private User user;
+        private List<int> selectedCompanyIds;
+
+        public FrmCustomerForm(
+            User user,
+            List<int> selectedCompanyIds)
         {
+            this.user = user;
+            this.selectedCompanyIds = selectedCompanyIds;
+
             InitializeComponent();
             setIcon();
             SetButtonsBorder();
@@ -39,19 +47,27 @@ namespace CompanyProjectWindowsFormApp
         private void ListCustomers()
         {
             List<Customer> customers =
-                blCustomer.CustomerList();
+                blCustomer
+                    .CustomerList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
-            var customerList = customers.Select(x => new
-            {
-                x.CustomerId,
-                x.CustomerName,
-                x.CustomerSurname,
-                x.CustomerTelephoneNumber,
-                x.CustomerEmail,
-                CompanyName = x.Company.CompanyName
-            }).ToList();
+            var customerList =
+                customers.Select(x => new
+                {
+                    x.CustomerId,
+                    x.CustomerName,
+                    x.CustomerSurname,
+                    x.CustomerTelephoneNumber,
+                    x.CustomerEmail,
+                    CompanyName =
+                        x.Company.CompanyName
+                }).ToList();
 
-            DgvCustomers.DataSource = customerList;
+            DgvCustomers.DataSource =
+                customerList;
 
             LblRecordCount.Text =
                 customers.Count + " customers";
@@ -74,7 +90,12 @@ namespace CompanyProjectWindowsFormApp
                 TxtSearch.Text.Trim().ToLower();
 
             List<Customer> customers =
-                blCustomer.CustomerList();
+                blCustomer
+                    .CustomerList()
+                    .Where(x =>
+                        selectedCompanyIds.Contains(
+                            x.CompanyId))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -97,23 +118,26 @@ namespace CompanyProjectWindowsFormApp
                     .ToList();
             }
 
-            var customerList = customers.Select(x => new
-            {
-                x.CustomerId,
-                x.CustomerName,
-                x.CustomerSurname,
-                x.CustomerTelephoneNumber,
-                x.CustomerEmail,
-                CompanyName =
-                    x.Company != null
-                        ? x.Company.CompanyName
-                        : ""
-            }).ToList();
+            var customerList =
+                customers.Select(x => new
+                {
+                    x.CustomerId,
+                    x.CustomerName,
+                    x.CustomerSurname,
+                    x.CustomerTelephoneNumber,
+                    x.CustomerEmail,
+                    CompanyName =
+                        x.Company != null
+                            ? x.Company.CompanyName
+                            : ""
+                }).ToList();
 
-            DgvCustomers.DataSource = customerList;
+            DgvCustomers.DataSource =
+                customerList;
 
             LblRecordCount.Text =
-                customers.Count + " customers";
+                customers.Count +
+                " customers";
         }
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -123,17 +147,19 @@ namespace CompanyProjectWindowsFormApp
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             FrmCustomerAddEditForm frm =
-    new FrmCustomerAddEditForm();
+                new FrmCustomerAddEditForm(
+                    user,
+                    selectedCompanyIds);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListCustomers();
             }
         }
-
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            Customer customer = GetSelectedCustomer();
+            Customer customer =
+                GetSelectedCustomer();
 
             if (customer == null)
             {
@@ -147,14 +173,16 @@ namespace CompanyProjectWindowsFormApp
             }
 
             FrmCustomerAddEditForm frm =
-                new FrmCustomerAddEditForm(customer);
+                new FrmCustomerAddEditForm(
+                    user,
+                    selectedCompanyIds,
+                    customer);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 ListCustomers();
             }
         }
-
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             Customer customer = GetSelectedCustomer();
