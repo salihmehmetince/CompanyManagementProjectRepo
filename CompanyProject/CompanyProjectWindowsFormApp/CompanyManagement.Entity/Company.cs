@@ -52,5 +52,8 @@ namespace CompanyManagement.Entity
         { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }
+
+        public virtual ICollection<CompanyHasCustomer>CompanyHasCustomers
+        { get; set; }
     }
 }

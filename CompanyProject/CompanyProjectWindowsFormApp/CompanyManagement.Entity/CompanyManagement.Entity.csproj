@@ -164,6 +164,7 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyGivesBonusToEmployee.cs" />
+    <Compile Include="CompanyHasCustomer.cs" />
     <Compile Include="CompanyHasDepartmentType.cs" />
     <Compile Include="CompanyHasProductOrService.cs" />
     <Compile Include="CompanyOwner.cs" />
@@ -208,6 +209,10 @@
     <Compile Include="Migrations\20260927124957_AddCompanyIdToCustomer.cs" />
     <Compile Include="Migrations\20260927124957_AddCompanyIdToCustomer.Designer.cs">
       <DependentUpon>20260927124957_AddCompanyIdToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20261002142415_AddCompanyHasCustomer.cs" />
+    <Compile Include="Migrations\20261002142415_AddCompanyHasCustomer.Designer.cs">
+      <DependentUpon>20261002142415_AddCompanyHasCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="PaymentType.cs" />

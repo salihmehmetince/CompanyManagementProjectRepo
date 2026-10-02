@@ -833,7 +833,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomer
                     .CustomerList()
                     .Count(x =>
-                        selectedCompanyIds.Contains(x.CompanyId));
+                        x.CompanyHasCustomers.Any(y =>
+                            selectedCompanyIds.Contains(
+                                y.CompanyId)));
 
             int productOrServiceCount =
                 blCompanyHasProductOrService

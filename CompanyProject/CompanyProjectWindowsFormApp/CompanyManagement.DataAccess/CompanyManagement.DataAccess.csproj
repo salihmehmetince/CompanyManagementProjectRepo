@@ -158,6 +158,7 @@
     <Compile Include="DALAdmin.cs" />
     <Compile Include="DALCompany.cs" />
     <Compile Include="DALCompanyGivesBonusToEmployee.cs" />
+    <Compile Include="DALCompanyHasCustomer.cs" />
     <Compile Include="DALCompanyHasDepartmentType.cs" />
     <Compile Include="DALCompanyHasProductOrService.cs" />
     <Compile Include="DALCompanyOwner.cs" />

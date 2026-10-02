@@ -82,8 +82,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomer
                     .CustomerList()
                     .Where(x =>
-                        selectedCompanyIds.Contains(
-                            x.CompanyId))
+                        x.CompanyHasCustomers.Any(y =>
+                            selectedCompanyIds.Contains(
+                                y.CompanyId)))
                     .ToList();
 
             CmbCustomer.DataSource =
@@ -136,12 +137,26 @@ namespace CompanyProjectWindowsFormApp
 
         private void LoadCompanies()
         {
+            int customerId;
+
+            if (CmbCustomer.SelectedValue == null ||
+                !int.TryParse(
+                    CmbCustomer.SelectedValue.ToString(),
+                    out customerId))
+            {
+                CmbCompany.DataSource = null;
+                return;
+            }
+
             List<Company> companies =
-                blCompany
-                    .CompanyList()
+                blCustomer
+                    .CustomerGetById(customerId)
+                    .CompanyHasCustomers
                     .Where(x =>
                         selectedCompanyIds.Contains(
-                            x.CompanyId))
+                            x.CompanyId) &&
+                        x.Company != null)
+                    .Select(x => x.Company)
                     .ToList();
 
             CmbCompany.DataSource =
@@ -168,6 +183,7 @@ namespace CompanyProjectWindowsFormApp
         private void BtnSave_Click(object sender, EventArgs e)
         {
             if (CmbCustomer.SelectedValue == null ||
+                CmbCompany.SelectedValue == null ||
                 CmbProducts.SelectedValue == null ||
                 CmbPaymentTypes.SelectedValue == null)
             {
@@ -194,8 +210,48 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
+            int customerId =
+                Convert.ToInt32(
+                    CmbCustomer.SelectedValue);
+
+            int companyId =
+                Convert.ToInt32(
+                    CmbCompany.SelectedValue);
+
             int companyHasProductOrServiceId =
-                Convert.ToInt32(CmbProducts.SelectedValue);
+                Convert.ToInt32(
+                    CmbProducts.SelectedValue);
+
+            Customer customer =
+                blCustomer
+                    .CustomerGetById(
+                        customerId);
+
+            if (customer == null)
+            {
+                MessageBox.Show(
+                    "Customer could not be found.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            bool customerBelongsToCompany =
+                customer.CompanyHasCustomers.Any(x =>
+                    x.CompanyId == companyId);
+
+            if (!customerBelongsToCompany)
+            {
+                MessageBox.Show(
+                    "The selected customer is not registered with the selected company.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
 
             CompanyHasProductOrService companyHasProductOrService =
                 blCompanyHasProductOrService
@@ -213,6 +269,33 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
+            if (companyHasProductOrService.CompanyId != companyId)
+            {
+                MessageBox.Show(
+                    "The selected product does not belong to the selected company.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            // Edit durumunda eski ürün ve miktarı sakla
+            decimal oldQuantity = 0;
+            int oldProductId = 0;
+
+            if (customerBuysCompanyHasProductOrService != null)
+            {
+                oldQuantity =
+                    customerBuysCompanyHasProductOrService
+                        .CustomerBuysCompanyHasProductOrServiceQuantity;
+
+                oldProductId =
+                    customerBuysCompanyHasProductOrService
+                        .CompanyHasProductOrServiceId;
+            }
+
+            // Yeni ödeme veya edit edilen yeni ürün için stok kontrolü
             if (companyHasProductOrService
                     .CompanyHasProductOrServiceQuantity < quantity)
             {
@@ -239,13 +322,14 @@ namespace CompanyProjectWindowsFormApp
             }
 
             payment.CustomerId =
-                Convert.ToInt32(CmbCustomer.SelectedValue);
+                customerId;
 
             payment.CompanyHasProductOrServiceId =
                 companyHasProductOrServiceId;
 
             payment.PaymentTypeId =
-                Convert.ToInt32(CmbPaymentTypes.SelectedValue);
+                Convert.ToInt32(
+                    CmbPaymentTypes.SelectedValue);
 
             payment.CustomerBuysCompanyHasProductOrServiceQuantity =
                 quantity;
@@ -259,13 +343,15 @@ namespace CompanyProjectWindowsFormApp
             {
                 result =
                     blCustomerBuysCompanyHasProductOrService
-                        .CustomerBuysCompanyHasProductOrServiceAdd(payment);
+                        .CustomerBuysCompanyHasProductOrServiceAdd(
+                            payment);
             }
             else
             {
                 result =
                     blCustomerBuysCompanyHasProductOrService
-                        .CustomerBuysCompanyHasProductOrServiceUpdate(payment);
+                        .CustomerBuysCompanyHasProductOrServiceUpdate(
+                            payment);
             }
 
             if (!result)
@@ -279,27 +365,95 @@ namespace CompanyProjectWindowsFormApp
                 return;
             }
 
-            companyHasProductOrService
-                .CompanyHasProductOrServiceQuantity -= quantity;
-
-            bool stockResult =
-                blCompanyHasProductOrService
-                    .CompanyHasProductOrServiceUpdate(
-                        companyHasProductOrService);
-
-            if (!stockResult)
+            // Yeni ödeme
+            if (customerBuysCompanyHasProductOrService == null)
             {
-                MessageBox.Show(
-                    "Payment was saved, but the stock could not be updated.",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                companyHasProductOrService
+                    .CompanyHasProductOrServiceQuantity -=
+                    quantity;
 
-                return;
+                bool stockResult =
+                    blCompanyHasProductOrService
+                        .CompanyHasProductOrServiceUpdate(
+                            companyHasProductOrService);
+
+                if (!stockResult)
+                {
+                    MessageBox.Show(
+                        "Payment was saved, but the stock could not be updated.",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
+            }
+            else
+            {
+                // Edit:
+                // Önce eski ürüne eski miktarı geri ekle
+                CompanyHasProductOrService oldProduct =
+                    blCompanyHasProductOrService
+                        .CompanyHasProductOrServiceGetById(
+                            oldProductId);
+
+                if (oldProduct == null)
+                {
+                    MessageBox.Show(
+                        "The old product could not be found.",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                oldProduct
+                    .CompanyHasProductOrServiceQuantity +=
+                    oldQuantity;
+
+                bool oldStockResult =
+                    blCompanyHasProductOrService
+                        .CompanyHasProductOrServiceUpdate(
+                            oldProduct);
+
+                if (!oldStockResult)
+                {
+                    MessageBox.Show(
+                        "The old product stock could not be restored.",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+                // Sonra yeni üründen yeni miktarı çıkar
+                companyHasProductOrService
+                    .CompanyHasProductOrServiceQuantity -=
+                    quantity;
+
+                bool newStockResult =
+                    blCompanyHasProductOrService
+                        .CompanyHasProductOrServiceUpdate(
+                            companyHasProductOrService);
+
+                if (!newStockResult)
+                {
+                    MessageBox.Show(
+                        "The new product stock could not be updated.",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
             }
 
             MessageBox.Show(
-                "Payment saved successfully.",
+                customerBuysCompanyHasProductOrService == null
+                    ? "Payment added successfully."
+                    : "Payment updated successfully.",
                 "Success",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);

@@ -46,6 +46,7 @@
     <Compile Include="BLAdmin.cs" />
     <Compile Include="BLCompany.cs" />
     <Compile Include="BLCompanyGivesBonusToEmployee.cs" />
+    <Compile Include="BLCompanyHasCustomer.cs" />
     <Compile Include="BLCompanyHasDepartmentType.cs" />
     <Compile Include="BLCompanyHasProductOrService.cs" />
     <Compile Include="BLCompanyOwner.cs" />

@@ -50,8 +50,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomer
                     .CustomerList()
                     .Where(x =>
-                        selectedCompanyIds.Contains(
-                            x.CompanyId))
+                        x.CompanyHasCustomers.Any(y =>
+                            selectedCompanyIds.Contains(
+                                y.CompanyId)))
                     .ToList();
 
             var customerList =
@@ -63,7 +64,13 @@ namespace CompanyProjectWindowsFormApp
                     x.CustomerTelephoneNumber,
                     x.CustomerEmail,
                     CompanyName =
-                        x.Company.CompanyName
+                        string.Join(", ",
+                            x.CompanyHasCustomers
+                                .Where(y =>
+                                    selectedCompanyIds.Contains(
+                                        y.CompanyId))
+                                .Select(y =>
+                                    y.Company.CompanyName))
                 }).ToList();
 
             DgvCustomers.DataSource =
@@ -93,8 +100,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomer
                     .CustomerList()
                     .Where(x =>
-                        selectedCompanyIds.Contains(
-                            x.CompanyId))
+                        x.CompanyHasCustomers.Any(y =>
+                            selectedCompanyIds.Contains(
+                                y.CompanyId)))
                     .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
@@ -110,10 +118,13 @@ namespace CompanyProjectWindowsFormApp
                         (x.CustomerEmail != null &&
                          x.CustomerEmail.ToLower()
                             .Contains(searchText)) ||
-                        (x.Company != null &&
-                         x.Company.CompanyName
-                            .ToLower()
-                            .Contains(searchText))
+                        x.CompanyHasCustomers.Any(y =>
+                            selectedCompanyIds.Contains(
+                                y.CompanyId) &&
+                            y.Company != null &&
+                            y.Company.CompanyName
+                                .ToLower()
+                                .Contains(searchText))
                     )
                     .ToList();
             }
@@ -127,9 +138,14 @@ namespace CompanyProjectWindowsFormApp
                     x.CustomerTelephoneNumber,
                     x.CustomerEmail,
                     CompanyName =
-                        x.Company != null
-                            ? x.Company.CompanyName
-                            : ""
+                        string.Join(", ",
+                            x.CompanyHasCustomers
+                                .Where(y =>
+                                    selectedCompanyIds.Contains(
+                                        y.CompanyId) &&
+                                    y.Company != null)
+                                .Select(y =>
+                                    y.Company.CompanyName))
                 }).ToList();
 
             DgvCustomers.DataSource =

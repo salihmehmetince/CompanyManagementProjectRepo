@@ -65,6 +65,7 @@ namespace CompanyManagement.Entity
             CompanyGivesBonusToEmployees
         { get; set; }
 
+        public DbSet<CompanyHasCustomer> CompanyHasCustomers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -219,11 +220,17 @@ namespace CompanyManagement.Entity
                 .HasForeignKey(x => x.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Company 1 - N Customer
-            modelBuilder.Entity<Customer>()
+            // Company n - N Customer
+            modelBuilder.Entity<CompanyHasCustomer>()
                 .HasOne(x => x.Company)
-                .WithMany(x => x.Customers)
+                .WithMany(x => x.CompanyHasCustomers)
                 .HasForeignKey(x => x.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CompanyHasCustomer>()
+                .HasOne(x => x.Customer)
+                .WithMany(x => x.CompanyHasCustomers)
+                .HasForeignKey(x => x.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // CompanyHasProductOrService 1 - N CustomerBuysCompanyHasProductOrService

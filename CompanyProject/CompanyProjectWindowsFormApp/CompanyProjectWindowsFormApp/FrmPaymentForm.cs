@@ -49,9 +49,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomerBuysCompanyHasProductOrService
                     .CustomerBuysCompanyHasProductOrServiceList()
                     .Where(x =>
-                        x.Customer != null &&
+                        x.CompanyHasProductOrService != null &&
                         selectedCompanyIds.Contains(
-                            x.Customer.CompanyId))
+                            x.CompanyHasProductOrService.CompanyId))
                     .ToList();
 
             var paymentList = payments.Select(x => new
@@ -64,9 +64,10 @@ namespace CompanyProjectWindowsFormApp
                         : "",
 
                 CompanyName =
-                    x.Customer != null &&
-                    x.Customer.Company != null
-                        ? x.Customer.Company.CompanyName
+                    x.CompanyHasProductOrService != null &&
+                    x.CompanyHasProductOrService.Company != null
+                        ? x.CompanyHasProductOrService
+                            .Company.CompanyName
                         : "",
 
                 ProductOrServiceName =
@@ -155,9 +156,9 @@ namespace CompanyProjectWindowsFormApp
                 blCustomerBuysCompanyHasProductOrService
                     .CustomerBuysCompanyHasProductOrServiceList()
                     .Where(x =>
-                        x.Customer != null &&
+                        x.CompanyHasProductOrService != null &&
                         selectedCompanyIds.Contains(
-                            x.Customer.CompanyId))
+                            x.CompanyHasProductOrService.CompanyId))
                     .ToList();
 
             if (!string.IsNullOrEmpty(searchText))
@@ -169,9 +170,9 @@ namespace CompanyProjectWindowsFormApp
                             .ToLower()
                             .Contains(searchText)) ||
 
-                        (x.Customer != null &&
-                         x.Customer.Company != null &&
-                         x.Customer.Company.CompanyName
+                        (x.CompanyHasProductOrService != null &&
+                         x.CompanyHasProductOrService.Company != null &&
+                         x.CompanyHasProductOrService.Company.CompanyName
                             .ToLower()
                             .Contains(searchText)) ||
 
@@ -232,9 +233,9 @@ namespace CompanyProjectWindowsFormApp
                         : "",
 
                 CompanyName =
-                    x.Customer != null &&
-                    x.Customer.Company != null
-                        ? x.Customer.Company.CompanyName
+                    x.CompanyHasProductOrService != null &&
+                    x.CompanyHasProductOrService.Company != null
+                        ? x.CompanyHasProductOrService.Company.CompanyName
                         : "",
 
                 ProductOrServiceName =

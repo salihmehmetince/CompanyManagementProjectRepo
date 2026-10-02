@@ -1,4 +1,5 @@
-﻿using CompanyManagement.BusinessLogic;
+﻿using CompanyManagement.BLL;
+using CompanyManagement.BusinessLogic;
 using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
@@ -19,6 +20,7 @@ namespace CompanyProjectWindowsFormApp
         private BLCustomer blCustomer = new BLCustomer();
         private Customer customer;
         private BLCompany blCompany = new BLCompany();
+        private BLCompanyHasCustomer blCompanyHasCustomer=new BLCompanyHasCustomer();
 
         private User user;
         private List<int> selectedCompanyIds;
@@ -52,41 +54,76 @@ namespace CompanyProjectWindowsFormApp
                             x.CompanyId))
                     .ToList();
 
-            CmbCompany.DataSource =
+            CLBCompanies.DataSource =
                 companies;
 
-            CmbCompany.DisplayMember =
+            CLBCompanies.DisplayMember =
                 "CompanyName";
 
-            CmbCompany.ValueMember =
+            CLBCompanies.ValueMember =
                 "CompanyId";
         }
-
         private void LoadCustomer()
         {
             LblTitle.Text = "Edit Customer";
             LblDescription.Text = "Update customer information";
 
-            TxtEmployeeName.Text = customer.CustomerName;
-            TxtSurname.Text = customer.CustomerSurname;
-            MTBTelephoneNumber.Text = customer.CustomerTelephoneNumber;
-            TxtEmail.Text = customer.CustomerEmail;
-            CmbCompany.SelectedValue = customer.CompanyId;
+            TxtEmployeeName.Text =
+                customer.CustomerName;
 
+            TxtSurname.Text =
+                customer.CustomerSurname;
+
+            MTBTelephoneNumber.Text =
+                customer.CustomerTelephoneNumber;
+
+            TxtEmail.Text =
+                customer.CustomerEmail;
+
+            for (int i = 0; i < CLBCompanies.Items.Count; i++)
+            {
+                Company company =
+                    CLBCompanies.Items[i] as Company;
+
+                if (company == null)
+                    continue;
+
+                bool isSelected =
+                    customer.CompanyHasCustomers.Any(x =>
+                        x.CompanyId == company.CompanyId);
+
+                CLBCompanies.SetItemChecked(
+                    i,
+                    isSelected);
+            }
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            List<Company> selectedCompanies =
+                CLBCompanies.CheckedItems
+                    .Cast<Company>()
+                    .ToList();
+
+            if (selectedCompanies.Count == 0)
+            {
+                MessageBox.Show(
+                    "Please select at least one company.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
             Customer customerToSave;
 
             if (customer == null)
             {
-                // Yeni müşteri
                 customerToSave = new Customer();
             }
             else
             {
-                // Mevcut müşteri
                 customerToSave = customer;
             }
 
@@ -102,43 +139,90 @@ namespace CompanyProjectWindowsFormApp
             customerToSave.CustomerEmail =
                 TxtEmail.Text.Trim();
 
-            customerToSave.CompanyId =
-                Convert.ToInt32(CmbCompany.SelectedValue);
-
             bool result;
 
             if (customer == null)
             {
-                result = blCustomer.CustomerAdd(customerToSave);
+                result =
+                    blCustomer.CustomerAdd(
+                        customerToSave);
             }
             else
             {
-                result = blCustomer.CustomerUpdate(customerToSave);
+                result =
+                    blCustomer.CustomerUpdate(
+                        customerToSave);
             }
 
-            if (result)
-            {
-                MessageBox.Show(
-                    customer == null
-                        ? "Customer added successfully."
-                        : "Customer updated successfully.",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            else
+            if (!result)
             {
                 MessageBox.Show(
                     "Customer could not be saved. Please check the entered information.",
                     "Error",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                    MessageBoxIcon.Error);
+
+                return;
             }
+
+            if (customer != null)
+            {
+                List<CompanyHasCustomer> oldCompanyHasCustomers =
+                    blCompanyHasCustomer
+                        .CompanyHasCustomerList()
+                        .Where(x =>
+                            x.CustomerId ==
+                            customerToSave.CustomerId)
+                        .ToList();
+
+                foreach (CompanyHasCustomer oldCompanyHasCustomer
+                    in oldCompanyHasCustomers)
+                {
+                    blCompanyHasCustomer
+                        .CompanyHasCustomerDelete(
+                            oldCompanyHasCustomer
+                                .CompanyHasCustomerId);
+                }
+            }
+
+            foreach (Company company in selectedCompanies)
+            {
+                CompanyHasCustomer companyHasCustomer =
+                    new CompanyHasCustomer();
+
+                companyHasCustomer.CompanyId =
+                    company.CompanyId;
+
+                companyHasCustomer.CustomerId =
+                    customerToSave.CustomerId;
+
+                bool companyResult =
+                    blCompanyHasCustomer
+                        .CompanyHasCustomerAdd(
+                            companyHasCustomer);
+
+                if (!companyResult)
+                {
+                    MessageBox.Show(
+                        "Customer was saved, but the company relationship could not be saved.",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
+            }
+
+            MessageBox.Show(
+                customer == null
+                    ? "Customer added successfully."
+                    : "Customer updated successfully.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
+            DialogResult = DialogResult.OK;
+            Close();
         }
         private void BtnCancel_Click(object sender, EventArgs e)
         {
