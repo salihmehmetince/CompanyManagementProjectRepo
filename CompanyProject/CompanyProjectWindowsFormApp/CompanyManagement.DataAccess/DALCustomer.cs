@@ -19,10 +19,11 @@ namespace CompanyManagement.DataAccess
                         x.CustomerBuysCompanyHasProductOrServices)
                     .Include(x =>
                         x.CompanyHasCustomers)
+                        .ThenInclude(x =>
+                            x.Company)
                     .ToList();
             }
         }
-
         public Customer CustomerGetById(int customerId)
         {
             using (var context = new AppDbContext())

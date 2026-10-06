@@ -64,8 +64,35 @@ namespace CompanyManagement.DataAccess
         {
             using (var context = new AppDbContext())
             {
-                context.CustomerBuysCompanyHasProductOrServices
-                    .Update(customerBuysCompanyHasProductOrService);
+                var existingPayment =
+                    context.CustomerBuysCompanyHasProductOrServices
+                        .FirstOrDefault(x =>
+                            x.CustomerBuysCompanyHasProductOrServiceId ==
+                            customerBuysCompanyHasProductOrService
+                                .CustomerBuysCompanyHasProductOrServiceId);
+
+                if (existingPayment == null)
+                    return false;
+
+                existingPayment.CustomerId =
+                    customerBuysCompanyHasProductOrService
+                        .CustomerId;
+
+                existingPayment.CompanyHasProductOrServiceId =
+                    customerBuysCompanyHasProductOrService
+                        .CompanyHasProductOrServiceId;
+
+                existingPayment.PaymentTypeId =
+                    customerBuysCompanyHasProductOrService
+                        .PaymentTypeId;
+
+                existingPayment.CustomerBuysCompanyHasProductOrServiceQuantity =
+                    customerBuysCompanyHasProductOrService
+                        .CustomerBuysCompanyHasProductOrServiceQuantity;
+
+                existingPayment.CustomerBuysCompanyHasProductOrServiceDate =
+                    customerBuysCompanyHasProductOrService
+                        .CustomerBuysCompanyHasProductOrServiceDate;
 
                 return context.SaveChanges() > 0;
             }

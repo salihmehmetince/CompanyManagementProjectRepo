@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.BusinessLogic;
+using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace CompanyProjectWindowsFormApp
         private BLCustomerBuysCompanyHasProductOrService blCustomerBuysCompanyHasProductOrService = new BLCustomerBuysCompanyHasProductOrService();
         private User user;
         private List<int> selectedCompanyIds;
+        private BLCompanyHasProductOrService blCompanyHasProductOrService = new BLCompanyHasProductOrService();
 
         public FrmPaymentForm(
             User user,
@@ -347,7 +349,7 @@ namespace CompanyProjectWindowsFormApp
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CustomerBuysCompanyHasProductOrService payment =
-    GetSelectedPayment();
+                GetSelectedPayment();
 
             if (payment == null)
             {
@@ -369,9 +371,46 @@ namespace CompanyProjectWindowsFormApp
             if (result != DialogResult.Yes)
                 return;
 
-            if (!blCustomerBuysCompanyHasProductOrService
-                .CustomerBuysCompanyHasProductOrServiceDelete(
-                    payment.CustomerBuysCompanyHasProductOrServiceId))
+            CompanyHasProductOrService product =
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceGetById(
+                        payment.CompanyHasProductOrServiceId);
+
+            if (product == null)
+            {
+                MessageBox.Show(
+                    "The product or service could not be found.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            product.CompanyHasProductOrServiceQuantity +=
+                payment.CustomerBuysCompanyHasProductOrServiceQuantity;
+
+            bool stockResult =
+                blCompanyHasProductOrService
+                    .CompanyHasProductOrServiceUpdate(product);
+
+            if (!stockResult)
+            {
+                MessageBox.Show(
+                    "The product stock could not be restored.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+            bool deleteResult =
+                blCustomerBuysCompanyHasProductOrService
+                    .CustomerBuysCompanyHasProductOrServiceDelete(
+                        payment.CustomerBuysCompanyHasProductOrServiceId);
+
+            if (!deleteResult)
             {
                 MessageBox.Show(
                     "Payment could not be deleted.",

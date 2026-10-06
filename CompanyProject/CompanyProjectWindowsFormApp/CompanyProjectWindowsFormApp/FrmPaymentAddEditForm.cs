@@ -60,6 +60,13 @@ namespace CompanyProjectWindowsFormApp
             CmbCustomer.SelectedValue =
                 customerBuysCompanyHasProductOrService.CustomerId;
 
+            CmbCompany.SelectedValue =
+                customerBuysCompanyHasProductOrService
+                    .CompanyHasProductOrService
+                    .CompanyId;
+
+            LoadProducts();
+
             CmbProducts.SelectedValue =
                 customerBuysCompanyHasProductOrService
                     .CompanyHasProductOrServiceId;
