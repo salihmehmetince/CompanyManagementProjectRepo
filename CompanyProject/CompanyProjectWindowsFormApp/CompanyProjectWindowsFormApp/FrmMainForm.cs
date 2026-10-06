@@ -1,6 +1,7 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace CompanyProjectWindowsFormApp
 {
@@ -39,6 +41,9 @@ namespace CompanyProjectWindowsFormApp
 
         BLCompanyHasProductOrService blCompanyHasProductOrService =
     new BLCompanyHasProductOrService();
+
+        private BLTask blTask = new BLTask();
+        private BLMeeting blMeeting = new BLMeeting();
         public FrmMainForm(User user, List<int> selectedCompanyIds)
         {
             this.user = user;
@@ -139,12 +144,28 @@ namespace CompanyProjectWindowsFormApp
 
         private void CreateCompanyOwnerMenu()
         {
-
+            CreateCompaniesButton();
+            CreateCompanyDeparmentsButton();
+            CreateEmployeesButton();
+            CreateEmployeeBonusButton();
+            CreateMeetingsButton();
+            CreateTasksButton();
+            CreateProductsOrServicesButton();
+            CreateCustomersButton();
+            CreateCompanyInventorysButton();
+            CreatePaymentsButton();
+            CreateCompanyOwnerDashboard();
         }
 
         private void CreateEmployeeMenu()
         {
-
+            CreateMeetingsButton();
+            CreateTasksButton();
+            CreateProductsOrServicesButton();
+            CreateCustomersButton();
+            CreateCompanyInventorysButton();
+            CreatePaymentsButton();
+            CreateEmployeeDashboard();
         }
 
         private void CreateCompaniesButton()
@@ -1727,6 +1748,382 @@ namespace CompanyProjectWindowsFormApp
                 dgvLowStock);
 
             return pnlLowStock;
+        }
+        private void CreateCompanyOwnerDashboard()
+        {
+            List<Meeting> meetings =
+                blMeeting
+                    .MeetingList();
+
+            List<CompanyManagement.Entity.Task> tasks =
+                blTask
+                    .TaskList();
+
+            Panel pnlUpcomingMeetings =
+                CreateUpcomingMeetingsPanel(meetings);
+
+            PnlContent.Controls.Add(
+                pnlUpcomingMeetings);
+
+
+            Panel pnlPendingTasks =
+                CreatePendingTasksPanel(tasks);
+
+            PnlContent.Controls.Add(
+                pnlPendingTasks);
+        }
+
+        private void CreateEmployeeDashboard()
+        {
+            // Employee Dashboard
+        }
+
+        private Panel CreateUpcomingMeetingsPanel(
+    List<Meeting> meetings)
+        {
+            Panel pnlUpcomingMeetings =
+                new Panel();
+
+            pnlUpcomingMeetings.Location =
+                new Point(20, 20);
+
+            pnlUpcomingMeetings.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    350);
+
+            pnlUpcomingMeetings.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlUpcomingMeetings.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Upcoming Meetings";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlUpcomingMeetings.Controls.Add(
+                lblTitle);
+
+
+            DataGridView dgvMeetings =
+                new DataGridView();
+
+            dgvMeetings.Location =
+                new Point(20, 55);
+
+            dgvMeetings.Size =
+                new Size(
+                    pnlUpcomingMeetings.Width - 40,
+                    270);
+
+            dgvMeetings.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            dgvMeetings.BackgroundColor =
+                Color.FromArgb(248, 250, 252);
+
+            dgvMeetings.BorderStyle =
+                BorderStyle.None;
+
+            dgvMeetings.AllowUserToAddRows =
+                false;
+
+            dgvMeetings.AllowUserToDeleteRows =
+                false;
+
+            dgvMeetings.ReadOnly =
+                true;
+
+            dgvMeetings.RowHeadersVisible =
+                false;
+
+            dgvMeetings.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvMeetings.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvMeetings.MultiSelect =
+                false;
+
+            dgvMeetings.EnableHeadersVisualStyles =
+                false;
+
+            dgvMeetings.ColumnHeadersDefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(71, 85, 105),
+
+                    ForeColor =
+                        Color.White,
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9,
+                            FontStyle.Bold)
+                };
+
+            dgvMeetings.DefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(248, 250, 252),
+
+                    ForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    SelectionBackColor =
+                        Color.FromArgb(219, 234, 254),
+
+                    SelectionForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9)
+                };
+
+
+            dgvMeetings.Columns.Add(
+                "Plot",
+                "Meeting");
+
+            dgvMeetings.Columns.Add(
+                "Place",
+                "Place");
+
+            dgvMeetings.Columns.Add(
+                "Date",
+                "Date");
+
+
+            var upcomingMeetings =
+                meetings
+                    .Where(x =>
+                        x.MeetingDate >= DateTime.Now)
+                    .OrderBy(x =>
+                        x.MeetingDate)
+                    .Take(10)
+                    .ToList();
+
+
+            foreach (var meeting in upcomingMeetings)
+            {
+                dgvMeetings.Rows.Add(
+                    meeting.MeetingPlot,
+
+                    meeting.MeetingPlace,
+
+                    meeting.MeetingDate
+                        .ToString("dd.MM.yyyy HH:mm"));
+            }
+
+
+            pnlUpcomingMeetings.Controls.Add(
+                dgvMeetings);
+
+            return pnlUpcomingMeetings;
+        }
+
+        private Panel CreatePendingTasksPanel(
+    List<CompanyManagement.Entity.Task> tasks)
+        {
+            Panel pnlPendingTasks =
+                new Panel();
+
+            pnlPendingTasks.Location =
+                new Point(20, 390);
+
+            pnlPendingTasks.Size =
+                new Size(
+                    PnlContent.ClientSize.Width - 40,
+                    350);
+
+            pnlPendingTasks.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            pnlPendingTasks.BackColor =
+                Color.FromArgb(30, 41, 59);
+
+
+            Label lblTitle =
+                new Label();
+
+            lblTitle.Text =
+                "Pending Tasks";
+
+            lblTitle.Font =
+                new Font(
+                    "Segoe UI",
+                    14,
+                    FontStyle.Bold);
+
+            lblTitle.ForeColor =
+                Color.White;
+
+            lblTitle.AutoSize =
+                true;
+
+            lblTitle.Location =
+                new Point(20, 15);
+
+            pnlPendingTasks.Controls.Add(
+                lblTitle);
+
+
+            DataGridView dgvTasks =
+                new DataGridView();
+
+            dgvTasks.Location =
+                new Point(20, 55);
+
+            dgvTasks.Size =
+                new Size(
+                    pnlPendingTasks.Width - 40,
+                    270);
+
+            dgvTasks.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left |
+                AnchorStyles.Right;
+
+            dgvTasks.BackgroundColor =
+                Color.FromArgb(248, 250, 252);
+
+            dgvTasks.BorderStyle =
+                BorderStyle.None;
+
+            dgvTasks.AllowUserToAddRows =
+                false;
+
+            dgvTasks.AllowUserToDeleteRows =
+                false;
+
+            dgvTasks.ReadOnly =
+                true;
+
+            dgvTasks.RowHeadersVisible =
+                false;
+
+            dgvTasks.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvTasks.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvTasks.MultiSelect =
+                false;
+
+            dgvTasks.EnableHeadersVisualStyles =
+                false;
+
+            dgvTasks.ColumnHeadersDefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(71, 85, 105),
+
+                    ForeColor =
+                        Color.White,
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9,
+                            FontStyle.Bold)
+                };
+
+            dgvTasks.DefaultCellStyle =
+                new DataGridViewCellStyle
+                {
+                    BackColor =
+                        Color.FromArgb(248, 250, 252),
+
+                    ForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    SelectionBackColor =
+                        Color.FromArgb(219, 234, 254),
+
+                    SelectionForeColor =
+                        Color.FromArgb(15, 23, 42),
+
+                    Font =
+                        new Font(
+                            "Segoe UI",
+                            9)
+                };
+
+
+            dgvTasks.Columns.Add(
+                "Task",
+                "Task");
+
+            dgvTasks.Columns.Add(
+                "BeginningDate",
+                "Beginning Date");
+
+            dgvTasks.Columns.Add(
+                "Status",
+                "Status");
+
+
+            var pendingTasks =
+                tasks
+                    .Where(x =>
+                        !x.IsCompleted)
+                    .OrderBy(x =>
+                        x.TaskBeginningDate)
+                    .Take(10)
+                    .ToList();
+
+
+            foreach (var task in pendingTasks)
+            {
+                dgvTasks.Rows.Add(
+                    task.TaskName,
+
+                    task.TaskBeginningDate
+                        .ToString("dd.MM.yyyy HH:mm"),
+
+                    "Pending");
+            }
+
+
+            pnlPendingTasks.Controls.Add(
+                dgvTasks);
+
+            return pnlPendingTasks;
         }
     }
 
