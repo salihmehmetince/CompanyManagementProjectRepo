@@ -924,13 +924,13 @@ namespace CompanyProjectWindowsFormApp
 
             //some summary charts
             Panel pnlSalesOverview =
-            CreateSalesOverviewPanel(payments);
+            CreateSalesOverviewPanel(payments, 20, 460);
 
             PnlContent.Controls.Add(
                 pnlSalesOverview);
 
             Panel pnlTopProducts =
-                CreateTopProductsPanel(payments);
+                CreateTopProductsPanel(payments, 20, 780);
 
             PnlContent.Controls.Add(
                 pnlTopProducts);
@@ -942,13 +942,13 @@ namespace CompanyProjectWindowsFormApp
                 pnlSalesByCompany);
 
             Panel pnlRecentSales =
-                CreateRecentSalesPanel(payments);
+                CreateRecentSalesPanel(payments, 20, 1420);
 
             PnlContent.Controls.Add(
                 pnlRecentSales);
 
             Panel pnlLowStock =
-                CreateLowStockPanel();
+                CreateLowStockPanel(20, 1790);
 
             PnlContent.Controls.Add(
                 pnlLowStock);
@@ -971,13 +971,16 @@ namespace CompanyProjectWindowsFormApp
             return gauge;
         }
 
-        private Panel CreateSalesOverviewPanel(List<CustomerBuysCompanyHasProductOrService> payments)
+        private Panel CreateSalesOverviewPanel(
+            List<CustomerBuysCompanyHasProductOrService> payments,
+            int positionX,
+            int positionY)
         {
             Panel pnlSalesOverview =
                 new Panel();
 
             pnlSalesOverview.Location =
-                new Point(20, 460);
+                new Point(positionX, positionY);
 
             pnlSalesOverview.Size =
                 new Size(
@@ -1076,13 +1079,16 @@ namespace CompanyProjectWindowsFormApp
             series.Color =
                 Color.FromArgb(37, 99, 235);
 
+
             for (int month = 1; month <= 12; month++)
             {
                 decimal monthlyRevenue =
                     payments
                         .Where(x =>
+                            x.CustomerBuysCompanyHasProductOrServiceDate.Year ==
+                                DateTime.Now.Year &&
                             x.CustomerBuysCompanyHasProductOrServiceDate.Month ==
-                            month)
+                                month)
                         .Sum(x =>
                             x.CompanyHasProductOrService
                                 .CompanyHasProductOrServicePrice *
@@ -1099,21 +1105,21 @@ namespace CompanyProjectWindowsFormApp
             chartSales.Series.Add(
                 series);
 
-
             pnlSalesOverview.Controls.Add(
                 chartSales);
 
             return pnlSalesOverview;
         }
-
         private Panel CreateTopProductsPanel(
-    List<CustomerBuysCompanyHasProductOrService> payments)
+            List<CustomerBuysCompanyHasProductOrService> payments,
+            int positionX,
+            int positionY)
         {
             Panel pnlTopProducts =
                 new Panel();
 
             pnlTopProducts.Location =
-                new Point(20, 780);
+                new Point(positionX, positionY);
 
             pnlTopProducts.Size =
                 new Size(
@@ -1127,6 +1133,7 @@ namespace CompanyProjectWindowsFormApp
 
             pnlTopProducts.BackColor =
                 Color.FromArgb(30, 41, 59);
+
 
             Label lblTitle =
                 new Label();
@@ -1152,6 +1159,7 @@ namespace CompanyProjectWindowsFormApp
             pnlTopProducts.Controls.Add(
                 lblTitle);
 
+
             Chart chartTopProducts =
                 new Chart();
 
@@ -1171,6 +1179,7 @@ namespace CompanyProjectWindowsFormApp
 
             chartTopProducts.BackColor =
                 Color.FromArgb(30, 41, 59);
+
 
             ChartArea chartArea =
                 new ChartArea();
@@ -1193,6 +1202,7 @@ namespace CompanyProjectWindowsFormApp
             chartTopProducts.ChartAreas.Add(
                 chartArea);
 
+
             Series series =
                 new Series();
 
@@ -1208,23 +1218,25 @@ namespace CompanyProjectWindowsFormApp
             series.Color =
                 Color.FromArgb(37, 99, 235);
 
-            var topProducts =
-    payments
-        .GroupBy(x =>
-            x.CompanyHasProductOrService
-                .ProductOrService)
-        .Select(x => new
-        {
-            ProductOrService =
-                x.Key.ProductOrServiceName,
 
-            Quantity =
-                x.Sum(y =>
-                    y.CustomerBuysCompanyHasProductOrServiceQuantity)
-        })
-        .OrderByDescending(x => x.Quantity)
-        .Take(50)
-        .ToList();
+            var topProducts =
+                payments
+                    .GroupBy(x =>
+                        x.CompanyHasProductOrService
+                            .ProductOrService)
+                    .Select(x => new
+                    {
+                        ProductOrService =
+                            x.Key.ProductOrServiceName,
+
+                        Quantity =
+                            x.Sum(y =>
+                                y.CustomerBuysCompanyHasProductOrServiceQuantity)
+                    })
+                    .OrderByDescending(x => x.Quantity)
+                    .Take(50)
+                    .ToList();
+
 
             foreach (var product in topProducts)
             {
@@ -1232,6 +1244,7 @@ namespace CompanyProjectWindowsFormApp
                     product.ProductOrService,
                     product.Quantity);
             }
+
 
             chartTopProducts.Series.Add(
                 series);
@@ -1241,6 +1254,7 @@ namespace CompanyProjectWindowsFormApp
 
             return pnlTopProducts;
         }
+
 
         private Panel CreateSalesByCompanyPanel(
     List<CustomerBuysCompanyHasProductOrService> payments)
@@ -1380,13 +1394,15 @@ namespace CompanyProjectWindowsFormApp
         }
 
         private Panel CreateRecentSalesPanel(
-    List<CustomerBuysCompanyHasProductOrService> payments)
+            List<CustomerBuysCompanyHasProductOrService> payments,
+            int positionX,
+            int positionY)
         {
             Panel pnlRecentSales =
                 new Panel();
 
             pnlRecentSales.Location =
-                new Point(20, 1420);
+                new Point(positionX, positionY);
 
             pnlRecentSales.Size =
                 new Size(
@@ -1400,6 +1416,7 @@ namespace CompanyProjectWindowsFormApp
 
             pnlRecentSales.BackColor =
                 Color.FromArgb(30, 41, 59);
+
 
             Label lblTitle =
                 new Label();
@@ -1424,6 +1441,7 @@ namespace CompanyProjectWindowsFormApp
 
             pnlRecentSales.Controls.Add(
                 lblTitle);
+
 
             DataGridView dgvRecentSales =
                 new DataGridView();
@@ -1509,6 +1527,7 @@ namespace CompanyProjectWindowsFormApp
                             9)
                 };
 
+
             dgvRecentSales.Columns.Add(
                 "Customer",
                 "Customer");
@@ -1537,12 +1556,14 @@ namespace CompanyProjectWindowsFormApp
                 "Revenue",
                 "Revenue");
 
+
             var recentSales =
                 payments
                     .OrderByDescending(x =>
                         x.CustomerBuysCompanyHasProductOrServiceDate)
                     .Take(10)
                     .ToList();
+
 
             foreach (var sale in recentSales)
             {
@@ -1572,19 +1593,22 @@ namespace CompanyProjectWindowsFormApp
                     revenue.ToString("N2"));
             }
 
+
             pnlRecentSales.Controls.Add(
                 dgvRecentSales);
 
             return pnlRecentSales;
         }
 
-        private Panel CreateLowStockPanel()
+        private Panel CreateLowStockPanel(
+            int positionX,
+            int positionY)
         {
             Panel pnlLowStock =
                 new Panel();
 
             pnlLowStock.Location =
-                new Point(20, 1790);
+                new Point(positionX, positionY);
 
             pnlLowStock.Size =
                 new Size(
@@ -1598,6 +1622,7 @@ namespace CompanyProjectWindowsFormApp
 
             pnlLowStock.BackColor =
                 Color.FromArgb(30, 41, 59);
+
 
             Label lblTitle =
                 new Label();
@@ -1622,6 +1647,7 @@ namespace CompanyProjectWindowsFormApp
 
             pnlLowStock.Controls.Add(
                 lblTitle);
+
 
             DataGridView dgvLowStock =
                 new DataGridView();
@@ -1707,6 +1733,7 @@ namespace CompanyProjectWindowsFormApp
                             9)
                 };
 
+
             dgvLowStock.Columns.Add(
                 "Company",
                 "Company");
@@ -1718,6 +1745,7 @@ namespace CompanyProjectWindowsFormApp
             dgvLowStock.Columns.Add(
                 "Quantity",
                 "Quantity");
+
 
             List<CompanyHasProductOrService> companyProducts =
                 new BLCompanyHasProductOrService()
@@ -1733,6 +1761,7 @@ namespace CompanyProjectWindowsFormApp
                     .Take(10)
                     .ToList();
 
+
             foreach (var item in lowStock)
             {
                 dgvLowStock.Rows.Add(
@@ -1743,6 +1772,7 @@ namespace CompanyProjectWindowsFormApp
 
                     item.CompanyHasProductOrServiceQuantity);
             }
+
 
             pnlLowStock.Controls.Add(
                 dgvLowStock);
@@ -1759,6 +1789,16 @@ namespace CompanyProjectWindowsFormApp
                 blTask
                     .TaskList();
 
+            List<CustomerBuysCompanyHasProductOrService> payments =
+                blCustomerBuysCompanyHasProductOrService
+                    .CustomerBuysCompanyHasProductOrServiceList()
+                    .Where(x =>
+                        x.CompanyHasProductOrService != null &&
+                        selectedCompanyIds.Contains(
+                            x.CompanyHasProductOrService.CompanyId))
+                    .ToList();
+
+
             Panel pnlUpcomingMeetings =
                 CreateUpcomingMeetingsPanel(meetings);
 
@@ -1771,11 +1811,57 @@ namespace CompanyProjectWindowsFormApp
 
             PnlContent.Controls.Add(
                 pnlPendingTasks);
-        }
 
+
+            Panel pnlSalesOverview =
+                CreateSalesOverviewPanel(payments, 20, 760);
+
+            PnlContent.Controls.Add(
+                pnlSalesOverview);
+
+
+            Panel pnlTopProducts =
+                CreateTopProductsPanel(payments, 20, 1130);
+
+            PnlContent.Controls.Add(
+                pnlTopProducts);
+
+            Panel pnlRecentSales =
+    CreateRecentSalesPanel(payments, 20, 1420);
+
+            PnlContent.Controls.Add(
+                pnlRecentSales);
+
+            Panel pnlLowStock =
+                CreateLowStockPanel(20, 1790);
+
+            PnlContent.Controls.Add(
+                pnlLowStock);
+        }
         private void CreateEmployeeDashboard()
         {
-            // Employee Dashboard
+            List<Meeting> meetings =
+            blMeeting
+                .MeetingList();
+
+            List<CompanyManagement.Entity.Task> tasks =
+                blTask
+                    .TaskList();
+
+
+            Panel pnlUpcomingMeetings =
+                CreateUpcomingMeetingsEmployeePanel(meetings);
+
+            PnlContent.Controls.Add(
+                pnlUpcomingMeetings);
+
+
+            Panel pnlPendingTasks =
+                CreatePendingTasksEmployeePanel(tasks);
+
+            PnlContent.Controls.Add(
+                pnlPendingTasks);
+
         }
 
         private Panel CreateUpcomingMeetingsPanel(
@@ -1927,7 +2013,12 @@ namespace CompanyProjectWindowsFormApp
             var upcomingMeetings =
                 meetings
                     .Where(x =>
-                        x.MeetingDate >= DateTime.Now)
+                        x.MeetingDate >= DateTime.Now &&
+                        x.MeetingHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.UserId == user.UserId &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(z.CompanyId))))
                     .OrderBy(x =>
                         x.MeetingDate)
                     .Take(10)
@@ -2101,7 +2192,12 @@ namespace CompanyProjectWindowsFormApp
             var pendingTasks =
                 tasks
                     .Where(x =>
-                        !x.IsCompleted)
+                        !x.IsCompleted &&
+                        x.TaskHasCompanyOwners.Any(y =>
+                            y.CompanyOwner != null &&
+                            y.CompanyOwner.UserId == user.UserId &&
+                            y.CompanyOwner.CompanyOwnerHasCompanies.Any(z =>
+                                selectedCompanyIds.Contains(z.CompanyId))))
                     .OrderBy(x =>
                         x.TaskBeginningDate)
                     .Take(10)
@@ -2125,6 +2221,618 @@ namespace CompanyProjectWindowsFormApp
 
             return pnlPendingTasks;
         }
+
+        private void DrawDashboardIcon(
+            Graphics graphics,
+            Rectangle bounds,
+            string type,
+            Color color)
+        {
+            graphics.SmoothingMode =
+                System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            int size = 20;
+            int x = bounds.X + (bounds.Width - size) / 2;
+            int y = bounds.Y + (bounds.Height - size) / 2;
+
+            using (SolidBrush brush = new SolidBrush(color))
+            using (Pen pen = new Pen(color, 2))
+            using (SolidBrush white = new SolidBrush(Color.White))
+            using (Pen whitePen = new Pen(Color.White, 2))
+            {
+                if (type == "skull")
+                {
+                    graphics.FillEllipse(brush, x + 3, y, 14, 13);
+                    graphics.FillRectangle(brush, x + 5, y + 9, 10, 7);
+
+                    graphics.FillEllipse(white, x + 5, y + 5, 4, 4);
+                    graphics.FillEllipse(white, x + 11, y + 5, 4, 4);
+
+                    graphics.FillPolygon(white, new Point[]
+                    {
+                new Point(x + 10, y + 10),
+                new Point(x + 8, y + 13),
+                new Point(x + 12, y + 13)
+                    });
+
+                    graphics.DrawLine(pen, x + 7, y + 14, x + 7, y + 18);
+                    graphics.DrawLine(pen, x + 10, y + 14, x + 10, y + 18);
+                    graphics.DrawLine(pen, x + 13, y + 14, x + 13, y + 18);
+                }
+                else if (type == "warning")
+                {
+                    graphics.FillPolygon(brush, new Point[]
+                    {
+                new Point(x + 10, y),
+                new Point(x + 20, y + 18),
+                new Point(x, y + 18)
+                    });
+
+                    graphics.DrawLine(whitePen, x + 10, y + 5, x + 10, y + 11);
+                    graphics.FillEllipse(white, x + 9, y + 13, 2, 2);
+                }
+                else if (type == "calendar")
+                {
+                    graphics.DrawRectangle(pen, x + 2, y + 3, 16, 15);
+                    graphics.DrawLine(pen, x + 2, y + 7, x + 18, y + 7);
+                    graphics.DrawLine(pen, x + 6, y, x + 6, y + 5);
+                    graphics.DrawLine(pen, x + 14, y, x + 14, y + 5);
+                    graphics.FillRectangle(brush, x + 5, y + 10, 3, 3);
+                    graphics.FillRectangle(brush, x + 11, y + 10, 3, 3);
+                }
+                else if (type == "check")
+                {
+                    graphics.FillEllipse(brush, x, y, 20, 20);
+
+                    graphics.DrawLines(whitePen, new Point[]
+                    {
+                new Point(x + 4, y + 10),
+                new Point(x + 8, y + 14),
+                new Point(x + 16, y + 6)
+                    });
+                }
+                else if (type == "clock")
+                {
+                    graphics.DrawEllipse(pen, x + 1, y + 1, 18, 18);
+                    graphics.DrawLine(pen, x + 10, y + 4, x + 10, y + 10);
+                    graphics.DrawLine(pen, x + 10, y + 10, x + 14, y + 12);
+                }
+                else if (type == "alarm")
+                {
+                    graphics.DrawArc(pen, x + 3, y + 4, 14, 14, 180, 180);
+                    graphics.DrawLine(pen, x + 3, y + 11, x + 3, y + 15);
+                    graphics.DrawLine(pen, x + 17, y + 11, x + 17, y + 15);
+                    graphics.DrawLine(pen, x + 3, y + 15, x + 17, y + 15);
+                    graphics.DrawLine(pen, x + 5, y + 3, x + 2, y);
+                    graphics.DrawLine(pen, x + 15, y + 3, x + 18, y);
+                    graphics.DrawLine(pen, x + 7, y + 19, x + 5, y + 20);
+                    graphics.DrawLine(pen, x + 13, y + 19, x + 15, y + 20);
+                }
+                else if (type == "star")
+                {
+                    graphics.FillPolygon(brush, new Point[]
+                    {
+                new Point(x + 10, y),
+                new Point(x + 13, y + 7),
+                new Point(x + 20, y + 7),
+                new Point(x + 15, y + 12),
+                new Point(x + 17, y + 20),
+                new Point(x + 10, y + 16),
+                new Point(x + 3, y + 20),
+                new Point(x + 5, y + 12),
+                new Point(x, y + 7),
+                new Point(x + 7, y + 7)
+                    });
+                }
+                else if (type == "target")
+                {
+                    graphics.DrawEllipse(pen, x + 1, y + 1, 18, 18);
+                    graphics.DrawEllipse(pen, x + 5, y + 5, 10, 10);
+                    graphics.FillEllipse(brush, x + 8, y + 8, 4, 4);
+                }
+                else if (type == "lightning")
+                {
+                    graphics.FillPolygon(brush, new Point[]
+                    {
+                new Point(x + 12, y),
+                new Point(x + 4, y + 11),
+                new Point(x + 9, y + 11),
+                new Point(x + 7, y + 20),
+                new Point(x + 17, y + 7),
+                new Point(x + 12, y + 7)
+                    });
+                }
+                else if (type == "info")
+                {
+                    graphics.FillEllipse(brush, x, y, 20, 20);
+                    graphics.FillEllipse(white, x + 9, y + 4, 2, 2);
+                    graphics.FillRectangle(white, x + 9, y + 8, 2, 8);
+                }
+                else if (type == "flag")
+                {
+                    graphics.DrawLine(pen, x + 4, y, x + 4, y + 20);
+                    graphics.DrawLines(pen, new Point[]
+                    {
+                new Point(x + 5, y + 2),
+                new Point(x + 17, y + 4),
+                new Point(x + 12, y + 9),
+                new Point(x + 5, y + 7)
+                    });
+                }
+                else if (type == "shield")
+                {
+                    graphics.FillPolygon(brush, new Point[]
+                    {
+                new Point(x + 10, y),
+                new Point(x + 19, y + 4),
+                new Point(x + 17, y + 13),
+                new Point(x + 10, y + 20),
+                new Point(x + 3, y + 13),
+                new Point(x + 1, y + 4)
+                    });
+
+                    graphics.DrawLines(whitePen, new Point[]
+                    {
+                new Point(x + 5, y + 10),
+                new Point(x + 9, y + 13),
+                new Point(x + 15, y + 6)
+                    });
+                }
+                else if (type == "person")
+                {
+                    graphics.FillEllipse(brush, x + 6, y, 8, 8);
+                    graphics.FillPie(brush, x + 2, y + 9, 16, 13, 180, 180);
+                }
+                else if (type == "document")
+                {
+                    graphics.DrawRectangle(pen, x + 3, y + 1, 14, 18);
+                    graphics.DrawLine(pen, x + 6, y + 6, x + 14, y + 6);
+                    graphics.DrawLine(pen, x + 6, y + 10, x + 14, y + 10);
+                    graphics.DrawLine(pen, x + 6, y + 14, x + 12, y + 14);
+                }
+                else if (type == "pause")
+                {
+                    graphics.FillRectangle(brush, x + 4, y + 2, 4, 16);
+                    graphics.FillRectangle(brush, x + 12, y + 2, 4, 16);
+                }
+                else if (type == "progress")
+                {
+                    graphics.DrawEllipse(pen, x + 1, y + 1, 18, 18);
+                    graphics.DrawArc(pen, x + 1, y + 1, 18, 18, -90, 230);
+                }
+            }
+        }
+
+        private Panel CreateUpcomingMeetingsEmployeePanel(List<Meeting> meetings)
+        {
+            Panel pnl = new Panel
+            {
+                Location = new Point(20, 20),
+                Size = new Size(PnlContent.ClientSize.Width - 40, 350),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            Panel accent = new Panel
+            {
+                Location = new Point(0, 0),
+                Size = new Size(6, 350),
+                BackColor = Color.FromArgb(59, 130, 246)
+            };
+            pnl.Controls.Add(accent);
+
+            Label title = new Label
+            {
+                Text = "Upcoming Meetings",
+                Font = new Font("Segoe UI", 15, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 64, 175),
+                AutoSize = true,
+                Location = new Point(20, 12)
+            };
+            pnl.Controls.Add(title);
+
+            Label subtitle = new Label
+            {
+                Text = "Your schedule and time remaining",
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.FromArgb(100, 116, 139),
+                AutoSize = true,
+                Location = new Point(22, 40)
+            };
+            pnl.Controls.Add(subtitle);
+
+            DataGridView dgv = new DataGridView
+            {
+                Location = new Point(20, 68),
+                Size = new Size(pnl.Width - 40, 257),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                         AnchorStyles.Left | AnchorStyles.Right,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
+                RowHeadersVisible = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                MultiSelect = false,
+                EnableHeadersVisualStyles = false,
+                RowTemplate = { Height = 36 },
+                GridColor = Color.FromArgb(226, 232, 240)
+            };
+
+            dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(219, 234, 254),
+                ForeColor = Color.FromArgb(30, 64, 175),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Padding = new Padding(5)
+            };
+
+            dgv.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 65, 85),
+                SelectionBackColor = Color.FromArgb(219, 234, 254),
+                SelectionForeColor = Color.FromArgb(30, 41, 59),
+                Font = new Font("Segoe UI", 9),
+                Padding = new Padding(5)
+            };
+
+            dgv.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(248, 250, 252)
+            };
+
+            dgv.Columns.Add("Indicator", "");
+            dgv.Columns.Add("Plot", "Meeting");
+            dgv.Columns.Add("Place", "Place");
+            dgv.Columns.Add("Date", "Date");
+            dgv.Columns.Add("DaysLeft", "Days Left");
+            dgv.Columns.Add("Timeline", "Timeline");
+
+            dgv.Columns["Indicator"].FillWeight = 9;
+            dgv.Columns["Plot"].FillWeight = 31;
+            dgv.Columns["Place"].FillWeight = 22;
+            dgv.Columns["Date"].FillWeight = 25;
+            dgv.Columns["DaysLeft"].FillWeight = 16;
+            dgv.Columns["Timeline"].FillWeight = 22;
+
+            var upcomingMeetings =
+                meetings
+                    .Where(x =>
+                        x.MeetingDate >= DateTime.Now &&
+                        x.MeetingHasEmployees.Any(y =>
+                            y.Employee != null &&
+                            y.Employee.UserId == user.UserId))
+                    .OrderBy(x => x.MeetingDate)
+                    .Take(10)
+                    .ToList();
+
+            foreach (var meeting in upcomingMeetings)
+            {
+                double days = (meeting.MeetingDate - DateTime.Now).TotalDays;
+
+                string indicator;
+                Color color;
+
+                if (days <= 1)
+                {
+                    indicator = "alarm";
+                    color = Color.FromArgb(220, 38, 38);
+                }
+                else if (days <= 3)
+                {
+                    indicator = "clock";
+                    color = Color.FromArgb(234, 88, 12);
+                }
+                else if (days <= 5)
+                {
+                    indicator = "calendar";
+                    color = Color.FromArgb(202, 138, 4);
+                }
+                else
+                {
+                    indicator = "star";
+                    color = Color.FromArgb(22, 163, 74);
+                }
+
+                int row = dgv.Rows.Add(
+                    indicator,
+                    meeting.MeetingPlot,
+                    meeting.MeetingPlace,
+                    meeting.MeetingDate.ToString("dd.MM.yyyy HH:mm"),
+                    Math.Ceiling(days),
+                    Math.Min(days, 10));
+
+                dgv.Rows[row].Cells["Indicator"].Style.ForeColor = color;
+                dgv.Rows[row].Cells["DaysLeft"].Style.ForeColor = color;
+                dgv.Rows[row].Cells["DaysLeft"].Style.Font =
+                    new Font("Segoe UI", 9, FontStyle.Bold);
+            }
+
+            dgv.CellPainting += (sender, e) =>
+            {
+                if (e.RowIndex < 0)
+                    return;
+
+                if (e.ColumnIndex == dgv.Columns["Indicator"].Index)
+                {
+                    e.PaintBackground(e.CellBounds, true);
+
+                    string type = Convert.ToString(
+                        dgv.Rows[e.RowIndex].Cells["Indicator"].Value);
+
+                    Color color = dgv.Rows[e.RowIndex]
+                        .Cells["DaysLeft"].Style.ForeColor;
+
+                    DrawDashboardIcon(e.Graphics, e.CellBounds, type, color);
+
+                    e.Handled = true;
+                }
+                else if (e.ColumnIndex == dgv.Columns["Timeline"].Index)
+                {
+                    e.PaintBackground(e.CellBounds, true);
+
+                    double value = Convert.ToDouble(
+                        dgv.Rows[e.RowIndex].Cells["Timeline"].Value);
+
+                    Rectangle area = e.CellBounds;
+                    area.Inflate(-7, -13);
+
+                    using (SolidBrush background =
+                           new SolidBrush(Color.FromArgb(226, 232, 240)))
+                    {
+                        e.Graphics.FillRectangle(background, area);
+                    }
+
+                    int width = (int)(area.Width * Math.Min(value / 10.0, 1.0));
+
+                    Color color = value <= 1
+                        ? Color.FromArgb(220, 38, 38)
+                        : value <= 3
+                            ? Color.FromArgb(234, 88, 12)
+                            : value <= 5
+                                ? Color.FromArgb(202, 138, 4)
+                                : Color.FromArgb(22, 163, 74);
+
+                    using (SolidBrush fill = new SolidBrush(color))
+                    {
+                        e.Graphics.FillRectangle(
+                            fill,
+                            area.X,
+                            area.Y,
+                            Math.Max(0, width),
+                            area.Height);
+                    }
+
+                    e.Handled = true;
+                }
+            };
+
+            pnl.Controls.Add(dgv);
+            return pnl;
+        }
+
+        private Panel CreatePendingTasksEmployeePanel(
+    List<CompanyManagement.Entity.Task> tasks)
+        {
+            Panel pnl = new Panel
+            {
+                Location = new Point(20, 390),
+                Size = new Size(PnlContent.ClientSize.Width - 40, 350),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            Panel accent = new Panel
+            {
+                Location = new Point(0, 0),
+                Size = new Size(6, 350),
+                BackColor = Color.FromArgb(16, 185, 129)
+            };
+            pnl.Controls.Add(accent);
+
+            Label title = new Label
+            {
+                Text = "Pending Tasks",
+                Font = new Font("Segoe UI", 15, FontStyle.Bold),
+                ForeColor = Color.FromArgb(6, 95, 70),
+                AutoSize = true,
+                Location = new Point(20, 12)
+            };
+            pnl.Controls.Add(title);
+
+            Label subtitle = new Label
+            {
+                Text = "Your assigned work and priority",
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.FromArgb(100, 116, 139),
+                AutoSize = true,
+                Location = new Point(22, 40)
+            };
+            pnl.Controls.Add(subtitle);
+
+            DataGridView dgv = new DataGridView
+            {
+                Location = new Point(20, 68),
+                Size = new Size(pnl.Width - 40, 257),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                         AnchorStyles.Left | AnchorStyles.Right,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
+                RowHeadersVisible = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                MultiSelect = false,
+                EnableHeadersVisualStyles = false,
+                RowTemplate = { Height = 36 },
+                GridColor = Color.FromArgb(226, 232, 240)
+            };
+
+            dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(209, 250, 229),
+                ForeColor = Color.FromArgb(6, 95, 70),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Padding = new Padding(5)
+            };
+
+            dgv.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 65, 85),
+                SelectionBackColor = Color.FromArgb(209, 250, 229),
+                SelectionForeColor = Color.FromArgb(30, 41, 59),
+                Font = new Font("Segoe UI", 9),
+                Padding = new Padding(5)
+            };
+
+            dgv.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(248, 250, 252)
+            };
+
+            dgv.Columns.Add("Indicator", "");
+            dgv.Columns.Add("Task", "Task");
+            dgv.Columns.Add("BeginningDate", "Beginning Date");
+            dgv.Columns.Add("Status", "Status");
+            dgv.Columns.Add("Age", "Days Since Start");
+            dgv.Columns.Add("Timeline", "Priority");
+
+            dgv.Columns["Indicator"].FillWeight = 9;
+            dgv.Columns["Task"].FillWeight = 34;
+            dgv.Columns["BeginningDate"].FillWeight = 25;
+            dgv.Columns["Status"].FillWeight = 16;
+            dgv.Columns["Age"].FillWeight = 20;
+            dgv.Columns["Timeline"].FillWeight = 22;
+
+            var pendingTasks =
+                tasks
+                    .Where(x =>
+                        !x.IsCompleted &&
+                        x.TaskHasEmployees.Any(y =>
+                            y.Employee != null &&
+                            y.Employee.UserId == user.UserId))
+                    .OrderBy(x => x.TaskBeginningDate)
+                    .Take(10)
+                    .ToList();
+
+            foreach (var task in pendingTasks)
+            {
+                double days = Math.Max(
+                    0,
+                    (DateTime.Now - task.TaskBeginningDate).TotalDays);
+
+                string indicator;
+                string priority;
+                Color color;
+
+                if (days >= 5)
+                {
+                    indicator = "skull";
+                    priority = "High";
+                    color = Color.FromArgb(220, 38, 38);
+                }
+                else if (days >= 3)
+                {
+                    indicator = "warning";
+                    priority = "Medium";
+                    color = Color.FromArgb(234, 88, 12);
+                }
+                else
+                {
+                    indicator = "check";
+                    priority = "Normal";
+                    color = Color.FromArgb(22, 163, 74);
+                }
+
+                int row = dgv.Rows.Add(
+                    indicator,
+                    task.TaskName,
+                    task.TaskBeginningDate.ToString("dd.MM.yyyy HH:mm"),
+                    "Pending",
+                    Math.Floor(days),
+                    priority);
+
+                dgv.Rows[row].Cells["Indicator"].Style.ForeColor = color;
+                dgv.Rows[row].Cells["Age"].Style.ForeColor = color;
+                dgv.Rows[row].Cells["Age"].Style.Font =
+                    new Font("Segoe UI", 9, FontStyle.Bold);
+                dgv.Rows[row].Cells["Timeline"].Style.ForeColor = color;
+                dgv.Rows[row].Cells["Timeline"].Style.Font =
+                    new Font("Segoe UI", 9, FontStyle.Bold);
+                dgv.Rows[row].Cells["Status"].Style.ForeColor =
+                    Color.FromArgb(180, 83, 9);
+            }
+
+            dgv.CellPainting += (sender, e) =>
+            {
+                if (e.RowIndex < 0)
+                    return;
+
+                if (e.ColumnIndex == dgv.Columns["Indicator"].Index)
+                {
+                    e.PaintBackground(e.CellBounds, true);
+
+                    string type = Convert.ToString(
+                        dgv.Rows[e.RowIndex].Cells["Indicator"].Value);
+
+                    Color color = dgv.Rows[e.RowIndex]
+                        .Cells["Age"].Style.ForeColor;
+
+                    DrawDashboardIcon(e.Graphics, e.CellBounds, type, color);
+
+                    e.Handled = true;
+                }
+                else if (e.ColumnIndex == dgv.Columns["Timeline"].Index)
+                {
+                    e.PaintBackground(e.CellBounds, true);
+
+                    double days = Convert.ToDouble(
+                        dgv.Rows[e.RowIndex].Cells["Age"].Value);
+
+                    Rectangle area = e.CellBounds;
+                    area.Inflate(-7, -13);
+
+                    using (SolidBrush background =
+                           new SolidBrush(Color.FromArgb(226, 232, 240)))
+                    {
+                        e.Graphics.FillRectangle(background, area);
+                    }
+
+                    int width = (int)(
+                        area.Width * Math.Min(days / 5.0, 1.0));
+
+                    Color color = days >= 5
+                        ? Color.FromArgb(220, 38, 38)
+                        : days >= 3
+                            ? Color.FromArgb(234, 88, 12)
+                            : Color.FromArgb(22, 163, 74);
+
+                    using (SolidBrush fill = new SolidBrush(color))
+                    {
+                        e.Graphics.FillRectangle(
+                            fill,
+                            area.X,
+                            area.Y,
+                            Math.Max(0, width),
+                            area.Height);
+                    }
+
+                    e.Handled = true;
+                }
+            };
+
+            pnl.Controls.Add(dgv);
+            return pnl;
+        }
+
     }
 
 
