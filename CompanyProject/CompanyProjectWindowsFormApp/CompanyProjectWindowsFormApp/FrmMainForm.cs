@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -160,7 +161,6 @@ namespace CompanyProjectWindowsFormApp
         private void CreateEmployeeMenu()
         {
             CreateMeetingsButton();
-            CreateTasksButton();
             CreateProductsOrServicesButton();
             CreateCustomersButton();
             CreateCompanyInventorysButton();
@@ -1861,6 +1861,40 @@ namespace CompanyProjectWindowsFormApp
 
             PnlContent.Controls.Add(
                 pnlPendingTasks);
+
+            List<CustomerBuysCompanyHasProductOrService> payments =
+                blCustomerBuysCompanyHasProductOrService
+                    .CustomerBuysCompanyHasProductOrServiceList()
+                    .Where(x =>
+                        x.CompanyHasProductOrService != null &&
+                        selectedCompanyIds.Contains(
+                            x.CompanyHasProductOrService.CompanyId))
+                    .ToList();
+
+            Panel pnlSalesOverview =
+                CreateSalesOverviewPanel(payments, 20, 760);
+
+            PnlContent.Controls.Add(
+                pnlSalesOverview);
+
+
+            Panel pnlTopProducts =
+                CreateTopProductsPanel(payments, 20, 1130);
+
+            PnlContent.Controls.Add(
+                pnlTopProducts);
+
+            Panel pnlRecentSales =
+    CreateRecentSalesPanel(payments, 20, 1420);
+
+            PnlContent.Controls.Add(
+                pnlRecentSales);
+
+            Panel pnlLowStock =
+                CreateLowStockPanel(20, 1790);
+
+            PnlContent.Controls.Add(
+                pnlLowStock);
 
         }
 
