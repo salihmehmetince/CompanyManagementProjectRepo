@@ -1,6 +1,7 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Helpers;
 using CompanyProjectWindowsFormApp.Properties;
 using System;
 using System.Collections.Generic;
@@ -976,61 +977,108 @@ namespace CompanyProjectWindowsFormApp
             int positionX,
             int positionY)
         {
-            Panel pnlSalesOverview =
-                new Panel();
+            Panel pnlSalesOverview = new Panel();
 
-            pnlSalesOverview.Location =
-                new Point(positionX, positionY);
-
-            pnlSalesOverview.Size =
-                new Size(
-                    PnlContent.ClientSize.Width - 40,
-                    300);
+            pnlSalesOverview.Location = new Point(positionX, positionY);
+            pnlSalesOverview.Size = new Size(
+                PnlContent.ClientSize.Width - 40,
+                300);
 
             pnlSalesOverview.Anchor =
                 AnchorStyles.Top |
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            pnlSalesOverview.BackColor =
-                Color.FromArgb(30, 41, 59);
+            pnlSalesOverview.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            Label lblTitle =
-                new Label();
+            Label lblTitle = new Label();
 
-            lblTitle.Text =
-                "Sales Overview";
+            lblTitle.Text = "Sales Overview";
+            lblTitle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(20, 15);
 
-            lblTitle.Font =
-                new Font(
-                    "Segoe UI",
-                    14,
-                    FontStyle.Bold);
-
-            lblTitle.ForeColor =
-                Color.White;
-
-            lblTitle.AutoSize =
-                true;
-
-            lblTitle.Location =
-                new Point(20, 15);
-
-            pnlSalesOverview.Controls.Add(
-                lblTitle);
+            pnlSalesOverview.Controls.Add(lblTitle);
 
 
-            Chart chartSales =
-                new Chart();
+            // Export menu
 
-            chartSales.Location =
-                new Point(20, 55);
+            Button btnExport = new Button();
 
-            chartSales.Size =
-                new Size(
-                    pnlSalesOverview.Width - 40,
-                    220);
+            btnExport.Text = "Export  ▼";
+            btnExport.Size = new Size(110, 32);
+
+            btnExport.Location = new Point(
+                pnlSalesOverview.Width - 130,
+                10);
+
+            btnExport.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right;
+
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(71, 85, 105);
+            btnExport.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(51, 65, 85);
+
+            btnExport.BackColor = Color.FromArgb(51, 65, 85);
+            btnExport.ForeColor = Color.White;
+            btnExport.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnExport.Cursor = Cursors.Hand;
+
+
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            exportMenu.BackColor = Color.FromArgb(30, 41, 59);
+            exportMenu.ForeColor = Color.White;
+            exportMenu.ShowImageMargin = false;
+            exportMenu.RenderMode = ToolStripRenderMode.Professional;
+
+
+            ToolStripMenuItem itemExcel =
+                new ToolStripMenuItem("Export to Excel");
+
+            ToolStripMenuItem itemPdf =
+                new ToolStripMenuItem("Export to PDF");
+
+
+            itemExcel.BackColor = Color.FromArgb(30, 41, 59);
+            itemExcel.ForeColor = Color.White;
+            itemExcel.Padding = new Padding(10, 8, 10, 8);
+
+            itemPdf.BackColor = Color.FromArgb(30, 41, 59);
+            itemPdf.ForeColor = Color.White;
+            itemPdf.Padding = new Padding(10, 8, 10, 8);
+
+
+            exportMenu.Items.Add(itemExcel);
+            exportMenu.Items.Add(itemPdf);
+
+
+            btnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(
+                    btnExport,
+                    new Point(0, btnExport.Height));
+            };
+
+
+            pnlSalesOverview.Controls.Add(btnExport);
+
+
+            // Chart
+
+            Chart chartSales = new Chart();
+
+            chartSales.Location = new Point(20, 55);
+
+            chartSales.Size = new Size(
+                pnlSalesOverview.Width - 40,
+                220);
 
             chartSales.Anchor =
                 AnchorStyles.Top |
@@ -1038,15 +1086,12 @@ namespace CompanyProjectWindowsFormApp
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            chartSales.BackColor =
-                Color.FromArgb(30, 41, 59);
+            chartSales.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            ChartArea chartArea =
-                new ChartArea();
+            ChartArea chartArea = new ChartArea();
 
-            chartArea.BackColor =
-                Color.FromArgb(30, 41, 59);
+            chartArea.BackColor = Color.FromArgb(30, 41, 59);
 
             chartArea.AxisX.LabelStyle.ForeColor =
                 Color.FromArgb(203, 213, 225);
@@ -1060,25 +1105,18 @@ namespace CompanyProjectWindowsFormApp
             chartArea.AxisY.MajorGrid.LineColor =
                 Color.FromArgb(71, 85, 105);
 
-            chartSales.ChartAreas.Add(
-                chartArea);
+            chartSales.ChartAreas.Add(chartArea);
 
 
-            Series series =
-                new Series();
+            Series series = new Series();
 
-            series.Name =
-                "Revenue";
+            series.Name = "Revenue";
+            series.ChartType = SeriesChartType.Line;
+            series.BorderWidth = 3;
+            series.Color = Color.FromArgb(37, 99, 235);
 
-            series.ChartType =
-                SeriesChartType.Line;
 
-            series.BorderWidth =
-                3;
-
-            series.Color =
-                Color.FromArgb(37, 99, 235);
-
+            int currentYear = DateTime.Now.Year;
 
             for (int month = 1; month <= 12; month++)
             {
@@ -1086,7 +1124,7 @@ namespace CompanyProjectWindowsFormApp
                     payments
                         .Where(x =>
                             x.CustomerBuysCompanyHasProductOrServiceDate.Year ==
-                                DateTime.Now.Year &&
+                                currentYear &&
                             x.CustomerBuysCompanyHasProductOrServiceDate.Month ==
                                 month)
                         .Sum(x =>
@@ -1095,18 +1133,68 @@ namespace CompanyProjectWindowsFormApp
                             x.CustomerBuysCompanyHasProductOrServiceQuantity);
 
                 series.Points.AddXY(
-                    new DateTime(
-                        DateTime.Now.Year,
-                        month,
-                        1).ToString("MMM"),
+                    new DateTime(currentYear, month, 1).ToString("MMM"),
                     monthlyRevenue);
             }
 
-            chartSales.Series.Add(
-                series);
+            chartSales.Series.Add(series);
 
-            pnlSalesOverview.Controls.Add(
-                chartSales);
+            pnlSalesOverview.Controls.Add(chartSales);
+
+
+            // Excel export
+
+            itemExcel.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "Excel Dosyası (*.xlsx)|*.xlsx";
+
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "SalesOverview.xlsx";
+                    saveFileDialog.Title = "Export Sales Overview";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ExcelExportHelper.ExportToExcel(
+                                chartSales,
+                                saveFileDialog.FileName,
+                                "Sales Overview");
+
+                            MessageBox.Show(
+                                "Grafik Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+
+            // PDF export
+
+            itemPdf.Click += (sender, e) =>
+            {
+                MessageBox.Show(
+                    "PDF aktarımı henüz eklenmedi.",
+                    "Export to PDF",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            };
+
 
             return pnlSalesOverview;
         }
@@ -1115,61 +1203,109 @@ namespace CompanyProjectWindowsFormApp
             int positionX,
             int positionY)
         {
-            Panel pnlTopProducts =
-                new Panel();
+            Panel pnlTopProducts = new Panel();
 
-            pnlTopProducts.Location =
-                new Point(positionX, positionY);
+            pnlTopProducts.Location = new Point(positionX, positionY);
 
-            pnlTopProducts.Size =
-                new Size(
-                    PnlContent.ClientSize.Width - 40,
-                    300);
+            pnlTopProducts.Size = new Size(
+                PnlContent.ClientSize.Width - 40,
+                300);
 
             pnlTopProducts.Anchor =
                 AnchorStyles.Top |
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            pnlTopProducts.BackColor =
-                Color.FromArgb(30, 41, 59);
+            pnlTopProducts.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            Label lblTitle =
-                new Label();
+            Label lblTitle = new Label();
 
-            lblTitle.Text =
-                "Top Products / Services";
+            lblTitle.Text = "Top Products / Services";
+            lblTitle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(20, 15);
 
-            lblTitle.Font =
-                new Font(
-                    "Segoe UI",
-                    14,
-                    FontStyle.Bold);
-
-            lblTitle.ForeColor =
-                Color.White;
-
-            lblTitle.AutoSize =
-                true;
-
-            lblTitle.Location =
-                new Point(20, 15);
-
-            pnlTopProducts.Controls.Add(
-                lblTitle);
+            pnlTopProducts.Controls.Add(lblTitle);
 
 
-            Chart chartTopProducts =
-                new Chart();
+            // Export menu
 
-            chartTopProducts.Location =
-                new Point(20, 55);
+            Button btnExport = new Button();
 
-            chartTopProducts.Size =
-                new Size(
-                    pnlTopProducts.Width - 40,
-                    220);
+            btnExport.Text = "Export  ▼";
+            btnExport.Size = new Size(110, 32);
+
+            btnExport.Location = new Point(
+                pnlTopProducts.Width - 130,
+                10);
+
+            btnExport.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right;
+
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(71, 85, 105);
+            btnExport.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(51, 65, 85);
+
+            btnExport.BackColor = Color.FromArgb(51, 65, 85);
+            btnExport.ForeColor = Color.White;
+            btnExport.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnExport.Cursor = Cursors.Hand;
+
+
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            exportMenu.BackColor = Color.FromArgb(30, 41, 59);
+            exportMenu.ForeColor = Color.White;
+            exportMenu.ShowImageMargin = false;
+            exportMenu.RenderMode = ToolStripRenderMode.Professional;
+
+
+            ToolStripMenuItem itemExcel =
+                new ToolStripMenuItem("Export to Excel");
+
+            ToolStripMenuItem itemPdf =
+                new ToolStripMenuItem("Export to PDF");
+
+
+            itemExcel.BackColor = Color.FromArgb(30, 41, 59);
+            itemExcel.ForeColor = Color.White;
+            itemExcel.Padding = new Padding(10, 8, 10, 8);
+
+            itemPdf.BackColor = Color.FromArgb(30, 41, 59);
+            itemPdf.ForeColor = Color.White;
+            itemPdf.Padding = new Padding(10, 8, 10, 8);
+
+
+            exportMenu.Items.Add(itemExcel);
+            exportMenu.Items.Add(itemPdf);
+
+
+            btnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(
+                    btnExport,
+                    new Point(0, btnExport.Height));
+            };
+
+
+            pnlTopProducts.Controls.Add(btnExport);
+
+
+            // Chart
+
+            Chart chartTopProducts = new Chart();
+
+            chartTopProducts.Location = new Point(20, 55);
+
+            chartTopProducts.Size = new Size(
+                pnlTopProducts.Width - 40,
+                220);
 
             chartTopProducts.Anchor =
                 AnchorStyles.Top |
@@ -1177,15 +1313,12 @@ namespace CompanyProjectWindowsFormApp
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            chartTopProducts.BackColor =
-                Color.FromArgb(30, 41, 59);
+            chartTopProducts.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            ChartArea chartArea =
-                new ChartArea();
+            ChartArea chartArea = new ChartArea();
 
-            chartArea.BackColor =
-                Color.FromArgb(30, 41, 59);
+            chartArea.BackColor = Color.FromArgb(30, 41, 59);
 
             chartArea.AxisX.LabelStyle.ForeColor =
                 Color.FromArgb(203, 213, 225);
@@ -1199,31 +1332,21 @@ namespace CompanyProjectWindowsFormApp
             chartArea.AxisY.MajorGrid.LineColor =
                 Color.FromArgb(71, 85, 105);
 
-            chartTopProducts.ChartAreas.Add(
-                chartArea);
+            chartTopProducts.ChartAreas.Add(chartArea);
 
 
-            Series series =
-                new Series();
+            Series series = new Series();
 
-            series.Name =
-                "Sales";
-
-            series.ChartType =
-                SeriesChartType.Column;
-
-            series.BorderWidth =
-                2;
-
-            series.Color =
-                Color.FromArgb(37, 99, 235);
+            series.Name = "Sales";
+            series.ChartType = SeriesChartType.Column;
+            series.BorderWidth = 2;
+            series.Color = Color.FromArgb(37, 99, 235);
 
 
             var topProducts =
                 payments
                     .GroupBy(x =>
-                        x.CompanyHasProductOrService
-                            .ProductOrService)
+                        x.CompanyHasProductOrService.ProductOrService)
                     .Select(x => new
                     {
                         ProductOrService =
@@ -1246,72 +1369,175 @@ namespace CompanyProjectWindowsFormApp
             }
 
 
-            chartTopProducts.Series.Add(
-                series);
+            chartTopProducts.Series.Add(series);
 
-            pnlTopProducts.Controls.Add(
-                chartTopProducts);
+            pnlTopProducts.Controls.Add(chartTopProducts);
+
+
+            // Excel export
+
+            itemExcel.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "Excel Dosyası (*.xlsx)|*.xlsx";
+
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "TopProducts.xlsx";
+                    saveFileDialog.Title = "Export Top Products / Services";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ExcelExportHelper.ExportToExcel(
+                                chartTopProducts,
+                                saveFileDialog.FileName,
+                                "Top Products");
+
+                            MessageBox.Show(
+                                "Grafik Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+
+            // PDF export
+
+            itemPdf.Click += (sender, e) =>
+            {
+                MessageBox.Show(
+                    "PDF aktarımı henüz eklenmedi.",
+                    "Export to PDF",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            };
+
 
             return pnlTopProducts;
         }
 
 
         private Panel CreateSalesByCompanyPanel(
-    List<CustomerBuysCompanyHasProductOrService> payments)
+            List<CustomerBuysCompanyHasProductOrService> payments)
         {
-            Panel pnlSalesByCompany =
-                new Panel();
+            Panel pnlSalesByCompany = new Panel();
 
-            pnlSalesByCompany.Location =
-                new Point(20, 1100);
+            pnlSalesByCompany.Location = new Point(20, 1100);
 
-            pnlSalesByCompany.Size =
-                new Size(
-                    PnlContent.ClientSize.Width - 40,
-                    300);
+            pnlSalesByCompany.Size = new Size(
+                PnlContent.ClientSize.Width - 40,
+                300);
 
             pnlSalesByCompany.Anchor =
                 AnchorStyles.Top |
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            pnlSalesByCompany.BackColor =
-                Color.FromArgb(30, 41, 59);
+            pnlSalesByCompany.BackColor = Color.FromArgb(30, 41, 59);
 
-            Label lblTitle =
-                new Label();
 
-            lblTitle.Text =
-                "Sales by Company";
+            Label lblTitle = new Label();
 
-            lblTitle.Font =
-                new Font(
-                    "Segoe UI",
-                    14,
-                    FontStyle.Bold);
+            lblTitle.Text = "Sales by Company";
+            lblTitle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(20, 15);
 
-            lblTitle.ForeColor =
-                Color.White;
+            pnlSalesByCompany.Controls.Add(lblTitle);
 
-            lblTitle.AutoSize =
-                true;
 
-            lblTitle.Location =
-                new Point(20, 15);
+            // Export menu
 
-            pnlSalesByCompany.Controls.Add(
-                lblTitle);
+            Button btnExport = new Button();
 
-            Chart chartSalesByCompany =
-                new Chart();
+            btnExport.Text = "Export  ▼";
+            btnExport.Size = new Size(110, 32);
 
-            chartSalesByCompany.Location =
-                new Point(20, 55);
+            btnExport.Location = new Point(
+                pnlSalesByCompany.Width - 130,
+                10);
 
-            chartSalesByCompany.Size =
-                new Size(
-                    pnlSalesByCompany.Width - 40,
-                    220);
+            btnExport.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right;
+
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(71, 85, 105);
+            btnExport.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(51, 65, 85);
+
+            btnExport.BackColor = Color.FromArgb(51, 65, 85);
+            btnExport.ForeColor = Color.White;
+            btnExport.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnExport.Cursor = Cursors.Hand;
+
+
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            exportMenu.BackColor = Color.FromArgb(30, 41, 59);
+            exportMenu.ForeColor = Color.White;
+            exportMenu.ShowImageMargin = false;
+            exportMenu.RenderMode = ToolStripRenderMode.Professional;
+
+
+            ToolStripMenuItem itemExcel =
+                new ToolStripMenuItem("Export to Excel");
+
+            ToolStripMenuItem itemPdf =
+                new ToolStripMenuItem("Export to PDF");
+
+
+            itemExcel.BackColor = Color.FromArgb(30, 41, 59);
+            itemExcel.ForeColor = Color.White;
+            itemExcel.Padding = new Padding(10, 8, 10, 8);
+
+            itemPdf.BackColor = Color.FromArgb(30, 41, 59);
+            itemPdf.ForeColor = Color.White;
+            itemPdf.Padding = new Padding(10, 8, 10, 8);
+
+
+            exportMenu.Items.Add(itemExcel);
+            exportMenu.Items.Add(itemPdf);
+
+
+            btnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(
+                    btnExport,
+                    new Point(0, btnExport.Height));
+            };
+
+
+            pnlSalesByCompany.Controls.Add(btnExport);
+
+
+            // Chart
+
+            Chart chartSalesByCompany = new Chart();
+
+            chartSalesByCompany.Location = new Point(20, 55);
+
+            chartSalesByCompany.Size = new Size(
+                pnlSalesByCompany.Width - 40,
+                220);
 
             chartSalesByCompany.Anchor =
                 AnchorStyles.Top |
@@ -1319,14 +1545,12 @@ namespace CompanyProjectWindowsFormApp
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            chartSalesByCompany.BackColor =
-                Color.FromArgb(30, 41, 59);
+            chartSalesByCompany.BackColor = Color.FromArgb(30, 41, 59);
 
-            ChartArea chartArea =
-                new ChartArea();
 
-            chartArea.BackColor =
-                Color.FromArgb(30, 41, 59);
+            ChartArea chartArea = new ChartArea();
+
+            chartArea.BackColor = Color.FromArgb(30, 41, 59);
 
             chartArea.AxisX.LabelStyle.ForeColor =
                 Color.FromArgb(203, 213, 225);
@@ -1340,42 +1564,34 @@ namespace CompanyProjectWindowsFormApp
             chartArea.AxisY.MajorGrid.LineColor =
                 Color.FromArgb(71, 85, 105);
 
-            chartSalesByCompany.ChartAreas.Add(
-                chartArea);
+            chartSalesByCompany.ChartAreas.Add(chartArea);
 
-            Series series =
-                new Series();
 
-            series.Name =
-                "Revenue";
+            Series series = new Series();
 
-            series.ChartType =
-                SeriesChartType.Column;
+            series.Name = "Revenue";
+            series.ChartType = SeriesChartType.Column;
+            series.BorderWidth = 2;
+            series.Color = Color.FromArgb(37, 99, 235);
 
-            series.BorderWidth =
-                2;
-
-            series.Color =
-                Color.FromArgb(37, 99, 235);
 
             var salesByCompany =
-    payments
-        .GroupBy(x =>
-            x.CompanyHasProductOrService.Company)
-        .Select(x => new
-        {
-            CompanyName =
-                x.Key.CompanyName,
+                payments
+                    .GroupBy(x =>
+                        x.CompanyHasProductOrService.Company)
+                    .Select(x => new
+                    {
+                        CompanyName = x.Key.CompanyName,
 
-            Revenue =
-                x.Sum(y =>
-                    y.CompanyHasProductOrService
-                        .CompanyHasProductOrServicePrice *
-                    y.CustomerBuysCompanyHasProductOrServiceQuantity)
-        })
-        .OrderByDescending(x =>
-            x.Revenue)
-        .ToList();
+                        Revenue =
+                            x.Sum(y =>
+                                y.CompanyHasProductOrService
+                                    .CompanyHasProductOrServicePrice *
+                                y.CustomerBuysCompanyHasProductOrServiceQuantity)
+                    })
+                    .OrderByDescending(x => x.Revenue)
+                    .ToList();
+
 
             foreach (var company in salesByCompany)
             {
@@ -1384,11 +1600,65 @@ namespace CompanyProjectWindowsFormApp
                     company.Revenue);
             }
 
-            chartSalesByCompany.Series.Add(
-                series);
 
-            pnlSalesByCompany.Controls.Add(
-                chartSalesByCompany);
+            chartSalesByCompany.Series.Add(series);
+
+            pnlSalesByCompany.Controls.Add(chartSalesByCompany);
+
+
+            // Excel export
+
+            itemExcel.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "Excel Dosyası (*.xlsx)|*.xlsx";
+
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "SalesByCompany.xlsx";
+                    saveFileDialog.Title = "Export Sales by Company";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ExcelExportHelper.ExportToExcel(
+                                chartSalesByCompany,
+                                saveFileDialog.FileName,
+                                "Sales by Company");
+
+                            MessageBox.Show(
+                                "Grafik Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+
+            // PDF export
+
+            itemPdf.Click += (sender, e) =>
+            {
+                MessageBox.Show(
+                    "PDF aktarımı henüz eklenmedi.",
+                    "Export to PDF",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            };
+
 
             return pnlSalesByCompany;
         }
@@ -1398,61 +1668,109 @@ namespace CompanyProjectWindowsFormApp
             int positionX,
             int positionY)
         {
-            Panel pnlRecentSales =
-                new Panel();
+            Panel pnlRecentSales = new Panel();
 
-            pnlRecentSales.Location =
-                new Point(positionX, positionY);
+            pnlRecentSales.Location = new Point(positionX, positionY);
 
-            pnlRecentSales.Size =
-                new Size(
-                    PnlContent.ClientSize.Width - 40,
-                    350);
+            pnlRecentSales.Size = new Size(
+                PnlContent.ClientSize.Width - 40,
+                350);
 
             pnlRecentSales.Anchor =
                 AnchorStyles.Top |
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            pnlRecentSales.BackColor =
-                Color.FromArgb(30, 41, 59);
+            pnlRecentSales.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            Label lblTitle =
-                new Label();
+            Label lblTitle = new Label();
 
-            lblTitle.Text =
-                "Recent Sales";
+            lblTitle.Text = "Recent Sales";
+            lblTitle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(20, 15);
 
-            lblTitle.Font =
-                new Font(
-                    "Segoe UI",
-                    14,
-                    FontStyle.Bold);
-
-            lblTitle.ForeColor =
-                Color.White;
-
-            lblTitle.AutoSize =
-                true;
-
-            lblTitle.Location =
-                new Point(20, 15);
-
-            pnlRecentSales.Controls.Add(
-                lblTitle);
+            pnlRecentSales.Controls.Add(lblTitle);
 
 
-            DataGridView dgvRecentSales =
-                new DataGridView();
+            // Export menu
 
-            dgvRecentSales.Location =
-                new Point(20, 55);
+            Button btnExport = new Button();
 
-            dgvRecentSales.Size =
-                new Size(
-                    pnlRecentSales.Width - 40,
-                    270);
+            btnExport.Text = "Export  ▼";
+            btnExport.Size = new Size(110, 32);
+
+            btnExport.Location = new Point(
+                pnlRecentSales.Width - 130,
+                10);
+
+            btnExport.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right;
+
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(71, 85, 105);
+            btnExport.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(51, 65, 85);
+
+            btnExport.BackColor = Color.FromArgb(51, 65, 85);
+            btnExport.ForeColor = Color.White;
+            btnExport.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnExport.Cursor = Cursors.Hand;
+
+
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            exportMenu.BackColor = Color.FromArgb(30, 41, 59);
+            exportMenu.ForeColor = Color.White;
+            exportMenu.ShowImageMargin = false;
+            exportMenu.RenderMode = ToolStripRenderMode.Professional;
+
+
+            ToolStripMenuItem itemExcel =
+                new ToolStripMenuItem("Export to Excel");
+
+            ToolStripMenuItem itemPdf =
+                new ToolStripMenuItem("Export to PDF");
+
+
+            itemExcel.BackColor = Color.FromArgb(30, 41, 59);
+            itemExcel.ForeColor = Color.White;
+            itemExcel.Padding = new Padding(10, 8, 10, 8);
+
+            itemPdf.BackColor = Color.FromArgb(30, 41, 59);
+            itemPdf.ForeColor = Color.White;
+            itemPdf.Padding = new Padding(10, 8, 10, 8);
+
+
+            exportMenu.Items.Add(itemExcel);
+            exportMenu.Items.Add(itemPdf);
+
+
+            btnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(
+                    btnExport,
+                    new Point(0, btnExport.Height));
+            };
+
+
+            pnlRecentSales.Controls.Add(btnExport);
+
+
+            // DataGridView
+
+            DataGridView dgvRecentSales = new DataGridView();
+
+            dgvRecentSales.Location = new Point(20, 55);
+
+            dgvRecentSales.Size = new Size(
+                pnlRecentSales.Width - 40,
+                270);
 
             dgvRecentSales.Anchor =
                 AnchorStyles.Top |
@@ -1460,23 +1778,12 @@ namespace CompanyProjectWindowsFormApp
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            dgvRecentSales.BackgroundColor =
-                Color.FromArgb(248, 250, 252);
-
-            dgvRecentSales.BorderStyle =
-                BorderStyle.None;
-
-            dgvRecentSales.AllowUserToAddRows =
-                false;
-
-            dgvRecentSales.AllowUserToDeleteRows =
-                false;
-
-            dgvRecentSales.ReadOnly =
-                true;
-
-            dgvRecentSales.RowHeadersVisible =
-                false;
+            dgvRecentSales.BackgroundColor = Color.FromArgb(248, 250, 252);
+            dgvRecentSales.BorderStyle = BorderStyle.None;
+            dgvRecentSales.AllowUserToAddRows = false;
+            dgvRecentSales.AllowUserToDeleteRows = false;
+            dgvRecentSales.ReadOnly = true;
+            dgvRecentSales.RowHeadersVisible = false;
 
             dgvRecentSales.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
@@ -1484,77 +1791,35 @@ namespace CompanyProjectWindowsFormApp
             dgvRecentSales.SelectionMode =
                 DataGridViewSelectionMode.FullRowSelect;
 
-            dgvRecentSales.MultiSelect =
-                false;
-
-            dgvRecentSales.EnableHeadersVisualStyles =
-                false;
+            dgvRecentSales.MultiSelect = false;
+            dgvRecentSales.EnableHeadersVisualStyles = false;
 
             dgvRecentSales.ColumnHeadersDefaultCellStyle =
                 new DataGridViewCellStyle
                 {
-                    BackColor =
-                        Color.FromArgb(71, 85, 105),
-
-                    ForeColor =
-                        Color.White,
-
-                    Font =
-                        new Font(
-                            "Segoe UI",
-                            9,
-                            FontStyle.Bold)
+                    BackColor = Color.FromArgb(71, 85, 105),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold)
                 };
 
             dgvRecentSales.DefaultCellStyle =
                 new DataGridViewCellStyle
                 {
-                    BackColor =
-                        Color.FromArgb(248, 250, 252),
-
-                    ForeColor =
-                        Color.FromArgb(15, 23, 42),
-
-                    SelectionBackColor =
-                        Color.FromArgb(219, 234, 254),
-
-                    SelectionForeColor =
-                        Color.FromArgb(15, 23, 42),
-
-                    Font =
-                        new Font(
-                            "Segoe UI",
-                            9)
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    ForeColor = Color.FromArgb(15, 23, 42),
+                    SelectionBackColor = Color.FromArgb(219, 234, 254),
+                    SelectionForeColor = Color.FromArgb(15, 23, 42),
+                    Font = new Font("Segoe UI", 9)
                 };
 
 
-            dgvRecentSales.Columns.Add(
-                "Customer",
-                "Customer");
-
-            dgvRecentSales.Columns.Add(
-                "Company",
-                "Company");
-
-            dgvRecentSales.Columns.Add(
-                "ProductOrService",
-                "Product / Service");
-
-            dgvRecentSales.Columns.Add(
-                "Quantity",
-                "Quantity");
-
-            dgvRecentSales.Columns.Add(
-                "PaymentType",
-                "Payment Type");
-
-            dgvRecentSales.Columns.Add(
-                "Date",
-                "Date");
-
-            dgvRecentSales.Columns.Add(
-                "Revenue",
-                "Revenue");
+            dgvRecentSales.Columns.Add("Customer", "Customer");
+            dgvRecentSales.Columns.Add("Company", "Company");
+            dgvRecentSales.Columns.Add("ProductOrService", "Product / Service");
+            dgvRecentSales.Columns.Add("Quantity", "Quantity");
+            dgvRecentSales.Columns.Add("PaymentType", "Payment Type");
+            dgvRecentSales.Columns.Add("Date", "Date");
+            dgvRecentSales.Columns.Add("Revenue", "Revenue");
 
 
             var recentSales =
@@ -1594,8 +1859,83 @@ namespace CompanyProjectWindowsFormApp
             }
 
 
-            pnlRecentSales.Controls.Add(
-                dgvRecentSales);
+            pnlRecentSales.Controls.Add(dgvRecentSales);
+
+
+            // Excel export
+
+            itemExcel.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "Excel Dosyası (*.xlsx)|*.xlsx";
+
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "RecentSales.xlsx";
+                    saveFileDialog.Title = "Export Recent Sales";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                            {
+                                var worksheet = workbook.Worksheets.Add("Recent Sales");
+
+                                for (int column = 0; column < dgvRecentSales.Columns.Count; column++)
+                                {
+                                    worksheet.Cell(1, column + 1).Value =
+                                        dgvRecentSales.Columns[column].HeaderText;
+                                }
+
+                                for (int row = 0; row < dgvRecentSales.Rows.Count; row++)
+                                {
+                                    for (int column = 0; column < dgvRecentSales.Columns.Count; column++)
+                                    {
+                                        worksheet.Cell(row + 2, column + 1).Value =
+                                            Convert.ToString(
+                                                dgvRecentSales.Rows[row].Cells[column].Value);
+                                    }
+                                }
+
+                                worksheet.Row(1).Style.Font.Bold = true;
+                                worksheet.Columns().AdjustToContents();
+
+                                workbook.SaveAs(saveFileDialog.FileName);
+                            }
+
+                            MessageBox.Show(
+                                "Satışlar Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+
+            // PDF export
+
+            itemPdf.Click += (sender, e) =>
+            {
+                MessageBox.Show(
+                    "PDF aktarımı henüz eklenmedi.",
+                    "Export to PDF",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            };
+
 
             return pnlRecentSales;
         }
@@ -1604,61 +1944,109 @@ namespace CompanyProjectWindowsFormApp
             int positionX,
             int positionY)
         {
-            Panel pnlLowStock =
-                new Panel();
+            Panel pnlLowStock = new Panel();
 
-            pnlLowStock.Location =
-                new Point(positionX, positionY);
+            pnlLowStock.Location = new Point(positionX, positionY);
 
-            pnlLowStock.Size =
-                new Size(
-                    PnlContent.ClientSize.Width - 40,
-                    350);
+            pnlLowStock.Size = new Size(
+                PnlContent.ClientSize.Width - 40,
+                350);
 
             pnlLowStock.Anchor =
                 AnchorStyles.Top |
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            pnlLowStock.BackColor =
-                Color.FromArgb(30, 41, 59);
+            pnlLowStock.BackColor = Color.FromArgb(30, 41, 59);
 
 
-            Label lblTitle =
-                new Label();
+            Label lblTitle = new Label();
 
-            lblTitle.Text =
-                "Low Stock";
+            lblTitle.Text = "Low Stock";
+            lblTitle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(20, 15);
 
-            lblTitle.Font =
-                new Font(
-                    "Segoe UI",
-                    14,
-                    FontStyle.Bold);
-
-            lblTitle.ForeColor =
-                Color.White;
-
-            lblTitle.AutoSize =
-                true;
-
-            lblTitle.Location =
-                new Point(20, 15);
-
-            pnlLowStock.Controls.Add(
-                lblTitle);
+            pnlLowStock.Controls.Add(lblTitle);
 
 
-            DataGridView dgvLowStock =
-                new DataGridView();
+            // Export menu
 
-            dgvLowStock.Location =
-                new Point(20, 55);
+            Button btnExport = new Button();
 
-            dgvLowStock.Size =
-                new Size(
-                    pnlLowStock.Width - 40,
-                    270);
+            btnExport.Text = "Export  ▼";
+            btnExport.Size = new Size(110, 32);
+
+            btnExport.Location = new Point(
+                pnlLowStock.Width - 130,
+                10);
+
+            btnExport.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right;
+
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatAppearance.MouseOverBackColor =
+                Color.FromArgb(71, 85, 105);
+            btnExport.FlatAppearance.MouseDownBackColor =
+                Color.FromArgb(51, 65, 85);
+
+            btnExport.BackColor = Color.FromArgb(51, 65, 85);
+            btnExport.ForeColor = Color.White;
+            btnExport.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            btnExport.Cursor = Cursors.Hand;
+
+
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            exportMenu.BackColor = Color.FromArgb(30, 41, 59);
+            exportMenu.ForeColor = Color.White;
+            exportMenu.ShowImageMargin = false;
+            exportMenu.RenderMode = ToolStripRenderMode.Professional;
+
+
+            ToolStripMenuItem itemExcel =
+                new ToolStripMenuItem("Export to Excel");
+
+            ToolStripMenuItem itemPdf =
+                new ToolStripMenuItem("Export to PDF");
+
+
+            itemExcel.BackColor = Color.FromArgb(30, 41, 59);
+            itemExcel.ForeColor = Color.White;
+            itemExcel.Padding = new Padding(10, 8, 10, 8);
+
+            itemPdf.BackColor = Color.FromArgb(30, 41, 59);
+            itemPdf.ForeColor = Color.White;
+            itemPdf.Padding = new Padding(10, 8, 10, 8);
+
+
+            exportMenu.Items.Add(itemExcel);
+            exportMenu.Items.Add(itemPdf);
+
+
+            btnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(
+                    btnExport,
+                    new Point(0, btnExport.Height));
+            };
+
+
+            pnlLowStock.Controls.Add(btnExport);
+
+
+            // DataGridView
+
+            DataGridView dgvLowStock = new DataGridView();
+
+            dgvLowStock.Location = new Point(20, 55);
+
+            dgvLowStock.Size = new Size(
+                pnlLowStock.Width - 40,
+                270);
 
             dgvLowStock.Anchor =
                 AnchorStyles.Top |
@@ -1666,23 +2054,12 @@ namespace CompanyProjectWindowsFormApp
                 AnchorStyles.Left |
                 AnchorStyles.Right;
 
-            dgvLowStock.BackgroundColor =
-                Color.FromArgb(248, 250, 252);
-
-            dgvLowStock.BorderStyle =
-                BorderStyle.None;
-
-            dgvLowStock.AllowUserToAddRows =
-                false;
-
-            dgvLowStock.AllowUserToDeleteRows =
-                false;
-
-            dgvLowStock.ReadOnly =
-                true;
-
-            dgvLowStock.RowHeadersVisible =
-                false;
+            dgvLowStock.BackgroundColor = Color.FromArgb(248, 250, 252);
+            dgvLowStock.BorderStyle = BorderStyle.None;
+            dgvLowStock.AllowUserToAddRows = false;
+            dgvLowStock.AllowUserToDeleteRows = false;
+            dgvLowStock.ReadOnly = true;
+            dgvLowStock.RowHeadersVisible = false;
 
             dgvLowStock.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
@@ -1690,61 +2067,31 @@ namespace CompanyProjectWindowsFormApp
             dgvLowStock.SelectionMode =
                 DataGridViewSelectionMode.FullRowSelect;
 
-            dgvLowStock.MultiSelect =
-                false;
-
-            dgvLowStock.EnableHeadersVisualStyles =
-                false;
+            dgvLowStock.MultiSelect = false;
+            dgvLowStock.EnableHeadersVisualStyles = false;
 
             dgvLowStock.ColumnHeadersDefaultCellStyle =
                 new DataGridViewCellStyle
                 {
-                    BackColor =
-                        Color.FromArgb(71, 85, 105),
-
-                    ForeColor =
-                        Color.White,
-
-                    Font =
-                        new Font(
-                            "Segoe UI",
-                            9,
-                            FontStyle.Bold)
+                    BackColor = Color.FromArgb(71, 85, 105),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold)
                 };
 
             dgvLowStock.DefaultCellStyle =
                 new DataGridViewCellStyle
                 {
-                    BackColor =
-                        Color.FromArgb(248, 250, 252),
-
-                    ForeColor =
-                        Color.FromArgb(15, 23, 42),
-
-                    SelectionBackColor =
-                        Color.FromArgb(219, 234, 254),
-
-                    SelectionForeColor =
-                        Color.FromArgb(15, 23, 42),
-
-                    Font =
-                        new Font(
-                            "Segoe UI",
-                            9)
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    ForeColor = Color.FromArgb(15, 23, 42),
+                    SelectionBackColor = Color.FromArgb(219, 234, 254),
+                    SelectionForeColor = Color.FromArgb(15, 23, 42),
+                    Font = new Font("Segoe UI", 9)
                 };
 
 
-            dgvLowStock.Columns.Add(
-                "Company",
-                "Company");
-
-            dgvLowStock.Columns.Add(
-                "ProductOrService",
-                "Product / Service");
-
-            dgvLowStock.Columns.Add(
-                "Quantity",
-                "Quantity");
+            dgvLowStock.Columns.Add("Company", "Company");
+            dgvLowStock.Columns.Add("ProductOrService", "Product / Service");
+            dgvLowStock.Columns.Add("Quantity", "Quantity");
 
 
             List<CompanyHasProductOrService> companyProducts =
@@ -1766,16 +2113,88 @@ namespace CompanyProjectWindowsFormApp
             {
                 dgvLowStock.Rows.Add(
                     item.Company.CompanyName,
-
-                    item.ProductOrService
-                        .ProductOrServiceName,
-
+                    item.ProductOrService.ProductOrServiceName,
                     item.CompanyHasProductOrServiceQuantity);
             }
 
 
-            pnlLowStock.Controls.Add(
-                dgvLowStock);
+            pnlLowStock.Controls.Add(dgvLowStock);
+
+
+            // Excel export
+
+            itemExcel.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "Excel Dosyası (*.xlsx)|*.xlsx";
+
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "LowStock.xlsx";
+                    saveFileDialog.Title = "Export Low Stock";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                            {
+                                var worksheet = workbook.Worksheets.Add("Low Stock");
+
+                                for (int column = 0; column < dgvLowStock.Columns.Count; column++)
+                                {
+                                    worksheet.Cell(1, column + 1).Value =
+                                        dgvLowStock.Columns[column].HeaderText;
+                                }
+
+                                for (int row = 0; row < dgvLowStock.Rows.Count; row++)
+                                {
+                                    for (int column = 0; column < dgvLowStock.Columns.Count; column++)
+                                    {
+                                        worksheet.Cell(row + 2, column + 1).Value =
+                                            Convert.ToString(
+                                                dgvLowStock.Rows[row].Cells[column].Value);
+                                    }
+                                }
+
+                                worksheet.Row(1).Style.Font.Bold = true;
+                                worksheet.Columns().AdjustToContents();
+
+                                workbook.SaveAs(saveFileDialog.FileName);
+                            }
+
+                            MessageBox.Show(
+                                "Stok bilgileri Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+
+            // PDF export
+
+            itemPdf.Click += (sender, e) =>
+            {
+                MessageBox.Show(
+                    "PDF aktarımı henüz eklenmedi.",
+                    "Export to PDF",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            };
+
 
             return pnlLowStock;
         }
