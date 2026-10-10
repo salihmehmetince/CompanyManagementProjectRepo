@@ -1,5 +1,6 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Helper;
 using CompanyProjectWindowsFormApp.Helpers;
 using System;
 using System.Collections.Generic;
@@ -290,8 +291,44 @@ namespace CompanyProjectWindowsFormApp
 
             pdfItem.Click += (sender, e) =>
             {
-                // PDF'e aktarma işlemi
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "PDF Dosyası (*.pdf)|*.pdf";
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "Products_Services.pdf";
+                    saveFileDialog.Title = "Export Products_Services";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                DgvProductOrServices,
+                                Enumerable.Range(0, DgvProductOrServices.Columns.Count).ToArray(),
+                                saveFileDialog.FileName,
+                                documentTitle: "Products-Services",
+                                textOnly: false,
+                                imageColumnIndex: 4);
+
+                            MessageBox.Show(
+                                "Veriler PDF dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
             BtnExport.Click += (sender, e) =>
             {

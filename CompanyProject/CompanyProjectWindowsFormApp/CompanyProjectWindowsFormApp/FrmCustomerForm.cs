@@ -1,5 +1,6 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Helper;
 using CompanyProjectWindowsFormApp.Helpers;
 using System;
 using System.Collections.Generic;
@@ -296,8 +297,42 @@ namespace CompanyProjectWindowsFormApp
 
             pdfItem.Click += (sender, e) =>
             {
-                // PDF'e aktarma işlemi
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "PDF Dosyası (*.pdf)|*.pdf";
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "Customers.pdf";
+                    saveFileDialog.Title = "Export Customers";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                DgvCustomers,
+                                Enumerable.Range(0, DgvCustomers.Columns.Count).ToArray(),
+                                saveFileDialog.FileName,
+                                documentTitle: "Customers");
+
+                            MessageBox.Show(
+                                "Veriler PDF dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
             BtnExport.Click += (sender, e) =>
             {

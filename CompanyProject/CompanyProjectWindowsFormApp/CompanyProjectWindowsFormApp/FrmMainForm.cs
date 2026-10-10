@@ -1,8 +1,10 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Helper;
 using CompanyProjectWindowsFormApp.Helpers;
 using CompanyProjectWindowsFormApp.Properties;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1188,12 +1190,43 @@ namespace CompanyProjectWindowsFormApp
 
             itemPdf.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "PDF aktarımı henüz eklenmedi.",
-                    "Export to PDF",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "PDF File (*.pdf)|*.pdf";
+
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "SalesOverview.pdf";
+                    saveFileDialog.Title = "Sales Overview";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                chartSales,
+                                saveFileDialog.FileName,
+                                "Sales Overview");
+
+                            MessageBox.Show(
+                                "Chart exported to PDF successfully.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF export failed.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
 
             return pnlSalesOverview;
@@ -1420,12 +1453,43 @@ namespace CompanyProjectWindowsFormApp
 
             itemPdf.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "PDF aktarımı henüz eklenmedi.",
-                    "Export to PDF",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "PDF File (*.pdf)|*.pdf";
+
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "TopProducts.pdf";
+                    saveFileDialog.Title = "Top Products";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                chartTopProducts,
+                                saveFileDialog.FileName,
+                                "Top Products");
+
+                            MessageBox.Show(
+                                "Chart exported to PDF successfully.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF export failed.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
 
             return pnlTopProducts;
@@ -1652,12 +1716,43 @@ namespace CompanyProjectWindowsFormApp
 
             itemPdf.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "PDF aktarımı henüz eklenmedi.",
-                    "Export to PDF",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "PDF File (*.pdf)|*.pdf";
+
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "SalesByCompany.pdf";
+                    saveFileDialog.Title = "Export Sales by Company";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                chartSalesByCompany,
+                                saveFileDialog.FileName,
+                                "Sales by Company");
+
+                            MessageBox.Show(
+                                "Chart exported to PDF successfully.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF export failed.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
 
             return pnlSalesByCompany;
@@ -1926,15 +2021,48 @@ namespace CompanyProjectWindowsFormApp
 
 
             // PDF export
-
             itemPdf.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "PDF aktarımı henüz eklenmedi.",
-                    "Export to PDF",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "PDF File (*.pdf)|*.pdf";
+
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "RecentSales.pdf";
+                    saveFileDialog.Title = "Export Recent Sales";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                dgvRecentSales,
+                                Enumerable.Range(
+                                    0,
+                                    dgvRecentSales.Columns.Count).ToArray(),
+                                saveFileDialog.FileName,
+                                documentTitle: "Recent Sales");
+
+                            MessageBox.Show(
+                                "Sales exported to PDF successfully.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF export failed.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
 
             return pnlRecentSales;
@@ -2188,12 +2316,46 @@ namespace CompanyProjectWindowsFormApp
 
             itemPdf.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "PDF aktarımı henüz eklenmedi.",
-                    "Export to PDF",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter =
+                        "PDF File (*.pdf)|*.pdf";
+
+                    saveFileDialog.DefaultExt = "pdf";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "LowStock.pdf";
+                    saveFileDialog.Title = "Export Low Stock";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            PdfExportHelper.ExportToPdf(
+                                dgvLowStock,
+                                Enumerable.Range(
+                                    0,
+                                    dgvLowStock.Columns.Count).ToArray(),
+                                saveFileDialog.FileName,
+                                documentTitle: "Low Stock");
+
+                            MessageBox.Show(
+                                "Low Stock to PDF successfully.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "PDF export failed.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
             };
+
 
 
             return pnlLowStock;

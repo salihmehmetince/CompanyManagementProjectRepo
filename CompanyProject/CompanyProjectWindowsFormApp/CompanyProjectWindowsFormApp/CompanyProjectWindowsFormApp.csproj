@@ -127,13 +127,13 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="MigraDoc.DocumentObjectModel, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-MigraDoc.6.2.4\lib\netstandard2.0\MigraDoc.DocumentObjectModel.dll</HintPath>
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.4\lib\net462\MigraDoc.DocumentObjectModel.dll</HintPath>
     </Reference>
-    <Reference Include="MigraDoc.Rendering, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-MigraDoc.6.2.4\lib\netstandard2.0\MigraDoc.Rendering.dll</HintPath>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.4\lib\net462\MigraDoc.Rendering-gdi.dll</HintPath>
     </Reference>
-    <Reference Include="MigraDoc.RtfRendering, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-MigraDoc.6.2.4\lib\netstandard2.0\MigraDoc.RtfRendering.dll</HintPath>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.4\lib\net462\MigraDoc.RtfRendering-gdi.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -141,29 +141,44 @@
     <Reference Include="PdfSharp, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp.BarCodes, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.BarCodes.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.BarCodes-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.BarCodes-gdi.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.Charting, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.Charting.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp.Charting-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.Charting-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp.Cryptography, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.Cryptography.dll</HintPath>
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.Quality, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.Quality.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp.Quality-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.Quality-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp.Shared, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.Shared.dll</HintPath>
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.Shared.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.Snippets, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.Snippets.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp.Snippets-gdi, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.Snippets-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp.System, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.System.dll</HintPath>
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.System.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.WPFonts, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.WPFonts.dll</HintPath>
+      <HintPath>..\packages\PDFsharp-GDI.6.2.4\lib\net462\PdfSharp.WPFonts.dll</HintPath>
     </Reference>
     <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
       <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
@@ -461,6 +476,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helper\ExcelExportHelper.cs" />
+    <Compile Include="Helper\PdfExportHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmCompaniesForm.resx">
