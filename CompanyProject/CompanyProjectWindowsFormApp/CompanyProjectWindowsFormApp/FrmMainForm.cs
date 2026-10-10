@@ -3474,6 +3474,31 @@ namespace CompanyProjectWindowsFormApp
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
+                else
+                {
+                    System.Threading.Tasks.Task.Run(() =>
+                    {
+                        try
+                        {
+                            GoogleDriveBackupService googleDriveBackupService =
+                                new GoogleDriveBackupService();
+
+                            googleDriveBackupService.UploadBackup(backupPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.BeginInvoke((Action)(() =>
+                            {
+                                MessageBox.Show(
+                                    "Yerel yedekleme başarılı, ancak Google Drive'a yükleme başarısız oldu.\n\n" +
+                                    ex.Message,
+                                    "Google Drive Yedekleme Hatası",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                            }));
+                        }
+                    });
+                }
             };
 
             backupTimer.Start();

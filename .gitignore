@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+/CompanyProject/CompanyProjectWindowsFormApp/CompanyProjectWindowsFormApp/Credentials/credentials.json
