@@ -44,6 +44,7 @@
             this.PnlHeader = new System.Windows.Forms.Panel();
             this.LblDescription = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
+            this.BtnExport = new System.Windows.Forms.Button();
             this.PnlMain.SuspendLayout();
             this.PnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProductOrServices)).BeginInit();
@@ -133,6 +134,7 @@
             // 
             // PnlToolbar
             // 
+            this.PnlToolbar.Controls.Add(this.BtnExport);
             this.PnlToolbar.Controls.Add(this.BtnDelete);
             this.PnlToolbar.Controls.Add(this.BtnEdit);
             this.PnlToolbar.Controls.Add(this.BtnAdd);
@@ -236,6 +238,20 @@
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "Products Or Services";
             // 
+            // BtnExport
+            // 
+            this.BtnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.BtnExport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnExport.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.BtnExport.ForeColor = System.Drawing.Color.White;
+            this.BtnExport.Location = new System.Drawing.Point(781, 18);
+            this.BtnExport.Name = "BtnExport";
+            this.BtnExport.Size = new System.Drawing.Size(90, 35);
+            this.BtnExport.TabIndex = 5;
+            this.BtnExport.Text = "Export ▼";
+            this.BtnExport.UseVisualStyleBackColor = false;
+            // 
             // FrmProductOrServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
@@ -277,5 +293,6 @@
         private System.Windows.Forms.Panel PnlHeader;
         private System.Windows.Forms.Label LblDescription;
         private System.Windows.Forms.Label LblTitle;
+        private System.Windows.Forms.Button BtnExport;
     }
 }

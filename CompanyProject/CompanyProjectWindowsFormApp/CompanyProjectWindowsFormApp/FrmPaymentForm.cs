@@ -1,6 +1,7 @@
 ﻿using CompanyManagement.BusinessLogic;
 using CompanyManagement.DataAccess;
 using CompanyManagement.Entity;
+using CompanyProjectWindowsFormApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +32,7 @@ namespace CompanyProjectWindowsFormApp
             setIcon();
             SetButtonsBorder();
             ListPayments();
+            CreateExportMenu();
         }
         private void setIcon()
         {
@@ -43,6 +45,7 @@ namespace CompanyProjectWindowsFormApp
             BtnAdd.FlatAppearance.BorderSize = 0;
             BtnEdit.FlatAppearance.BorderSize = 0;
             BtnDelete.FlatAppearance.BorderSize = 0;
+            BtnExport.FlatAppearance.BorderSize = 0;
         }
 
         private void ListPayments()
@@ -429,5 +432,64 @@ namespace CompanyProjectWindowsFormApp
 
             ListPayments();
         }
+        private void CreateExportMenu()
+        {
+            ContextMenuStrip exportMenu = new ContextMenuStrip();
+
+            ToolStripMenuItem excelItem = new ToolStripMenuItem("Excel'e Aktar");
+            ToolStripMenuItem pdfItem = new ToolStripMenuItem("PDF'e Aktar");
+
+            exportMenu.Items.Add(excelItem);
+            exportMenu.Items.Add(pdfItem);
+
+            excelItem.Click += (sender, e) =>
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Excel Dosyası (*.xlsx)|*.xlsx";
+                    saveFileDialog.DefaultExt = "xlsx";
+                    saveFileDialog.AddExtension = true;
+                    saveFileDialog.FileName = "Payments.xlsx";
+                    saveFileDialog.Title = "Export Payments";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ExcelExportHelper.ExportToExcel(
+                                DgvPayments,
+                                Enumerable.Range(0, DgvPayments.Columns.Count).ToArray(),
+                                saveFileDialog.FileName,
+                                worksheetName: "Payments");
+
+                            MessageBox.Show(
+                                "Veriler Excel dosyasına aktarıldı.",
+                                "Export Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Excel aktarımı başarısız oldu.\n" + ex.Message,
+                                "Export Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            };
+
+            pdfItem.Click += (sender, e) =>
+            {
+                // PDF'e aktarma işlemi
+            };
+
+            BtnExport.Click += (sender, e) =>
+            {
+                exportMenu.Show(BtnExport, new Point(0, BtnExport.Height));
+            };
+        }
+
     }
 }

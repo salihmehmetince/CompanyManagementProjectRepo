@@ -422,5 +422,111 @@ namespace CompanyProjectWindowsFormApp.Helpers
 
             workbook.SaveAs(filePath);
         }
+
+        public static void ExportToExcel(
+    DataGridView dataGridView,
+    int[] columnIndices,
+    int bitmapColumnIndex,
+    string filePath,
+    string worksheetName = "Veriler",
+    int imageWidth = 80,
+    int imageHeight = 60)
+        {
+            if (dataGridView == null)
+                throw new ArgumentNullException(nameof(dataGridView));
+
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                List<MemoryStream> imageStreams = new List<MemoryStream>();
+
+                try
+                {
+                    IXLWorksheet worksheet =
+                        workbook.Worksheets.Add(worksheetName);
+
+                    List<int> columns = (columnIndices ?? Array.Empty<int>())
+                        .Distinct()
+                        .Where(index =>
+                            index >= 0 &&
+                            index < dataGridView.Columns.Count)
+                        .ToList();
+
+                    for (int i = 0; i < columns.Count; i++)
+                    {
+                        worksheet.Cell(1, i + 1).Value =
+                            dataGridView.Columns[columns[i]].HeaderText;
+                    }
+
+                    worksheet.Row(1).Style.Font.Bold = true;
+                    worksheet.Row(1).Style.Fill.BackgroundColor = XLColor.LightGray;
+
+                    int excelRow = 2;
+
+                    foreach (DataGridViewRow row in dataGridView.Rows)
+                    {
+                        if (row.IsNewRow || !row.Visible)
+                            continue;
+
+                        worksheet.Row(excelRow).Height = 25;
+
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            int sourceColumn = columns[i];
+
+                            object value = row.Cells[sourceColumn].Value;
+
+                            IXLCell targetCell =
+                                worksheet.Cell(excelRow, i + 1);
+
+                            if (sourceColumn == bitmapColumnIndex)
+                            {
+                                if (value is Image image)
+                                {
+                                    using (Bitmap bitmap = new Bitmap(image))
+                                    {
+                                        MemoryStream stream = new MemoryStream();
+                                        imageStreams.Add(stream);
+
+                                        bitmap.Save(stream, ImageFormat.Png);
+                                        stream.Position = 0;
+
+                                        worksheet.AddPicture(stream)
+                                            .MoveTo(targetCell)
+                                            .WithSize(imageWidth, imageHeight);
+                                    }
+
+                                    worksheet.Row(excelRow).Height =
+                                        Math.Max(25, imageHeight * 0.75 + 5);
+                                }
+                            }
+                            else
+                            {
+                                WriteCellValue(targetCell, value);
+                            }
+                        }
+
+                        excelRow++;
+                    }
+
+                    worksheet.Columns().AdjustToContents();
+
+                    int excelImageColumn =
+                        columns.IndexOf(bitmapColumnIndex) + 1;
+
+                    if (excelImageColumn > 0)
+                    {
+                        worksheet.Column(excelImageColumn).Width =
+                            Math.Max(12, imageWidth / 7.0);
+                    }
+
+                    SaveWorkbook(workbook, filePath);
+                }
+                finally
+                {
+                    foreach (MemoryStream stream in imageStreams)
+                        stream.Dispose();
+                }
+            }
+        }
     }
 }
