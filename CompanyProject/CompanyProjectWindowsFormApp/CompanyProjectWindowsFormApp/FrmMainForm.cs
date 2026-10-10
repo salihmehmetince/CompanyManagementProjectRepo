@@ -4,6 +4,7 @@ using CompanyManagement.Entity;
 using CompanyProjectWindowsFormApp.Helper;
 using CompanyProjectWindowsFormApp.Helpers;
 using CompanyProjectWindowsFormApp.Properties;
+using CompanyProjectWindowsFormApp.Services;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,8 @@ namespace CompanyProjectWindowsFormApp
 
         private BLTask blTask = new BLTask();
         private BLMeeting blMeeting = new BLMeeting();
+        private System.Windows.Forms.Timer backupTimer;
+
         public FrmMainForm(User user, List<int> selectedCompanyIds)
         {
             this.user = user;
@@ -58,6 +61,7 @@ namespace CompanyProjectWindowsFormApp
             CreateDashBoardButton();
             CreateMenu(user);
             setIcon();
+            CreateTimerForBackup();
         }
 
         private void setIcon()
@@ -3446,6 +3450,33 @@ namespace CompanyProjectWindowsFormApp
 
             pnl.Controls.Add(dgv);
             return pnl;
+        }
+
+
+        private void CreateTimerForBackup()
+        {
+            backupTimer = new System.Windows.Forms.Timer();
+            backupTimer.Interval = 60000;
+
+            backupTimer.Tick += (sender, e) =>
+            {
+                DatabaseBackupService backupService = new DatabaseBackupService();
+
+                bool isSuccessful = backupService.CreateBackup(
+                    out string backupPath,
+                    out string errorMessage);
+
+                if (!isSuccessful)
+                {
+                    MessageBox.Show(
+                        "Otomatik yedekleme başarısız oldu.\n\n" + errorMessage,
+                        "Yedekleme Hatası",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            };
+
+            backupTimer.Start();
         }
 
     }
