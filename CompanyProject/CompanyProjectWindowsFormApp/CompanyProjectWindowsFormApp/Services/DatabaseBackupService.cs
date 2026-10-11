@@ -92,5 +92,81 @@ namespace CompanyProjectWindowsFormApp.Services
                 return false;
             }
         }
+
+        public bool IsValidBackupFile(string backupPath)
+        {
+            return !string.IsNullOrWhiteSpace(backupPath)
+                && System.IO.File.Exists(backupPath)
+                && string.Equals(
+                    System.IO.Path.GetExtension(backupPath),
+                    ".bak",
+                    System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        public bool RestoreBackup(string backupPath, out string errorMessage)
+        {
+            errorMessage = null;
+
+            try
+            {
+                if (!IsValidBackupFile(backupPath))
+                {
+                    throw new System.InvalidOperationException(
+                        "Geçerli bir .bak yedek dosyası seçilmedi.");
+                }
+
+                string connectionString =
+                    System.Configuration.ConfigurationManager
+                    .ConnectionStrings["CompanyManagementConnection"]
+                    .ConnectionString;
+
+                var builder =
+                    new System.Data.SqlClient.SqlConnectionStringBuilder(
+                        connectionString);
+
+                string databaseName = builder.InitialCatalog;
+
+                if (string.IsNullOrWhiteSpace(databaseName))
+                {
+                    throw new System.InvalidOperationException(
+                        "Veritabanı adı bulunamadı.");
+                }
+
+                builder.InitialCatalog = "master";
+
+                string safeDatabaseName = databaseName.Replace("]", "]]");
+                string safeBackupPath = backupPath.Replace("'", "''");
+
+                using (var connection =
+                    new System.Data.SqlClient.SqlConnection(
+                        builder.ConnectionString))
+                {
+                    connection.Open();
+
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandTimeout = 0;
+
+                        command.CommandText =
+                            "ALTER DATABASE [" + safeDatabaseName +
+                            "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
+                            "RESTORE DATABASE [" + safeDatabaseName +
+                            "] FROM DISK = N'" + safeBackupPath +
+                            "' WITH REPLACE, CHECKSUM; " +
+                            "ALTER DATABASE [" + safeDatabaseName +
+                            "] SET MULTI_USER;";
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
     }
 }

@@ -111,6 +111,32 @@ namespace CompanyProjectWindowsFormApp.Services
                         "Yedek Google Drive'a yüklenemedi: " +
                         result.Exception?.Message);
                 }
+
+                DeleteOldBackups(folderId);
+            }
+        }
+
+        private void DeleteOldBackups(string folderId)
+        {
+            var service = CreateDriveService();
+
+            var listRequest = service.Files.List();
+            listRequest.Q =
+                "'" + folderId + "' in parents and trashed = false";
+            listRequest.OrderBy = "createdTime desc";
+            listRequest.PageSize = 100;
+            listRequest.Fields = "files(id, name, createdTime)";
+
+            var files = listRequest.Execute().Files;
+
+            if (files == null || files.Count <= 5)
+            {
+                return;
+            }
+
+            foreach (var oldFile in files.Skip(5))
+            {
+                service.Files.Delete(oldFile.Id).Execute();
             }
         }
     }
