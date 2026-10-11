@@ -347,6 +347,12 @@
     <Compile Include="FrmDepartmentTypesForm.Designer.cs">
       <DependentUpon>FrmDepartmentTypesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDriveBackUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDriveBackUpForm.Designer.cs">
+      <DependentUpon>FrmDriveBackUpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmEmployeeAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -544,6 +550,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDepartmentTypesForm.resx">
       <DependentUpon>FrmDepartmentTypesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDriveBackUpForm.resx">
+      <DependentUpon>FrmDriveBackUpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmployeeAddEditForm.resx">
       <DependentUpon>FrmEmployeeAddEditForm.cs</DependentUpon>

@@ -483,7 +483,7 @@ namespace CompanyProjectWindowsFormApp
             PnlMenuButtons.Controls.Add(btnBackUpRestore);
             btnBackUpRestore.BringToFront();
             btnBackUpRestore.Click += BtnBackUpRestore_Click;
-            CreatebackUpRestorePanel();
+            CreateBackUpRestorePanel();
         }
 
         private void CreateDefinitionsPanel()
@@ -500,7 +500,7 @@ namespace CompanyProjectWindowsFormApp
             PnlDefinitions.BringToFront();
         }
 
-        private void CreatebackUpRestorePanel()
+        private void CreateBackUpRestorePanel()
         {
             PnlBackUpRestore = new Panel();
 
@@ -629,6 +629,7 @@ namespace CompanyProjectWindowsFormApp
             {
 
                 CreateLocalBackUp();
+                CreateDriveBackUp();
 
 
                 backUpRestoreCreated = true;
@@ -685,6 +686,27 @@ namespace CompanyProjectWindowsFormApp
             PnlBackUpRestore.Controls.Add(btnLocalBackUp);
             btnLocalBackUp.BringToFront();
             btnLocalBackUp.Click += BtnLocalBackUp_Click;
+        }
+        private void CreateDriveBackUp()
+        {
+            Button btnDriveBackUp = new Button();
+
+            btnDriveBackUp.Name = "BtnDriveBackUp";
+            btnDriveBackUp.Text = "Drive Back Up";
+            btnDriveBackUp.Dock = DockStyle.Top;
+            btnDriveBackUp.Height = 45;
+            btnDriveBackUp.FlatStyle = FlatStyle.Flat;
+            btnDriveBackUp.BackColor = Color.FromArgb(30, 41, 59);
+            btnDriveBackUp.ForeColor = Color.White;
+            btnDriveBackUp.Font = new Font("Segoe UI", 9F);
+            btnDriveBackUp.TextAlign = ContentAlignment.MiddleLeft;
+            btnDriveBackUp.Padding = new Padding(35, 0, 0, 0);
+            btnDriveBackUp.Cursor = Cursors.Hand;
+            btnDriveBackUp.FlatAppearance.BorderSize = 0;
+
+            PnlBackUpRestore.Controls.Add(btnDriveBackUp);
+            btnDriveBackUp.BringToFront();
+            btnDriveBackUp.Click += btnDriveBackUp_Click;
         }
 
         private void CreateDepartmentTypesButton()
@@ -785,6 +807,12 @@ namespace CompanyProjectWindowsFormApp
         {
             FrmLocalBackupsForm frmLocalBackupsForm = new FrmLocalBackupsForm();
             frmLocalBackupsForm.ShowDialog();
+        }
+
+        private void btnDriveBackUp_Click(object sender, EventArgs e)
+        {
+            FrmDriveBackUpForm frmDriveBackUpForm = new FrmDriveBackUpForm();
+            frmDriveBackUpForm.ShowDialog();
         }
 
         private void BtnDepartmentTypes_Click(object sender, EventArgs e)
