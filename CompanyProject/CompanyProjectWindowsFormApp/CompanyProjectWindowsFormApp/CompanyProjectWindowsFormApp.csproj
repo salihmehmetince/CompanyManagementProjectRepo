@@ -377,6 +377,12 @@
     <Compile Include="FrmFirstAdminForm.Designer.cs">
       <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmLocalBackupsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLocalBackupsForm.Designer.cs">
+      <DependentUpon>FrmLocalBackupsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -553,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmFirstAdminForm.resx">
       <DependentUpon>FrmFirstAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLocalBackupsForm.resx">
+      <DependentUpon>FrmLocalBackupsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLoginForm.resx">
       <DependentUpon>FrmLoginForm.cs</DependentUpon>

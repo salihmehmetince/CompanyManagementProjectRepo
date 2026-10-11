@@ -103,9 +103,13 @@ namespace CompanyProjectWindowsFormApp.Services
                     System.StringComparison.OrdinalIgnoreCase);
         }
 
+
         public bool RestoreBackup(string backupPath, out string errorMessage)
         {
             errorMessage = null;
+            bool singleUserMode = false;
+            string databaseName = null;
+            string masterConnectionString = null;
 
             try
             {
@@ -113,6 +117,17 @@ namespace CompanyProjectWindowsFormApp.Services
                 {
                     throw new System.InvalidOperationException(
                         "Geçerli bir .bak yedek dosyası seçilmedi.");
+                }
+
+                bool backupSuccessful = CreateBackup(
+                    out string preRestoreBackupPath,
+                    out string backupErrorMessage);
+
+                if (!backupSuccessful)
+                {
+                    throw new System.InvalidOperationException(
+                        "Geri yükleme öncesinde mevcut veritabanının yedeği alınamadı. " +
+                        "Geri yükleme iptal edildi.\n\n" + backupErrorMessage);
                 }
 
                 string connectionString =
@@ -124,7 +139,7 @@ namespace CompanyProjectWindowsFormApp.Services
                     new System.Data.SqlClient.SqlConnectionStringBuilder(
                         connectionString);
 
-                string databaseName = builder.InitialCatalog;
+                databaseName = builder.InitialCatalog;
 
                 if (string.IsNullOrWhiteSpace(databaseName))
                 {
@@ -133,13 +148,14 @@ namespace CompanyProjectWindowsFormApp.Services
                 }
 
                 builder.InitialCatalog = "master";
+                masterConnectionString = builder.ConnectionString;
 
                 string safeDatabaseName = databaseName.Replace("]", "]]");
                 string safeBackupPath = backupPath.Replace("'", "''");
 
                 using (var connection =
                     new System.Data.SqlClient.SqlConnection(
-                        builder.ConnectionString))
+                        masterConnectionString))
                 {
                     connection.Open();
 
@@ -149,14 +165,24 @@ namespace CompanyProjectWindowsFormApp.Services
 
                         command.CommandText =
                             "ALTER DATABASE [" + safeDatabaseName +
-                            "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
+                            "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;";
+
+                        command.ExecuteNonQuery();
+                        singleUserMode = true;
+
+                        command.CommandText =
                             "RESTORE DATABASE [" + safeDatabaseName +
                             "] FROM DISK = N'" + safeBackupPath +
-                            "' WITH REPLACE, CHECKSUM; " +
+                            "' WITH REPLACE, CHECKSUM;";
+
+                        command.ExecuteNonQuery();
+
+                        command.CommandText =
                             "ALTER DATABASE [" + safeDatabaseName +
                             "] SET MULTI_USER;";
 
                         command.ExecuteNonQuery();
+                        singleUserMode = false;
                     }
                 }
 
@@ -165,6 +191,41 @@ namespace CompanyProjectWindowsFormApp.Services
             catch (System.Exception ex)
             {
                 errorMessage = ex.Message;
+
+                if (singleUserMode &&
+                    !string.IsNullOrWhiteSpace(databaseName) &&
+                    !string.IsNullOrWhiteSpace(masterConnectionString))
+                {
+                    try
+                    {
+                        string safeDatabaseName =
+                            databaseName.Replace("]", "]]");
+
+                        using (var connection =
+                            new System.Data.SqlClient.SqlConnection(
+                                masterConnectionString))
+                        {
+                            connection.Open();
+
+                            using (var command = connection.CreateCommand())
+                            {
+                                command.CommandTimeout = 0;
+                                command.CommandText =
+                                    "ALTER DATABASE [" + safeDatabaseName +
+                                    "] SET MULTI_USER;";
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    catch (System.Exception restoreModeException)
+                    {
+                        errorMessage +=
+                            "\n\nVeritabanını MULTI_USER moduna döndürme hatası: " +
+                            restoreModeException.Message;
+                    }
+                }
+
                 return false;
             }
         }

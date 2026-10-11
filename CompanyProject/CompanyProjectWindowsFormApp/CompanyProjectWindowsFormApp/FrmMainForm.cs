@@ -28,7 +28,10 @@ namespace CompanyProjectWindowsFormApp
         private bool menuVisible = true;
         private bool definitionsCreated = false;
         private bool definitionsVisible = false;
+        private bool backUpRestoreCreated = false;
+        private bool backUpRestoreVisible = false;
         private Panel PnlDefinitions;
+        private Panel PnlBackUpRestore;
         private bool isClosing = false;
 
 
@@ -147,6 +150,7 @@ namespace CompanyProjectWindowsFormApp
             CreatePaymentsButton();
             CreateUsersButton();
             CreateDefinitionsButton();
+            CreateBackUpRestoreButton();
             CreateAdminDashboard();
         }
 
@@ -459,6 +463,29 @@ namespace CompanyProjectWindowsFormApp
             CreateDefinitionsPanel();
         }
 
+        private void CreateBackUpRestoreButton()
+        {
+            Button btnBackUpRestore = new Button();
+
+            btnBackUpRestore.Name = "BtnBackUpRestore";
+            btnBackUpRestore.Text = "Back-up Restore";
+            btnBackUpRestore.Dock = DockStyle.Top;
+            btnBackUpRestore.Height = 50;
+            btnBackUpRestore.FlatStyle = FlatStyle.Flat;
+            btnBackUpRestore.BackColor = Color.FromArgb(15, 23, 42);
+            btnBackUpRestore.ForeColor = Color.White;
+            btnBackUpRestore.Font = new Font("Segoe UI", 10F);
+            btnBackUpRestore.TextAlign = ContentAlignment.MiddleLeft;
+            btnBackUpRestore.Padding = new Padding(20, 0, 0, 0);
+            btnBackUpRestore.Cursor = Cursors.Hand;
+            btnBackUpRestore.FlatAppearance.BorderSize = 0;
+
+            PnlMenuButtons.Controls.Add(btnBackUpRestore);
+            btnBackUpRestore.BringToFront();
+            btnBackUpRestore.Click += BtnBackUpRestore_Click;
+            CreatebackUpRestorePanel();
+        }
+
         private void CreateDefinitionsPanel()
         {
             PnlDefinitions = new Panel();
@@ -471,6 +498,20 @@ namespace CompanyProjectWindowsFormApp
 
             PnlMenuButtons.Controls.Add(PnlDefinitions);
             PnlDefinitions.BringToFront();
+        }
+
+        private void CreatebackUpRestorePanel()
+        {
+            PnlBackUpRestore = new Panel();
+
+            PnlBackUpRestore.Name = "PnlBackUpRestore";
+            PnlBackUpRestore.Dock = DockStyle.Top;
+            PnlBackUpRestore.AutoSize = true;
+            PnlBackUpRestore.BackColor = Color.FromArgb(30, 41, 59);
+            PnlBackUpRestore.Visible = false;
+
+            PnlMenuButtons.Controls.Add(PnlBackUpRestore);
+            PnlBackUpRestore.BringToFront();
         }
         private void BtnCompanies_Click(object sender, EventArgs e)
         {
@@ -582,6 +623,26 @@ namespace CompanyProjectWindowsFormApp
             }
 
         }
+        private void BtnBackUpRestore_Click(object sender, EventArgs e)
+        {
+            if (!backUpRestoreCreated)
+            {
+
+                CreateLocalBackUp();
+
+
+                backUpRestoreCreated = true;
+                backUpRestoreVisible = true;
+
+                PnlBackUpRestore.Visible = true;
+            }
+            else
+            {
+                backUpRestoreVisible = !backUpRestoreVisible;
+                PnlBackUpRestore.Visible = backUpRestoreVisible;
+            }
+
+        }
 
         private void CreateCompanyTypesButton()
         {
@@ -603,6 +664,27 @@ namespace CompanyProjectWindowsFormApp
             PnlDefinitions.Controls.Add(btnCompanyTypes);
             btnCompanyTypes.BringToFront();
             btnCompanyTypes.Click += BtnCompanyTypes_Click;
+        }
+        private void CreateLocalBackUp()
+        {
+            Button btnLocalBackUp = new Button();
+
+            btnLocalBackUp.Name = "BtnLocalBackUp";
+            btnLocalBackUp.Text = "Local Back Up";
+            btnLocalBackUp.Dock = DockStyle.Top;
+            btnLocalBackUp.Height = 45;
+            btnLocalBackUp.FlatStyle = FlatStyle.Flat;
+            btnLocalBackUp.BackColor = Color.FromArgb(30, 41, 59);
+            btnLocalBackUp.ForeColor = Color.White;
+            btnLocalBackUp.Font = new Font("Segoe UI", 9F);
+            btnLocalBackUp.TextAlign = ContentAlignment.MiddleLeft;
+            btnLocalBackUp.Padding = new Padding(35, 0, 0, 0);
+            btnLocalBackUp.Cursor = Cursors.Hand;
+            btnLocalBackUp.FlatAppearance.BorderSize = 0;
+
+            PnlBackUpRestore.Controls.Add(btnLocalBackUp);
+            btnLocalBackUp.BringToFront();
+            btnLocalBackUp.Click += BtnLocalBackUp_Click;
         }
 
         private void CreateDepartmentTypesButton()
@@ -698,6 +780,11 @@ namespace CompanyProjectWindowsFormApp
         {
             FrmCompanyTypesForm form = new FrmCompanyTypesForm();
             form.ShowDialog();
+        }
+        private void BtnLocalBackUp_Click(object sender, EventArgs e)
+        {
+            FrmLocalBackupsForm frmLocalBackupsForm = new FrmLocalBackupsForm();
+            frmLocalBackupsForm.ShowDialog();
         }
 
         private void BtnDepartmentTypes_Click(object sender, EventArgs e)
