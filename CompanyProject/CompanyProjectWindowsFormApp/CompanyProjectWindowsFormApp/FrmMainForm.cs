@@ -30,8 +30,11 @@ namespace CompanyProjectWindowsFormApp
         private bool definitionsVisible = false;
         private bool backUpRestoreCreated = false;
         private bool backUpRestoreVisible = false;
+        private bool aICreated = false;
+        private bool aIVisible = false;
         private Panel PnlDefinitions;
         private Panel PnlBackUpRestore;
+        private Panel PnlaI;
         private bool isClosing = false;
 
 
@@ -151,6 +154,7 @@ namespace CompanyProjectWindowsFormApp
             CreateUsersButton();
             CreateDefinitionsButton();
             CreateBackUpRestoreButton();
+            CreateAIButton();
             CreateAdminDashboard();
         }
 
@@ -486,6 +490,29 @@ namespace CompanyProjectWindowsFormApp
             CreateBackUpRestorePanel();
         }
 
+        private void CreateAIButton()
+        {
+            Button btnAI = new Button();
+
+            btnAI.Name = "BtnAI";
+            btnAI.Text = "AI";
+            btnAI.Dock = DockStyle.Top;
+            btnAI.Height = 50;
+            btnAI.FlatStyle = FlatStyle.Flat;
+            btnAI.BackColor = Color.FromArgb(15, 23, 42);
+            btnAI.ForeColor = Color.White;
+            btnAI.Font = new Font("Segoe UI", 10F);
+            btnAI.TextAlign = ContentAlignment.MiddleLeft;
+            btnAI.Padding = new Padding(20, 0, 0, 0);
+            btnAI.Cursor = Cursors.Hand;
+            btnAI.FlatAppearance.BorderSize = 0;
+
+            PnlMenuButtons.Controls.Add(btnAI);
+            btnAI.BringToFront();
+            btnAI.Click += BtnAI_Click;
+            CreateAIPanel();
+        }
+
         private void CreateDefinitionsPanel()
         {
             PnlDefinitions = new Panel();
@@ -512,6 +539,19 @@ namespace CompanyProjectWindowsFormApp
 
             PnlMenuButtons.Controls.Add(PnlBackUpRestore);
             PnlBackUpRestore.BringToFront();
+        }
+        private void CreateAIPanel()
+        {
+            PnlaI = new Panel();
+
+            PnlaI.Name = "PnlaI";
+            PnlaI.Dock = DockStyle.Top;
+            PnlaI.AutoSize = true;
+            PnlaI.BackColor = Color.FromArgb(30, 41, 59);
+            PnlaI.Visible = false;
+
+            PnlMenuButtons.Controls.Add(PnlaI);
+            PnlaI.BringToFront();
         }
         private void BtnCompanies_Click(object sender, EventArgs e)
         {
@@ -644,6 +684,26 @@ namespace CompanyProjectWindowsFormApp
             }
 
         }
+        private void BtnAI_Click(object sender, EventArgs e)
+        {
+            if (!aICreated)
+            {
+
+                CreateSalesForecasting();
+
+
+                aICreated = true;
+                aIVisible = true;
+
+                PnlaI.Visible = true;
+            }
+            else
+            {
+                aIVisible = !aIVisible;
+                PnlaI.Visible = aIVisible;
+            }
+
+        }
 
         private void CreateCompanyTypesButton()
         {
@@ -686,6 +746,27 @@ namespace CompanyProjectWindowsFormApp
             PnlBackUpRestore.Controls.Add(btnLocalBackUp);
             btnLocalBackUp.BringToFront();
             btnLocalBackUp.Click += BtnLocalBackUp_Click;
+        }
+        private void CreateSalesForecasting()
+        {
+            Button btnSalesForecasting = new Button();
+
+            btnSalesForecasting.Name = "BtnSalesForecasting";
+            btnSalesForecasting.Text = "Sales Forecasting";
+            btnSalesForecasting.Dock = DockStyle.Top;
+            btnSalesForecasting.Height = 45;
+            btnSalesForecasting.FlatStyle = FlatStyle.Flat;
+            btnSalesForecasting.BackColor = Color.FromArgb(30, 41, 59);
+            btnSalesForecasting.ForeColor = Color.White;
+            btnSalesForecasting.Font = new Font("Segoe UI", 9F);
+            btnSalesForecasting.TextAlign = ContentAlignment.MiddleLeft;
+            btnSalesForecasting.Padding = new Padding(35, 0, 0, 0);
+            btnSalesForecasting.Cursor = Cursors.Hand;
+            btnSalesForecasting.FlatAppearance.BorderSize = 0;
+
+            PnlaI.Controls.Add(btnSalesForecasting);
+            btnSalesForecasting.BringToFront();
+            btnSalesForecasting.Click += BtnSalesForecasting_Click;
         }
         private void CreateDriveBackUp()
         {
@@ -807,6 +888,11 @@ namespace CompanyProjectWindowsFormApp
         {
             FrmLocalBackupsForm frmLocalBackupsForm = new FrmLocalBackupsForm();
             frmLocalBackupsForm.ShowDialog();
+        }
+        private void BtnSalesForecasting_Click(object sender, EventArgs e)
+        {
+            FrmSalesForecastingForm frmSalesForecastingForm = new FrmSalesForecastingForm(user,selectedCompanyIds);
+            frmSalesForecastingForm.ShowDialog();
         }
 
         private void btnDriveBackUp_Click(object sender, EventArgs e)
