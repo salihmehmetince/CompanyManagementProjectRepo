@@ -38,7 +38,11 @@ namespace CompanyProjectWindowsFormApp
             this.selectedModel = selectedModel;
 
             SetModeData();
+            DgvPredictionData.CellValueChanged +=
+    DgvPredictionData_CellValueChanged;
 
+            DgvPredictionData.CurrentCellDirtyStateChanged +=
+                DgvPredictionData_CurrentCellDirtyStateChanged;
             LoadPredictionDataGridView();
         }
 
@@ -131,6 +135,9 @@ namespace CompanyProjectWindowsFormApp
                     Name = "ThreeMonthAverage",
                     HeaderText = "Three Month Average"
                 });
+
+            DgvPredictionData.Columns["PreviousMonthSales"].ReadOnly = true;
+            DgvPredictionData.Columns["ThreeMonthAverage"].ReadOnly = true;
 
             for (int i = 0; i < 5; i++)
             {
@@ -470,5 +477,87 @@ namespace CompanyProjectWindowsFormApp
                 }
             }
         }
+
+        private void CalculateHistoricalSales(DataGridViewRow row)
+        {
+            if (row.IsNewRow ||
+                row.Cells["Company"].Value == null ||
+                row.Cells["Product"].Value == null ||
+                row.Cells["Year"].Value == null ||
+                row.Cells["Month"].Value == null)
+            {
+                return;
+            }
+
+            int companyId = Convert.ToInt32(
+                row.Cells["Company"].Value);
+
+            int productId = Convert.ToInt32(
+                row.Cells["Product"].Value);
+
+            int year;
+            int month;
+
+            if (!int.TryParse(
+                    row.Cells["Year"].Value.ToString(), out year) ||
+                !int.TryParse(
+                    row.Cells["Month"].Value.ToString(), out month) ||
+                year < 1 || month < 1 || month > 12)
+            {
+                return;
+            }
+
+            DateTime targetMonth = new DateTime(year, month, 1);
+            DateTime threeMonthsStart = targetMonth.AddMonths(-3);
+
+            BLCustomerBuysCompanyHasProductOrService blSales =
+                new BLCustomerBuysCompanyHasProductOrService();
+
+            var sales = blSales.CustomerBuysCompanyHasProductOrServiceList()
+                .Where(x =>
+                    x.CompanyHasProductOrService != null &&
+                    x.CompanyHasProductOrService.CompanyId == companyId &&
+                    x.CompanyHasProductOrService.ProductOrServiceId == productId &&
+                    x.CustomerBuysCompanyHasProductOrServiceDate >= threeMonthsStart &&
+                    x.CustomerBuysCompanyHasProductOrServiceDate < targetMonth)
+                .ToList();
+
+            DateTime previousMonth = targetMonth.AddMonths(-1);
+
+            double previousMonthSales = sales
+                .Where(x =>
+                    x.CustomerBuysCompanyHasProductOrServiceDate >= previousMonth &&
+                    x.CustomerBuysCompanyHasProductOrServiceDate < targetMonth)
+                .Sum(x => Convert.ToDouble(
+                    x.CustomerBuysCompanyHasProductOrServiceQuantity));
+
+            double threeMonthAverage = sales.Sum(x =>
+                Convert.ToDouble(
+                    x.CustomerBuysCompanyHasProductOrServiceQuantity)) / 3.0;
+
+            row.Cells["PreviousMonthSales"].Value = previousMonthSales;
+            row.Cells["ThreeMonthAverage"].Value = threeMonthAverage;
+        }
+
+        private void DgvPredictionData_CellValueChanged(
+    object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                CalculateHistoricalSales(
+                    DgvPredictionData.Rows[e.RowIndex]);
+            }
+        }
+
+        private void DgvPredictionData_CurrentCellDirtyStateChanged(
+            object sender, EventArgs e)
+        {
+            if (DgvPredictionData.IsCurrentCellDirty)
+            {
+                DgvPredictionData.CommitEdit(
+                    DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
     }
 }
